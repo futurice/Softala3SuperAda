@@ -138,21 +138,21 @@ class GameView extends Component {
             barStyle='light-content'
           />
           <Text style={styles.congratsText}>
-            Congratulations!
+            Onneksi olkoon!
           </Text>
           <Text style={styles.congratsBodyText}>
-            {'Puzzle has been completed.'}
+            {'Tehtävä ratkottu'}
           </Text>
           <Text style={styles.congratsBodyText}>
-            {`Total points: ${quizStatus.data.points}`}
+            {`Pisteitä yhteensä: ${quizStatus.data.points}`}
           </Text>
           <Text style={styles.retryText}>
-            {'You can try again, but this will reset your score to zero until you complete the quiz again!'}
+            {'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'}
           </Text>
           <TouchableOpacity
             style={[{marginTop: 10}, styles.button]}
             onPress={resetGame(this)}>
-              <Text style={styles.buttonText}>New Game</Text>
+              <Text style={styles.buttonText}>UUSI YRITYS</Text>
           </TouchableOpacity>
         </View>
       );
@@ -235,7 +235,7 @@ class GameView extends Component {
         const puzzleCompleted = wordsToFind === 0;
 
         // Points per minutes
-        const minutesPoints = Math.max((maxMinutes - minutes) * pointsPerMinute, 0);
+        const minutesPoints = Math.max(minutes * pointsPerMinute, 0);
         const wordsFound = solution.found.length - wordsToFind;
         const wordsPoints = wordsFound * pointsPerWord;
         const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
@@ -251,7 +251,7 @@ class GameView extends Component {
               {`${puzzleCompleted ? 'Onneksi olkoon!' : 'Aika loppui!'}`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {`Tehtävä ratkottu ${maxMinutes - minutes} minuuttia alle aikarajan: ${minutesPoints} pistettä`}
+              {`Tehtävä ratkottu ${minutes} minuuttia alle aikarajan: ${minutesPoints} pistettä`}
             </Text>
             <Text style={styles.congratsBodyText}>
               {`${wordsFound} sanaa (${pointsPerWord} pistettä sanaa kohti): ${wordsPoints} pistettä`}
