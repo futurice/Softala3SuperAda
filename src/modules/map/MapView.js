@@ -40,7 +40,7 @@ const MapView = React.createClass({
         </style>
       </head>
       <body>
-        <img src="${getConfiguration('API_ROOT')}/map.png" />
+        <img src="${getConfiguration('API_ROOT')}/public/map.png" />
       </body>
     </html>
     `;
