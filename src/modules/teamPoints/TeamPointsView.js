@@ -11,10 +11,6 @@ import {
 import AppStyles from '../AppStyles';
 
 const TeamPointsView = React.createClass({
-  async componentDidMount() {
-    this.props.refresh();
-  },
-
   render() {
     let sum = 0;
     let maxPoints = 0;
@@ -44,6 +40,7 @@ const TeamPointsView = React.createClass({
           <View style={styles.pointBox}>
             <Text style={styles.points}>{sum}/{maxPoints}</Text>
           </View>
+          <Text style={styles.baseText}>Kaikki rastit suoritettu!</Text>
           <Text style={styles.baseText}>Haluatko antaa järjestäjille palautetta?</Text>
           <View style ={styles.buttons}>
             <TouchableOpacity onPress={this.props.feedback}>
