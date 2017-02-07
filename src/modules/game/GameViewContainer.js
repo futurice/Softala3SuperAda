@@ -12,25 +12,11 @@ export default connect(
     initialiseGame() {
       dispatch(GameState.initGame());
     },
-    setQuizPoints(points) {
-      dispatch(rest.actions.quiz.post({}, {
-        body: JSON.stringify({points: points})
-      }, (err, data) => {
-        if (!err) {
-          console.log('successfully set quiz points: ', points);
-        } else {
-          console.log('Error setting quiz points: ', err, data);
-        }
-      }));
-    },
     refresh() {
       dispatch(rest.actions.quiz.sync());
     },
     deleteGame() {
       dispatch(rest.actions.quiz.delete());
-    },
-    tickTimer() {
-      dispatch(GameState.tickTimer());
     },
     pauseGame() {
       dispatch(GameState.gamePause());

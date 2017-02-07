@@ -8,8 +8,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Dimensions from 'Dimensions';
-import reactMixin from 'react-mixin';
-import TimerMixin from 'react-timer-mixin';
 import PuzzleContainer from '../puzzle/PuzzleContainer';
 import * as GameState from './GameState';
 import AppStyles from '../AppStyles';
@@ -56,21 +54,6 @@ const togglePause = (component) => (event) => {
   }
 };
 
-const tick = (component) => {
-  const {
-    gameState,
-    tickTimer
-  } = component.props;
-
-  const {
-    gameStatus
-  } = gameState;
-
-  if (gameStatus === GameState.GAME_RUNNING) {
-    tickTimer();
-  }
-};
-
 class GameView extends Component {
   constructor(props) {
     super(props);
@@ -94,19 +77,11 @@ class GameView extends Component {
     }
   }
 
-  componentDidMount() {
-    // Start the timer
-    this.setInterval(() => {
-      tick(this);
-    }, 1000);
-  }
-
   // TODO: render grew too big
   render() {
     const {
       gameState,
       quizStatus,
-      setQuizPoints
     } = this.props;
 
     const {
@@ -118,7 +93,7 @@ class GameView extends Component {
     } = gameState;
 
     let contentView;
-    const remaining = 10 * 60 - timer;
+    const remaining = (__DEV__ ? 10 : (10 * 60)) - timer;
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining - minutes * 60;
 
@@ -241,10 +216,6 @@ class GameView extends Component {
         const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
         const totalPoints = Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
 
-        if (!quizStatus.data.done) {
-          setQuizPoints(totalPoints);
-        }
-
         contentView = (
           <View style={styles.gameContainer}>
             <Text style={styles.congratsText}>
@@ -312,10 +283,7 @@ GameView.propTypes = {
   initialiseGame: PropTypes.func.isRequired,
   refresh: PropTypes.func.isRequired,
   quizStatus: PropTypes.object.isRequired,
-  setQuizPoints: PropTypes.func.isRequired
 };
-
-reactMixin(GameView.prototype, TimerMixin);
 
 const centered = {
   alignSelf: 'center'

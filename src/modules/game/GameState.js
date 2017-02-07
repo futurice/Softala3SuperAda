@@ -58,7 +58,7 @@ export function tickTimer() {
   };
 }
 
-const randomWords = (words, quantity = __DEV__ ? 5 : 21) => {
+const randomWords = (words, quantity = __DEV__ ? 2 : 21) => {
   let hit = { };
   let i = quantity;
   const rands = quantity;
@@ -154,10 +154,11 @@ export default function GameStateReducer(state = initialState, action) {
         gameStatus
       } = state;
 
+      const timeLimit = __DEV__ ? 10 : 10 * 60
+
       return {
         ...state,
-        timer: Math.min(timer + 1, 10 * 60),
-        gameStatus: (timer + 1) >= 10 * 60 ? GAME_COMPLETED : gameStatus
+        timer: Math.min(timer + 1, timeLimit),
       };
     }
     case WORD_FOUND: {

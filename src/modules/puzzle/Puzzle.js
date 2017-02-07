@@ -1,5 +1,7 @@
 import React, {PropTypes, Component} from 'react';
 import Dimensions from 'Dimensions';
+import reactMixin from 'react-mixin';
+import TimerMixin from 'react-timer-mixin';
 import {
   StyleSheet,
   View
@@ -110,6 +112,56 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
   }
 };
 
+const calculatePoints = (gameState) => {
+  const {
+    puzzle,
+    solution,
+    gameStatus,
+    wordsToFind,
+    timer,
+  } = gameState;
+
+  const remaining = (__DEV__ ? 10 : (10 * 60)) - timer;
+  const minutes = Math.floor(remaining / 60);
+
+  // TODO: move this into a config
+  const pointsPerMinute = 10;
+  const pointsPerWord = 5;
+  const pointsCompleted = 100;
+  const maxMinutes = 10;
+  const puzzleCompleted = wordsToFind === 0;
+
+  // Points per minutes
+  const minutesPoints = Math.max(minutes * pointsPerMinute, 0);
+  const wordsFound = solution.found.length - wordsToFind;
+  const wordsPoints = wordsFound * pointsPerWord;
+  const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
+
+  return Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
+};
+
+const tick = (component) => {
+  const {
+    gameState,
+    gameCompleted,
+    tickTimer,
+  } = component.props;
+
+  const {
+    gameStatus,
+    timer,
+  } = gameState;
+
+  if (gameStatus === GameState.GAME_RUNNING) {
+    const remaining = (__DEV__ ? 10 : (10 * 60)) - timer;
+    if (remaining <= 0) {
+      gameCompleted(calculatePoints(gameState));
+    } else {
+      tickTimer();
+    }
+  }
+};
+
 class Puzzle extends Component {
   constructor(props) {
     super(props);
@@ -126,8 +178,14 @@ class Puzzle extends Component {
   componentDidMount() {
     const {
       gameStarted,
-      gameStatus
+      gameStatus,
+      gameState
     } = this.props;
+
+    // Start the timer
+    this.setInterval(() => {
+      tick(this);
+    }, 1000);
 
     if (gameStatus === GameState.GAME_RUNNING ||
       gameStatus === GameState.GAME_PAUSE) {
@@ -140,12 +198,14 @@ class Puzzle extends Component {
   componentWillUpdate(newProps) {
     const {
       gameCompleted,
-      wordsToFind
+      wordsToFind,
+      gameState,
     } = newProps;
 
     if (wordsToFind === 0) {
+
       setTimeout(() => {
-        gameCompleted();
+        gameCompleted(calculatePoints(gameState));
       }, 500);
     }
   }
@@ -187,13 +247,16 @@ class Puzzle extends Component {
   }
 }
 
+reactMixin(Puzzle.prototype, TimerMixin);
+
 Puzzle.propTypes = {
   puzzle: PropTypes.array.isRequired,
   solution: PropTypes.object.isRequired,
   discoveredSoFar: PropTypes.object.isRequired,
   gameStarted: PropTypes.func.isRequired,
   wordsToFind: PropTypes.number.isRequired,
-  gameStatus: PropTypes.string.isRequired
+  gameStatus: PropTypes.string.isRequired,
+  gameState: PropTypes.object.isRequired,
 };
 
 const styles = StyleSheet.create({
