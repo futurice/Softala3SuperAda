@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 150,
     height: 70,
+    elevation: 5,
   },
   whiteFont: {
     color: AppStyles.white,
