@@ -3,7 +3,8 @@ import {
   Text,
   View,
   StyleSheet,
-  Image
+  Image,
+  StatusBar,
 } from 'react-native';
 
 import AppStyles from '../AppStyles';
@@ -12,6 +13,11 @@ const Goodbye = React.createClass({
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar
+          backgroundColor={AppStyles.darkRed}
+          animated={false}
+          barStyle="light-content"
+        />
         <View style={styles.header}>
           <Text style={styles.titleText}>
             Kiitos!
@@ -57,13 +63,14 @@ const styles = StyleSheet.create({
   textBody: {
     color: AppStyles.white,
     marginBottom: 15,
+    fontWeight: 'bold',
     fontSize: AppStyles.fontSize,
   },
   regardsContainer: {
     alignItems: 'center'
   },
   bottomText: {
-    fontSize: AppStyles.fontSize,
+    fontSize: 20,
     color: AppStyles.white,
     fontWeight: 'bold'
   }

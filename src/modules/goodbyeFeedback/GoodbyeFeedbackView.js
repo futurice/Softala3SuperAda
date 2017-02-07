@@ -3,25 +3,26 @@ import {
   Text,
   View,
   StyleSheet,
-  Image
+  Image,
+  StatusBar,
 } from 'react-native';
 
 import * as NavigationState from '../../modules/navigation/NavigationState';
+import AppStyles from '../AppStyles';
 
 const GoodbyeFeedbackView = React.createClass({
   propTypes: {
     dispatch: PropTypes.func.isRequired
   },
 
-  getInitialState() {
-    return {
-      background: 'rgba(255,0,54,1)'
-    };
-  },
-
   render() {
     return (
-      <View style={[styles.container, {backgroundColor: this.state.background}]}>
+      <View style={styles.container}>
+        <StatusBar
+          backgroundColor={AppStyles.darkRed}
+          animated={false}
+          barStyle="light-content"
+        />
         <View style={styles.header}>
           <Text style={styles.titleText}>
             Kiitos!
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: AppStyles.darkRed,
   },
   header: {
     justifyContent: 'flex-start',
@@ -52,23 +53,23 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   titleText: {
-    fontSize: 30,
+    fontSize: AppStyles.titleFontSize,
     fontWeight: 'bold',
-    color: '#FFF'
+    color: AppStyles.white
   },
   mark: {
     width: 200,
     height: 250
   },
   textstyle: {
-    color: '#FFF',
+    color: AppStyles.white,
     marginBottom: 15,
-    fontSize: 20,
+    fontSize: AppStyles.fontSize,
     fontWeight: 'bold',
     textAlign: 'center'
   },
   bottomText: {
-    color: '#FFF',
+    color: AppStyles.white,
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
