@@ -17,6 +17,8 @@ import RadioForm, {
   RadioButtonLabel
 } from 'react-native-simple-radio-button';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 import AppStyles from '../AppStyles';
 import _ from 'lodash';
 
@@ -121,7 +123,7 @@ const FeedbackView = React.createClass({
 
     return (
      <View style={styles.container}>
-      <ScrollView
+      <KeyboardAwareScrollView
         automaticallyAdjustContentInsets={false}
         style={styles.scrollView}>
 
@@ -137,7 +139,7 @@ const FeedbackView = React.createClass({
             <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'LÄHETÄ'}</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </View>
     );
   }
