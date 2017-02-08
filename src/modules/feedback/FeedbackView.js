@@ -72,7 +72,7 @@ const FeedbackView = React.createClass({
                 onChangeText={(value) => this.setState({
                   [i]: value
                 })}
-                value={val ? val : question.answer}
+                value={!_.isUndefined(val) ? val : question.answer}
                 />
             </View>
           </View>
