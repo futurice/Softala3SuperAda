@@ -14,9 +14,19 @@ export default connect(
     refresh() {
       dispatch(rest.actions.teamDetails());
     },
-    save(description, image) {
+    save(description, imageUri) {
+      let formdata = new FormData();
+
+      if (imageUri) {
+        formdata.append('image', {uri: imageUri, name: 'image.png', type: 'multipart/form-data'});
+      }
+      if (description) {
+        formdata.append('description', description);
+      }
+      
+      console.log(formdata);
       dispatch(rest.actions.teamDetails.post({}, {
-        body: JSON.stringify({ description, image })
+        body: formdata
       }, (err, data) => {
         if (!err) {
           dispatch(NavigationState.switchTab('CheckPointsTab'));

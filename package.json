@@ -38,6 +38,8 @@
     "react-native": "0.39.2",
     "react-native-checkbox": "^1.1.0",
     "react-native-image-picker": "^0.24.1",
+    "react-native-image-resizer": "0.0.12",
+    "react-native-keyboard-aware-scroll-view": "^0.2.7",
     "react-native-simple-radio-button": "^2.4.0",
     "react-native-smart-splash-screen": "^2.1.0",
     "react-redux": "^4.4.5",

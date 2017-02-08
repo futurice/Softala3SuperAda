@@ -9,12 +9,15 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Platform
+  Platform,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {options} from './image-picker-options';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+import ImageResizer from 'react-native-image-resizer';
 
 const TeamView = React.createClass({
   getInitialState() {
@@ -39,20 +42,22 @@ const TeamView = React.createClass({
   openImageGallery() {
     this.setState({ disableSave: true });
     ImagePicker.showImagePicker(options, (response) => {
-      this.setState({ disableSave: false });
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
+        this.setState({ disableSave: false });
       }
       else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
-      }
-      else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      }
-      else {
-        this.setState({
-          modifiedImage: response.data
+        this.setState({ disableSave: false });
+      } else {
+        ImageResizer.createResizedImage(response.uri, 512, 512, 'PNG', 100).then((resizedImageUri) => {
+          // resizeImageUri is the URI of the new image that can now be displayed, uploaded...
+          this.setState({
+            disableSave: false,
+            modifiedImage: resizedImageUri,
+          });
+        }).catch((err) => {
+          console.log(err);
         });
       }
     });
@@ -66,13 +71,15 @@ const TeamView = React.createClass({
       ? this.props.teamDetails.data.teamName
       : '';
     const image = this.state.modifiedImage !== null
-      ? { uri: 'data:image/png;base64,' + this.state.modifiedImage }
+      ? { uri: this.state.modifiedImage }
       : { uri: this.props.image }
 
     const disabled = this.props.teamDetails.loading
       || this.state.disableSave
       || this.state.modifiedTeamDescription === ''
       || (!this.state.modifiedImage && !this.state.modifiedTeamDescription);
+
+    const spinner = this.props.teamDetails.loading;
 
     return (
       <View style={{flex: 1, backgroundColor: '#fafafa'}}>
@@ -89,7 +96,7 @@ const TeamView = React.createClass({
             //this.setState({ width, height });
           }
         }}>
-          <ScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
+          <KeyboardAwareScrollView style={{backgroundColor: '#fafafa'}} contentContainerStyle={{
             minHeight: this.state.height
           }}>
             <View style={{
@@ -122,7 +129,7 @@ const TeamView = React.createClass({
                   }} />
               </View>
             </View>
-          </ScrollView>
+          </KeyboardAwareScrollView>
         </View>
         <View style={styles.saveButtonContainer}>
           <TouchableOpacity
@@ -138,7 +145,7 @@ const TeamView = React.createClass({
             }>
             <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'TALLENNA'}</Text>
           </TouchableOpacity>
-          { (this.state.disableSave)
+          { (spinner)
             ? <ActivityIndicator animating={true} color={ AppStyles.white } style={{position: 'absolute', height: 70, width: 70, zIndex: 1000}} size="large" />
             : null
           }

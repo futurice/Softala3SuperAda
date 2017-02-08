@@ -79,7 +79,7 @@ const CheckPointView = React.createClass({
       numCompanies++;
     });
 
-    if (this.props.companies.loading) {
+    if (!this.props.companies.data.length && this.props.companies.loading) {
       return (
         <View style={{flex: 1}}>
           <ActivityIndicator color={"#ed3a4b"} size={'large'} style={styles.centered}/>
