@@ -25,7 +25,10 @@ export default connect(
       }
 
       dispatch(rest.actions.teamDetails.post({}, {
-        body: formdata
+        body: formdata,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }, (err, data) => {
         if (!err) {
           dispatch(NavigationState.switchTab('CheckPointsTab'));

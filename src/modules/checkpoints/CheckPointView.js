@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
     opacity: 0.5
   },
   companyListContainer: {
+    paddingTop: 10,
     alignSelf: 'stretch',
   },
   companyList: {
