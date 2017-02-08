@@ -23,8 +23,7 @@ export default connect(
       if (description) {
         formdata.append('description', description);
       }
-      
-      console.log(formdata);
+
       dispatch(rest.actions.teamDetails.post({}, {
         body: formdata
       }, (err, data) => {
