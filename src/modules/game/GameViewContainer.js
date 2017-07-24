@@ -1,12 +1,12 @@
-import {connect} from 'react-redux';
-import rest from '../../services/rest';
+import { connect } from 'react-redux';
+import rest from '../../utils/rest';
 import * as GameState from './GameState';
 import GameView from './GameView';
 
 export default connect(
   state => ({
     gameState: state.gameState,
-    quizStatus: state.quiz
+    quizStatus: state.quiz,
   }),
   dispatch => ({
     initialiseGame() {
@@ -23,6 +23,6 @@ export default connect(
     },
     resumeGame() {
       dispatch(GameState.gameResume());
-    }
-  })
+    },
+  }),
 )(GameView);

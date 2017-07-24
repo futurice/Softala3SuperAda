@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import {
   ActivityIndicator,
   Text,
@@ -8,16 +8,16 @@ import {
   Image,
   Platform,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
 import RadioForm, {
   RadioButton,
   RadioButtonInput,
-  RadioButtonLabel
+  RadioButtonLabel,
 } from 'react-native-simple-radio-button';
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import AppStyles from '../AppStyles';
 import _ from 'lodash';
@@ -33,13 +33,13 @@ const FeedbackView = React.createClass({
 
   saveFeedback() {
     let answers = [];
-    Object.keys(this.props.feedback.data).forEach((i) => {
+    Object.keys(this.props.feedback.data).forEach(i => {
       answers[i] = this.state[i];
 
       // Use old answer if user did not change it
       if (_.isUndefined(answers[i])) {
-        answers[i] = this.props.feedback.data[i] &&
-          this.props.feedback.data[i].answer;
+        answers[i] =
+          this.props.feedback.data[i] && this.props.feedback.data[i].answer;
       }
     });
 
@@ -49,8 +49,13 @@ const FeedbackView = React.createClass({
   render() {
     if (this.props.feedback.loading) {
       return (
-        <View style={{flex: 1}} >
-          <ActivityIndicator color={'#ff5454'} animating={true} style={{height: 150, alignSelf: 'center', flex: 1}} size="large" />
+        <View style={{ flex: 1 }}>
+          <ActivityIndicator
+            color={'#ff5454'}
+            animating={true}
+            style={{ height: 150, alignSelf: 'center', flex: 1 }}
+            size="large"
+          />
         </View>
       );
     }
@@ -64,30 +69,30 @@ const FeedbackView = React.createClass({
         feedbackItems.push(
           <View key={i}>
             <Text style={styles.boldText}>
-              { question.questionText }
+              {question.questionText}
             </Text>
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
-                onChangeText={(value) => this.setState({
-                  [i]: value
-                })}
+                onChangeText={value =>
+                  this.setState({
+                    [i]: value,
+                  })}
                 value={!_.isUndefined(val) ? val : question.answer}
-                />
+              />
             </View>
-          </View>
+          </View>,
         );
       } else if (question.questionType === 'radio') {
-        let radioProps = []
+        let radioProps = [];
 
         for (let j = 0; j < question.numButtons; j++) {
-          const label = question.labels && question.labels[j]
-            ? question.labels[j]
-            : (j + 1);
+          const label =
+            question.labels && question.labels[j] ? question.labels[j] : j + 1;
 
           radioProps.push({
             label,
-            value: label
+            value: label,
           });
         }
 
@@ -101,48 +106,55 @@ const FeedbackView = React.createClass({
         feedbackItems.push(
           <View key={i}>
             <Text style={styles.boldText}>
-              { question.questionText }
+              {question.questionText}
             </Text>
             <RadioForm
               style={styles.radioButton}
               radio_props={radioProps}
               initial={initial}
-              onPress={(value) => this.setState({
-                [i]: value
-              })}
+              onPress={value =>
+                this.setState({
+                  [i]: value,
+                })}
               formHorizontal={true}
               labelHorizontal={false}
               animation={true}
               buttonColor={'#ff5454'}
               buttonSize={40}
             />
-          </View>
+          </View>,
         );
       }
     });
 
     return (
-     <View style={styles.container}>
-      <KeyboardAwareScrollView
-        automaticallyAdjustContentInsets={false}
-        style={styles.scrollView}>
+      <View style={styles.container}>
+        <KeyboardAwareScrollView
+          automaticallyAdjustContentInsets={false}
+          style={styles.scrollView}
+        >
+          <Text style={styles.baseText}>
+            Super-Adan järjestäjät ovat kiinnostuneita kokemuksistanne
+            tapahtumassa. Vastaamalla autat meitä tekemään tapahtumasta
+            paremman!
+          </Text>
 
-        <Text style={styles.baseText}>
-          Super-Adan järjestäjät ovat kiinnostuneita kokemuksistanne tapahtumassa.
-          Vastaamalla autat meitä tekemään tapahtumasta paremman!
-        </Text>
+          {feedbackItems}
 
-        { feedbackItems }
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => this.saveFeedback()}>
-            <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'LÄHETÄ'}</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAwareScrollView>
-    </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.saveFeedback()}
+            >
+              <Text style={[styles.whiteFont, { fontWeight: 'bold' }]}>
+                {'LÄHETÄ'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAwareScrollView>
+      </View>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -152,11 +164,11 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: AppStyles.whiteBackground,
-    flex: 1
+    flex: 1,
   },
   radioButton: {
     paddingLeft: 10,
-    paddingTop: 10
+    paddingTop: 10,
   },
   baseText: {
     marginLeft: 10,
@@ -164,7 +176,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: AppStyles.fontSize,
     marginBottom: 20,
-    color: 'black'
+    color: 'black',
   },
   boldText: {
     marginLeft: 10,
@@ -172,7 +184,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontSize: AppStyles.fontSize,
     fontWeight: 'bold',
-    color: 'black'
+    color: 'black',
   },
   input: {
     height: 48,
@@ -183,9 +195,9 @@ const styles = StyleSheet.create({
     marginRight: 10,
     ...Platform.select({
       ios: {
-        borderBottomWidth: 1
-      }
-    })
+        borderBottomWidth: 1,
+      },
+    }),
   },
   send: {
     backgroundColor: '#ff5454',
@@ -194,11 +206,11 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     marginBottom: 30,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   whiteFont: {
     color: AppStyles.white,
-    fontSize: AppStyles.fontSize
+    fontSize: AppStyles.fontSize,
   },
   buttonContainer: {
     backgroundColor: AppStyles.whiteBackground,
@@ -214,7 +226,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
-    padding: 20
+    padding: 20,
   },
 });
 

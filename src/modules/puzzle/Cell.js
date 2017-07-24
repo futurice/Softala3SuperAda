@@ -1,10 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Dimensions from 'Dimensions';
-import {
-    StyleSheet,
-    TouchableOpacity,
-    Text
-} from 'react-native';
+import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import * as GameState from '../game/GameState';
 import { noop } from 'lodash';
 import AppStyles from '../AppStyles';
@@ -20,28 +16,25 @@ class Cell extends Component {
   }
 
   render = () => {
-    const {
-      cellX,
-      cellY,
-      status,
-      text,
-      onCellPress,
-      gameStatus
-    } = this.props;
+    const { cellX, cellY, status, text, onCellPress, gameStatus } = this.props;
 
     const style = styles[status];
 
     return (
       <TouchableOpacity
         style={[styles.column, style]}
-        onPressOut={gameStatus === GameState.GAME_RUNNING ? onCellPress(cellX, cellY) : noop}
-        >
+        onPressOut={
+          gameStatus === GameState.GAME_RUNNING
+            ? onCellPress(cellX, cellY)
+            : noop
+        }
+      >
         <Text style={styles.cellText}>
-          {gameStatus === GameState.GAME_RUNNING ? text.toUpperCase() : ' ' }
+          {gameStatus === GameState.GAME_RUNNING ? text.toUpperCase() : ' '}
         </Text>
       </TouchableOpacity>
     );
-  }
+  };
 }
 
 const columnBase = {
@@ -50,25 +43,25 @@ const columnBase = {
   marginLeft: 1,
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: 1
+  borderRadius: 1,
 };
 
 const styles = StyleSheet.create({
   cellText: {
-    color: 'black'
+    color: 'black',
   },
   column: {
     ...columnBase,
-    backgroundColor: AppStyles.white
+    backgroundColor: AppStyles.white,
   },
   pressed: {
     ...columnBase,
-    backgroundColor: AppStyles.darkRed
+    backgroundColor: AppStyles.darkRed,
   },
   discovered: {
     ...columnBase,
-    backgroundColor: AppStyles.lightRed
-  }
+    backgroundColor: AppStyles.lightRed,
+  },
 });
 
 export default Cell;

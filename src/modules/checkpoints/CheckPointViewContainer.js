@@ -1,22 +1,24 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import CheckPointView from './CheckPointView';
 
-import rest from '../../services/rest';
+import rest from '../../utils/rest';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 
 export default connect(
   state => ({
-    companies: state.companies
+    companies: state.companies,
   }),
   dispatch => ({
     refresh() {
       dispatch(rest.actions.companies());
     },
     map() {
-      dispatch(NavigationState.pushRoute({
-        key: 'MapView',
-        title: 'Kartta'
-      }));
-    }
-  })
+      dispatch(
+        NavigationState.pushRoute({
+          key: 'MapView',
+          title: 'Kartta',
+        }),
+      );
+    },
+  }),
 )(CheckPointView);

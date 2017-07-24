@@ -1,4 +1,4 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Welcome from './Welcome';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 
@@ -7,6 +7,6 @@ export default connect(
   dispatch => ({
     profile() {
       dispatch(NavigationState.switchTab('ProfileTab'));
-    }
-  })
+    },
+  }),
 )(Welcome);

@@ -1,18 +1,12 @@
-import React, {PropTypes} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  StatusBar,
-} from 'react-native';
+import React, { PropTypes } from 'react';
+import { Text, View, StyleSheet, Image, StatusBar } from 'react-native';
 
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 
 const GoodbyeFeedbackView = React.createClass({
   propTypes: {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
   },
 
   render() {
@@ -24,21 +18,24 @@ const GoodbyeFeedbackView = React.createClass({
           barStyle="light-content"
         />
         <View style={styles.header}>
-          <Text style={styles.titleText}>
-            Kiitos!
-          </Text>
-          <Image style={styles.mark} source={require('../../../images/kiitos.png')}/>
+          <Text style={styles.titleText}>Kiitos!</Text>
+          <Image
+            style={styles.mark}
+            source={require('../../../images/kiitos.png')}
+          />
         </View>
         <View style={styles.inputContainer}>
           <Text style={styles.textstyle}>Kiitos palautteestasi!</Text>
-          <Text style={styles.textstyle}>Tervetuloa ensi vuonna uudestaan!</Text>
+          <Text style={styles.textstyle}>
+            Tervetuloa ensi vuonna uudestaan!
+          </Text>
         </View>
         <View style={styles.regardContainer}>
           <Text style={styles.bottomText}>t- Super-Ada tiimi</Text>
         </View>
       </View>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -50,30 +47,30 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 20,
   },
   titleText: {
     fontSize: AppStyles.titleFontSize,
     fontWeight: 'bold',
-    color: AppStyles.white
+    color: AppStyles.white,
   },
   mark: {
     width: 200,
-    height: 250
+    height: 250,
   },
   textstyle: {
     color: AppStyles.white,
     marginBottom: 15,
     fontSize: AppStyles.fontSize,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   bottomText: {
     color: AppStyles.white,
     fontSize: 20,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginTop: 50
-  }
+    marginTop: 50,
+  },
 });
 export default GoodbyeFeedbackView;

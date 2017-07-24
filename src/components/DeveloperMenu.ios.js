@@ -1,11 +1,7 @@
 import React from 'react';
 import * as snapshot from '../utils/snapshot';
 
-import {
-  TouchableOpacity,
-  ActionSheetIOS,
-  StyleSheet
-} from 'react-native';
+import { TouchableOpacity, ActionSheetIOS, StyleSheet } from 'react-native';
 
 /**
  * Simple developer menu, which allows e.g. to clear the app state.
@@ -18,23 +14,25 @@ const DeveloperMenu = React.createClass({
   showDeveloperMenu() {
     const options = {
       clearState: 0,
-      cancel: 1
+      cancel: 1,
     };
 
     const callback = async index => {
       if (index === options.clearState) {
         await snapshot.clearSnapshot();
-        console.warn('(╯°□°）╯︵ ┻━┻ \nState cleared, Cmd+R to reload the application now');
+        console.warn(
+          '(╯°□°）╯︵ ┻━┻ \nState cleared, Cmd+R to reload the application now',
+        );
       }
     };
 
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: [
-        'Clear state',
-        'Cancel'
-      ],
-      cancelButtonIndex: options.cancel
-    }, callback);
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ['Clear state', 'Cancel'],
+        cancelButtonIndex: options.cancel,
+      },
+      callback,
+    );
   },
 
   render() {
@@ -46,9 +44,9 @@ const DeveloperMenu = React.createClass({
       <TouchableOpacity
         style={styles.circle}
         onPress={this.showDeveloperMenu}
-        />
+      />
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -59,8 +57,8 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#fff'
-  }
+    backgroundColor: '#fff',
+  },
 });
 
 export default DeveloperMenu;

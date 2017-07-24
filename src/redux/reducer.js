@@ -1,27 +1,23 @@
 //import {combineReducers} from 'redux-loop';
-import {
-  combineReducers
-} from 'redux';
-import NavigationStateReducer from '../modules/navigation/NavigationState';
+import { combineReducers } from 'redux';
+import NavigatorStateReducer from '../modules/navigator/NavigatorState';
 import GameStateReducer from '../modules/game/GameState';
-import SessionStateReducer, {RESET_STATE} from '../modules/session/SessionState';
-import rest from '../services/rest';
+import SessionStateReducer, {
+  RESET_STATE,
+} from '../modules/session/SessionState';
+import rest from '../utils/rest';
 
 const reducers = {
-  // @NOTE: By convention, the navigation state must live in a subtree called
-  //`navigationState`
-  navigationState: NavigationStateReducer,
+  navigatorState: NavigatorStateReducer,
 
   session: SessionStateReducer,
 
   gameState: GameStateReducer,
 
-  ...rest.reducers
+  ...rest.reducers,
 };
 
-const namespacedReducer = combineReducers(
-  reducers
-);
+const namespacedReducer = combineReducers(reducers);
 
 export default function mainReducer(state, action) {
   if (action.type === RESET_STATE) {

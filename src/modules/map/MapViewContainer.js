@@ -1,4 +1,4 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import MapView from './MapView';
 
 import * as NavigationState from '../../modules/navigation/NavigationState';
@@ -9,5 +9,5 @@ export default connect(
     back() {
       dispatch(NavigationState.popRoute());
     },
-  })
+  }),
 )(MapView);

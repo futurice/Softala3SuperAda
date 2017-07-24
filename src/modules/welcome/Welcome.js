@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import {
   Text,
   View,
@@ -6,7 +6,7 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
 import AppStyles from '../AppStyles';
@@ -21,26 +21,26 @@ const Welcome = React.createClass({
           barStyle="light-content"
         />
 
-        <ScrollView contentContainerStyle={{
-          alignItems: 'center'
-        }}>
-          <Text style={styles.titleText}>
-              Tervetuloa!
-          </Text>
-          <Image style={styles.image} source={require('../../../images/tervetuloa.png')}/>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: 'center',
+          }}
+        >
+          <Text style={styles.titleText}>Tervetuloa!</Text>
+          <Image
+            style={styles.image}
+            source={require('../../../images/tervetuloa.png')}
+          />
           <Text style={styles.textStyle}>
-            Kahdeksan rastia odottavat sinua!
-            Jokaisella rastilla suoritetaan tehtävä.
-            Rasteja pitävät yritykset ja oppilaitokset
-            kirjaavat rastisuoritukset puolestanne
-          </Text>
-          <Text style={styles.textStyle}>
-            Kannattaa pelata läpi myös Super-Ada Quiz.
-            Tasapistetilanteessa hyvin suoritettu Quiz ratkaisee voiton.
+            Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan
+            tehtävä. Rasteja pitävät yritykset ja oppilaitokset kirjaavat
+            rastisuoritukset puolestanne
           </Text>
           <Text style={styles.textStyle}>
-            ONNEA MATKAAN!
+            Kannattaa pelata läpi myös Super-Ada Quiz. Tasapistetilanteessa
+            hyvin suoritettu Quiz ratkaisee voiton.
           </Text>
+          <Text style={styles.textStyle}>ONNEA MATKAAN!</Text>
         </ScrollView>
 
         <View style={styles.buttonContainer}>
@@ -50,7 +50,7 @@ const Welcome = React.createClass({
         </View>
       </View>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize: AppStyles.titleFontSize,
     fontWeight: 'bold',
     color: AppStyles.white,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   image: {
     resizeMode: 'contain',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
   whiteFont: {
     color: AppStyles.white,
     fontSize: AppStyles.fontSize,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   textStyle: {
     color: AppStyles.white,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginBottom: 20,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });
 export default Welcome;

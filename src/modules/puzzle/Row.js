@@ -1,12 +1,9 @@
-import React, {Component} from 'react';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Cell from './Cell';
 
-const isCellIn = (list, {x, y}) => {
-  const found = list.filter((elem) => {
+const isCellIn = (list, { x, y }) => {
+  const found = list.filter(elem => {
     return elem.x === x && elem.y === y;
   });
 
@@ -25,14 +22,14 @@ class Row extends Component {
       onCellPress,
       pressedCells,
       discoveredCells,
-      gameStatus
+      gameStatus,
     } = this.props;
 
-    const cells = row.map((cell,cellX) => {
+    const cells = row.map((cell, cellX) => {
       let cellStatus = 'normal';
-      if (isCellIn(pressedCells, {x: cellX, y: cellY})) {
+      if (isCellIn(pressedCells, { x: cellX, y: cellY })) {
         cellStatus = 'pressed';
-      } else if (isCellIn(discoveredCells, {x: cellX, y: cellY})) {
+      } else if (isCellIn(discoveredCells, { x: cellX, y: cellY })) {
         cellStatus = 'discovered';
       }
 
@@ -45,7 +42,7 @@ class Row extends Component {
           onCellPress={onCellPress}
           cellX={cellX}
           cellY={cellY}
-          />
+        />
       );
     });
 
@@ -54,14 +51,14 @@ class Row extends Component {
         {cells}
       </View>
     );
-  }
+  };
 }
 
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    marginTop: 1
-  }
+    marginTop: 1,
+  },
 });
 
 export default Row;

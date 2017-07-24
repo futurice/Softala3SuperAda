@@ -1,51 +1,40 @@
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
   Text,
   View,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 import PuzzleContainer from '../puzzle/PuzzleContainer';
 import * as GameState from './GameState';
 import AppStyles from '../AppStyles';
 
-const resetGame = (component) => (event) => {
+const resetGame = component => event => {
   event.preventDefault();
 
-  const {
-    deleteGame,
-    initialiseGame
-  } = component.props;
+  const { deleteGame, initialiseGame } = component.props;
 
   deleteGame();
   initialiseGame();
 };
 
-const startGame = (component) => (event) => {
+const startGame = component => event => {
   event.preventDefault();
 
-  const {
-    resumeGame
-  } = component.props;
+  const { resumeGame } = component.props;
 
   resumeGame();
 };
 
-const togglePause = (component) => (event) => {
+const togglePause = component => event => {
   event.preventDefault();
 
-  const {
-    pauseGame,
-    resumeGame,
-    gameState
-  } = component.props;
+  const { pauseGame, resumeGame, gameState } = component.props;
 
-  const {
-    gameStatus
-  } = gameState;
+  const { gameStatus } = gameState;
 
   if (gameStatus === GameState.GAME_PAUSE) {
     resumeGame();
@@ -60,15 +49,9 @@ class GameView extends Component {
   }
 
   componentWillMount() {
-    const {
-      initialiseGame,
-      gameState,
-      refresh
-    } = this.props;
+    const { initialiseGame, gameState, refresh } = this.props;
 
-    const {
-      gameStatus
-    } = gameState;
+    const { gameStatus } = gameState;
 
     refresh();
 
@@ -79,42 +62,38 @@ class GameView extends Component {
 
   // TODO: render grew too big
   render() {
-    const {
-      gameState,
-      quizStatus,
-    } = this.props;
+    const { gameState, quizStatus } = this.props;
 
-    const {
-      puzzle,
-      solution,
-      gameStatus,
-      wordsToFind,
-      timer
-    } = gameState;
+    const { puzzle, solution, gameStatus, wordsToFind, timer } = gameState;
 
     let contentView;
-    const remaining = (__DEV__ ? 10 : (10 * 60)) - timer;
+    const remaining = (__DEV__ ? 10 : 10 * 60) - timer;
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining - minutes * 60;
 
-    let footerText = `Aika: ${minutes}m ${seconds}s ${gameStatus === GameState.GAME_PAUSE ? '(paused)' : ''}`;
+    let footerText = `Aika: ${minutes}m ${seconds}s ${gameStatus ===
+    GameState.GAME_PAUSE
+      ? '(paused)'
+      : ''}`;
     if (gameStatus === GameState.GAME_COMPLETED) {
       footerText = `Game ended in ${timer}s`;
     }
 
     // If server thinks we're done, but redux store state says we're not,
     // show total points from server and offer to restart
-    if (!quizStatus.loading && quizStatus.data.done && gameStatus !== GameState.GAME_COMPLETED) {
+    if (
+      !quizStatus.loading &&
+      quizStatus.data.done &&
+      gameStatus !== GameState.GAME_COMPLETED
+    ) {
       return (
         <View style={styles.gameContainer}>
           <StatusBar
             backgroundColor={AppStyles.darkRed}
             animated={false}
-            barStyle='light-content'
+            barStyle="light-content"
           />
-          <Text style={styles.congratsText}>
-            Onneksi olkoon!
-          </Text>
+          <Text style={styles.congratsText}>Onneksi olkoon!</Text>
           <Text style={styles.congratsBodyText}>
             {'Tehtävä ratkottu'}
           </Text>
@@ -122,12 +101,15 @@ class GameView extends Component {
             {`Pisteitä yhteensä: ${quizStatus.data.points}`}
           </Text>
           <Text style={styles.retryText}>
-            {'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'}
+            {
+              'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'
+            }
           </Text>
           <TouchableOpacity
-            style={[{marginTop: 10}, styles.button]}
-            onPress={resetGame(this)}>
-              <Text style={styles.buttonText}>UUSI YRITYS</Text>
+            style={[{ marginTop: 10 }, styles.button]}
+            onPress={resetGame(this)}
+          >
+            <Text style={styles.buttonText}>UUSI YRITYS</Text>
           </TouchableOpacity>
         </View>
       );
@@ -138,27 +120,24 @@ class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.titleText}>
-                Super-Ada quiz!
-              </Text>
+              <Text style={styles.titleText}>Super-Ada quiz!</Text>
               <Text style={styles.welcomeText}>
                 Tervetuloa ratkomaan Super-Ada quiz-tehtävää!
               </Text>
               <Text style={styles.welcomeText}>
-                Kerää pisteitä löytämällä mahdollisimman monta IT-alaan liittyvää sanaa.
-                Saat lisäpisteitä löytämällä kaikki sanat nopeasti!
+                Kerää pisteitä löytämällä mahdollisimman monta IT-alaan
+                liittyvää sanaa. Saat lisäpisteitä löytämällä kaikki sanat
+                nopeasti!
               </Text>
               <Text style={styles.welcomeText}>
                 Aikarajoitus: 10 minuuttia.
               </Text>
               <Text style={styles.welcomeText}>
-                Voit yrittää ratkoa quiz-tehtävän monta kertaa.
-                Pisteet huomioidaan ainoastaan viimeisestä yrityksestä!
+                Voit yrittää ratkoa quiz-tehtävän monta kertaa. Pisteet
+                huomioidaan ainoastaan viimeisestä yrityksestä!
               </Text>
             </View>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={startGame(this)}>
+            <TouchableOpacity style={styles.button} onPress={startGame(this)}>
               <Text style={styles.buttonText}>ALOITA</Text>
             </TouchableOpacity>
           </View>
@@ -185,14 +164,22 @@ class GameView extends Component {
             />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                  style={styles.button}
-                  onPress={togglePause(this)}>
-                <Text style={styles.buttonText}>{gameStatus === GameState.GAME_RUNNING ? 'TAUKO' : 'JATKA'}</Text>
+                style={styles.button}
+                onPress={togglePause(this)}
+              >
+                <Text style={styles.buttonText}>
+                  {gameStatus === GameState.GAME_RUNNING ? 'TAUKO' : 'JATKA'}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={gameStatus === GameState.GAME_RUNNING ? styles.buttonDisabled : styles.button}
+                style={
+                  gameStatus === GameState.GAME_RUNNING
+                    ? styles.buttonDisabled
+                    : styles.button
+                }
                 disabled={gameStatus === GameState.GAME_RUNNING}
-                onPress={resetGame(this)}>
+                onPress={resetGame(this)}
+              >
                 <Text style={styles.buttonText}>UUSI YRITYS</Text>
               </TouchableOpacity>
             </View>
@@ -214,7 +201,9 @@ class GameView extends Component {
         const wordsFound = solution.found.length - wordsToFind;
         const wordsPoints = wordsFound * pointsPerWord;
         const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
-        const totalPoints = Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
+        const totalPoints = Math.round(
+          pointsIfCompleted + wordsPoints + minutesPoints,
+        );
 
         contentView = (
           <View style={styles.gameContainer}>
@@ -228,22 +217,23 @@ class GameView extends Component {
               {`${wordsFound} sanaa (${pointsPerWord} pistettä sanaa kohti): ${wordsPoints} pistettä`}
             </Text>
             <Text style={styles.congratsBodyText}>
-              {
-                puzzleCompleted
+              {puzzleCompleted
                 ? `Löysitte kaikki sanat: ${pointsCompleted} pistettä`
-                : 'Ette löytäneet kaikkia sanoja: 0 pistettä'
-              }
+                : 'Ette löytäneet kaikkia sanoja: 0 pistettä'}
             </Text>
             <Text style={styles.congratsBodyText}>
               {`Pisteitä yhteensä: ${totalPoints}`}
             </Text>
             <Text style={styles.retryText}>
-              {'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'}
+              {
+                'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'
+              }
             </Text>
             <TouchableOpacity
-              style={[{marginTop: 10}, styles.button]}
-              onPress={resetGame(this)}>
-                <Text style={styles.buttonText}>UUSI YRITYS</Text>
+              style={[{ marginTop: 10 }, styles.button]}
+              onPress={resetGame(this)}
+            >
+              <Text style={styles.buttonText}>UUSI YRITYS</Text>
             </TouchableOpacity>
           </View>
         );
@@ -257,7 +247,7 @@ class GameView extends Component {
           <ActivityIndicator
             animating
             style={styles.activityIndicator}
-            size='large'
+            size="large"
           />
         );
       }
@@ -268,7 +258,7 @@ class GameView extends Component {
         <StatusBar
           backgroundColor={AppStyles.darkRed}
           animated={false}
-          barStyle='light-content'
+          barStyle="light-content"
         />
         {contentView}
       </View>
@@ -286,7 +276,7 @@ GameView.propTypes = {
 };
 
 const centered = {
-  alignSelf: 'center'
+  alignSelf: 'center',
 };
 
 const styles = StyleSheet.create({
@@ -295,13 +285,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: AppStyles.darkRed
+    backgroundColor: AppStyles.darkRed,
   },
   welcomeContainer: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   activityIndicator: {
-    ...centered
+    ...centered,
   },
   headerContainer: {
     flexDirection: 'row',
@@ -309,17 +299,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: 20,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
   },
   wordsToFind: {
     color: AppStyles.white,
     fontSize: AppStyles.fontSize,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   timer: {
     color: AppStyles.white,
     fontSize: AppStyles.fontSize,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   congratsText: {
     paddingTop: 20,
@@ -327,7 +317,7 @@ const styles = StyleSheet.create({
     fontSize: AppStyles.titleFontSize,
     fontWeight: 'bold',
     color: AppStyles.white,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   congratsBodyText: {
     ...centered,
@@ -335,7 +325,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 20,
     textAlign: 'center',
-    fontSize: AppStyles.fontSize
+    fontSize: AppStyles.fontSize,
   },
   retryText: {
     ...centered,
@@ -344,7 +334,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: AppStyles.fontSize
+    fontSize: AppStyles.fontSize,
   },
   titleText: {
     ...centered,
@@ -354,7 +344,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: AppStyles.headerFontSize
+    fontSize: AppStyles.headerFontSize,
   },
   welcomeText: {
     ...centered,
@@ -362,7 +352,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingHorizontal: 20,
     textAlign: 'center',
-    fontSize: AppStyles.fontSize
+    fontSize: AppStyles.fontSize,
   },
   button: {
     backgroundColor: AppStyles.lightRed,
@@ -372,7 +362,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     height: 70,
     marginTop: 13,
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   buttonDisabled: {
     backgroundColor: AppStyles.darkRed,
@@ -382,16 +372,16 @@ const styles = StyleSheet.create({
     elevation: 5,
     height: 70,
     marginTop: 13,
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   buttonContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   buttonText: {
     color: AppStyles.white,
     fontSize: AppStyles.fontSize,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default GameView;

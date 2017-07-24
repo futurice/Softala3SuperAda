@@ -9,9 +9,8 @@
 
 #import "AppDelegate.h"
 
-#import "RCTBundleURLProvider.h"
-#import "RCTRootView.h"
-#import "RCTSplashScreen.h"
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
 
 @implementation AppDelegate
 
@@ -25,7 +24,6 @@
                                                       moduleName:@"SuperAda"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
-  [RCTSplashScreen open:rootView]; //activate splashscreen
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

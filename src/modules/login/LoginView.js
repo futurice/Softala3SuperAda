@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import {
   Text,
   View,
@@ -11,18 +11,15 @@ import {
   StatusBar,
   Platform,
   AsyncStorage,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 
-import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 
-const LoginView = React.createClass({
-  getInitialState() {
-    return {
-      teamname: ''
-    }
-  },
+export class LoginView extends React.Component {
+  state = {
+    teamname: '',
+  };
 
   errToString(err) {
     if (!err) {
@@ -34,7 +31,7 @@ const LoginView = React.createClass({
     }
 
     return String(err);
-  },
+  }
 
   render() {
     return (
@@ -44,40 +41,63 @@ const LoginView = React.createClass({
           animated={false}
           barStyle="light-content"
         />
-        <ScrollView style={{flex: 1, alignSelf: 'stretch'}} contentContainerStyle={{
-          alignItems: 'center'
-        }}>
-          <Image style={styles.logo} source={require('../../../images/superada_transparent.png')}/>
+        <ScrollView
+          style={{ flex: 1, alignSelf: 'stretch' }}
+          contentContainerStyle={{
+            alignItems: 'center',
+          }}
+        >
+          <Image
+            style={styles.logo}
+            source={require('../../../images/superada_transparent.png')}
+          />
           <View style={styles.inputContainer}>
             <Text style={styles.whiteFont}>Joukkueen nimi:</Text>
             <TextInput
               style={[styles.input, styles.whiteFont]}
-              onChangeText={(teamname) => this.setState({teamname})}
+              onChangeText={teamname => this.setState({ teamname })}
               value={this.state.teamname}
               autoCorrect={false}
-              underlineColorAndroid='#000'
-              selectionColor='#000'
+              underlineColorAndroid="#000"
+              selectionColor="#000"
             />
           </View>
           <View style={styles.errContainer}>
             <Text style={styles.whiteFont}>
-              { this.errToString(this.props.auth.error) }
+              {this.errToString(this.props.auth.error)}
             </Text>
           </View>
         </ScrollView>
 
         <View style={styles.loginButtonContainer}>
-          <TouchableOpacity disabled={this.props.auth.loading} onPress={() => this.props.login(this.state.teamname)} style={this.props.auth.loading ? styles.loginButtonLoading : styles.loginButton}>
+          <TouchableOpacity
+            disabled={this.props.auth.loading}
+            onPress={() => this.props.login(this.state.teamname)}
+            style={
+              this.props.auth.loading
+                ? styles.loginButtonLoading
+                : styles.loginButton
+            }
+          >
             <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
           </TouchableOpacity>
-          { this.props.auth.loading &&
-            <ActivityIndicator animating={true} color={ AppStyles.white } style={{zIndex: 1000, position: 'absolute', height: 70, width: 70}} size="large" />
-          }
+          {this.props.auth.loading &&
+            <ActivityIndicator
+              animating={true}
+              color={AppStyles.white}
+              style={{
+                zIndex: 1000,
+                position: 'absolute',
+                height: 70,
+                width: 70,
+              }}
+              size="large"
+            />}
         </View>
       </View>
     );
   }
-});
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -85,21 +105,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flex: 1,
-    backgroundColor: AppStyles.darkRed
+    backgroundColor: AppStyles.darkRed,
   },
   header: {
     justifyContent: 'flex-start',
     alignItems: 'center',
     flex: 0,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   logo: {
     marginVertical: 40,
     width: 200,
-    height: 200
+    height: 200,
   },
   errContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   loginButtonContainer: {
     backgroundColor: AppStyles.darkRed,
@@ -115,23 +135,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
-    padding: 20
+    padding: 20,
   },
   loginButtonLoading: {
     backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
-    padding: 20
+    padding: 20,
   },
   inputContainer: {
     marginHorizontal: 35,
     alignSelf: 'stretch',
     ...Platform.select({
       ios: {
-        borderBottomWidth: 1
-      }
-    })
+        borderBottomWidth: 1,
+      },
+    }),
   },
   input: {
     height: 45,
@@ -139,12 +159,34 @@ const styles = StyleSheet.create({
   },
   whiteFont: {
     fontSize: AppStyles.fontSize,
-    color: AppStyles.white
+    color: AppStyles.white,
   },
   debug: {
     color: AppStyles.white,
     marginBottom: 15,
-    marginLeft: 20
-  }
+    marginLeft: 20,
+  },
 });
-export default LoginView;
+
+import { connect } from 'react-redux';
+import rest from '../../utils/rest';
+
+export default connect(
+  state => ({
+    auth: state.auth,
+  }),
+  dispatch => ({
+    login(name) {
+      dispatch(
+        rest.actions.auth(
+          {},
+          {
+            body: JSON.stringify({
+              name: name.trim(),
+            }),
+          },
+        ),
+      );
+    },
+  }),
+)(LoginView);

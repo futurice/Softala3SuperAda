@@ -14,6 +14,6 @@ export default {
   headerElevation: 5,
   statusbarHeight: Platform.select({
     ios: 18,
-    android: 0
-  })
+    android: 0,
+  }),
 };

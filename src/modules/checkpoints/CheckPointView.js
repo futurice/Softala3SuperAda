@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import {
   Text,
   View,
@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Image
+  Image,
 } from 'react-native';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import TeamPointsView from '../../modules/teamPoints/TeamPointsViewContainer';
@@ -17,14 +17,14 @@ import Dimensions from 'Dimensions';
 const CheckPointView = React.createClass({
   getInitialState() {
     return {
-      refreshInterval: null
+      refreshInterval: null,
     };
   },
 
   componentDidMount() {
     this.fetchData();
     this.setState({
-      refreshInterval: setInterval(this.fetchData, 60 * 1000)
+      refreshInterval: setInterval(this.fetchData, 60 * 1000),
     });
   },
 
@@ -42,36 +42,48 @@ const CheckPointView = React.createClass({
 
     return (
       <View key={company.companyId} style={styles.company}>
-        <Image style={
-          [styles.thumb, company.points ? styles.companyVisited : null]
-        } source={{uri}} />
+        <Image
+          style={[styles.thumb, company.points ? styles.companyVisited : null]}
+          source={{ uri }}
+        />
 
-        {
-          company.points
-            ? <Image style={styles.checkmark} source={require('../../../images/checkmark.png')} />
-            : null
-        }
+        {company.points
+          ? <Image
+              style={styles.checkmark}
+              source={require('../../../images/checkmark.png')}
+            />
+          : null}
 
-        <Text numberOfLines={1} style={styles.companyText}>{company.companyName}</Text>
+        <Text numberOfLines={1} style={styles.companyText}>
+          {company.companyName}
+        </Text>
         <View style={styles.starsContainer}>
-          {
-            new Array(5).fill(null).map((element, index) => (
-              index < company.points
-                ? <Image key={index} style={styles.star} source={require('../../../images/star.png')}/>
-                : <Image key={index} style={styles.star} source={require('../../../images/star_grey.png')}/>
-            ))
-          }
+          {new Array(5)
+            .fill(null)
+            .map(
+              (element, index) =>
+                index < company.points
+                  ? <Image
+                      key={index}
+                      style={styles.star}
+                      source={require('../../../images/star.png')}
+                    />
+                  : <Image
+                      key={index}
+                      style={styles.star}
+                      source={require('../../../images/star_grey.png')}
+                    />,
+            )}
         </View>
       </View>
     );
   },
 
-
   render() {
     let visitedCompanies = 0;
     let numCompanies = 0;
 
-    this.props.companies.data.forEach((company) => {
+    this.props.companies.data.forEach(company => {
       if (company.points) {
         visitedCompanies++;
       }
@@ -81,46 +93,46 @@ const CheckPointView = React.createClass({
 
     if (!this.props.companies.data.length && this.props.companies.loading) {
       return (
-        <View style={{flex: 1}}>
-          <ActivityIndicator color={"#ed3a4b"} size={'large'} style={styles.centered}/>
+        <View style={{ flex: 1 }}>
+          <ActivityIndicator
+            color={'#ed3a4b'}
+            size={'large'}
+            style={styles.centered}
+          />
         </View>
       );
-    } else if(numCompanies && visitedCompanies >= numCompanies) {
-      return (
-        <TeamPointsView />
-      );
+    } else if (numCompanies && visitedCompanies >= numCompanies) {
+      return <TeamPointsView />;
     } else {
       return (
         <View style={styles.container}>
           <View style={styles.statusBar} />
           <View style={styles.header}>
-            <Text style={styles.headerText}>
-              Rastit
-            </Text>
+            <Text style={styles.headerText}>Rastit</Text>
           </View>
-          <ScrollView
-            style={styles.companyListContainer}
-          >
+          <ScrollView style={styles.companyListContainer}>
             <View style={styles.companyList}>
-            {
-              this.props.companies.data.map((company) => (
-                this.renderCompany(company)
-              ))
-            }
+              {this.props.companies.data.map(company =>
+                this.renderCompany(company),
+              )}
             </View>
           </ScrollView>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={() => this.props.map()}>
-              <Text style={[styles.whiteFont, {fontWeight: 'bold'}]}>{'KARTTA'}</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => this.props.map()}
+            >
+              <Text style={[styles.whiteFont, { fontWeight: 'bold' }]}>
+                {'KARTTA'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
       );
     }
-  }
-}
-);
+  },
+});
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -129,20 +141,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
   },
   header: {
     elevation: 5,
     alignSelf: 'stretch',
     backgroundColor: '#fe9593',
     height: 64,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   statusBar: {
     alignSelf: 'stretch',
     backgroundColor: AppStyles.lightRed,
     height: AppStyles.statusbarHeight,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   headerText: {
     textAlign: 'center',
@@ -156,7 +168,7 @@ const styles = StyleSheet.create({
     width: Math.floor(screenWidth / 3),
   },
   companyVisited: {
-    opacity: 0.5
+    opacity: 0.5,
   },
   companyListContainer: {
     paddingTop: 10,
@@ -172,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: Math.floor(screenWidth / 24),
   },
   starsContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   star: {
     width: Math.floor(screenWidth / 20),
@@ -183,7 +195,7 @@ const styles = StyleSheet.create({
     height: 32,
     position: 'absolute',
     right: 20,
-    top: 20
+    top: 20,
   },
   thumb: {
     width: Math.floor(screenWidth / 5),
@@ -198,7 +210,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   buttonContainer: {
     backgroundColor: AppStyles.whiteBackground,
@@ -218,12 +230,12 @@ const styles = StyleSheet.create({
   },
   whiteFont: {
     color: AppStyles.white,
-    fontSize: AppStyles.fontSize
+    fontSize: AppStyles.fontSize,
   },
   centered: {
     flex: 1,
-    alignSelf: 'center'
-  }
+    alignSelf: 'center',
+  },
 });
 
 export default CheckPointView;

@@ -1,52 +1,41 @@
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 import Dimensions from 'Dimensions';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as GameState from '../game/GameState';
 import Row from './Row';
 
 const screenWidth = Dimensions.get('window').width;
 const puzzleWidth = screenWidth - 10;
 
-const onCellPress = (component) => (cellX, cellY) => (event) => {
+const onCellPress = component => (cellX, cellY) => event => {
   event.preventDefault();
 
-  const {
-    puzzle,
-    solution,
-    discoveredSoFar,
-    wordFound
-  } = component.props;
+  const { puzzle, solution, discoveredSoFar, wordFound } = component.props;
 
-  const {
-    found
-  } = solution;
+  const { found } = solution;
 
-  const {
-    currentWord
-  } = component.state;
+  const { currentWord } = component.state;
 
-  const wordHit = found.filter((foundWordObj) => {
+  const wordHit = found.filter(foundWordObj => {
     return (
       !discoveredSoFar.words.includes(foundWordObj.word) &&
-      foundWordObj.x === cellX && foundWordObj.y === cellY
+      foundWordObj.x === cellX &&
+      foundWordObj.y === cellY
     );
   });
 
   if (wordHit.length > 0 || currentWord.wordHit !== null) {
-    const {pressedCells} = component.state;
-    pressedCells.push({x: cellX, y: cellY});
+    const { pressedCells } = component.state;
+    pressedCells.push({ x: cellX, y: cellY });
 
     // if we hit the beginning of a new word whilst following
     // a current one, ignore the new one
     currentWord.wordHit = currentWord.wordHit || wordHit[0];
 
-    const {currentWordPressed} = currentWord;
-    const {word} = currentWord.wordHit;
+    const { currentWordPressed } = currentWord;
+    const { word } = currentWord.wordHit;
 
     const tmpWord = currentWordPressed.join('') + puzzle[cellY][cellX];
     if (tmpWord === word) {
@@ -56,9 +45,9 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
       component.setState({
         currentWord: {
           currentWordPressed: [],
-          wordHit: null
+          wordHit: null,
         },
-        pressedCells: []
+        pressedCells: [],
       });
 
       return;
@@ -72,9 +61,9 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
         component.setState({
           currentWord: {
             currentWordPressed: [],
-            wordHit: null
+            wordHit: null,
           },
-          pressedCells: []
+          pressedCells: [],
         });
 
         return;
@@ -84,18 +73,18 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
       component.setState({
         currentWord: {
           currentWordPressed,
-          wordHit: currentWord.wordHit
+          wordHit: currentWord.wordHit,
         },
-        pressedCells
+        pressedCells,
       });
     } else {
       // Letter doesn't belong to a word, reset pressedCells and currentWord
       component.setState({
         currentWord: {
           currentWordPressed: [],
-          wordHit: null
+          wordHit: null,
         },
-        pressedCells: []
+        pressedCells: [],
       });
 
       return;
@@ -105,23 +94,17 @@ const onCellPress = (component) => (cellX, cellY) => (event) => {
     component.setState({
       currentWord: {
         currentWordPressed: [],
-        wordHit: null
+        wordHit: null,
       },
-      pressedCells: []
+      pressedCells: [],
     });
   }
 };
 
-const calculatePoints = (gameState) => {
-  const {
-    puzzle,
-    solution,
-    gameStatus,
-    wordsToFind,
-    timer,
-  } = gameState;
+const calculatePoints = gameState => {
+  const { puzzle, solution, gameStatus, wordsToFind, timer } = gameState;
 
-  const remaining = (__DEV__ ? 10 : (10 * 60)) - timer;
+  const remaining = (__DEV__ ? 10 : 10 * 60) - timer;
   const minutes = Math.floor(remaining / 60);
 
   // TODO: move this into a config
@@ -140,20 +123,13 @@ const calculatePoints = (gameState) => {
   return Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
 };
 
-const tick = (component) => {
-  const {
-    gameState,
-    gameCompleted,
-    tickTimer,
-  } = component.props;
+const tick = component => {
+  const { gameState, gameCompleted, tickTimer } = component.props;
 
-  const {
-    gameStatus,
-    timer,
-  } = gameState;
+  const { gameStatus, timer } = gameState;
 
   if (gameStatus === GameState.GAME_RUNNING) {
-    const remaining = (__DEV__ ? 10 : (10 * 60)) - timer;
+    const remaining = (__DEV__ ? 10 : 10 * 60) - timer;
     if (remaining <= 0) {
       gameCompleted(calculatePoints(gameState));
     } else {
@@ -169,26 +145,24 @@ class Puzzle extends Component {
     this.state = {
       currentWord: {
         currentWordPressed: [],
-        wordHit: null
+        wordHit: null,
       },
-      pressedCells: []
+      pressedCells: [],
     };
   }
 
   componentDidMount() {
-    const {
-      gameStarted,
-      gameStatus,
-      gameState
-    } = this.props;
+    const { gameStarted, gameStatus, gameState } = this.props;
 
     // Start the timer
     this.setInterval(() => {
       tick(this);
     }, 1000);
 
-    if (gameStatus === GameState.GAME_RUNNING ||
-      gameStatus === GameState.GAME_PAUSE) {
+    if (
+      gameStatus === GameState.GAME_RUNNING ||
+      gameStatus === GameState.GAME_PAUSE
+    ) {
       return;
     }
 
@@ -196,14 +170,9 @@ class Puzzle extends Component {
   }
 
   componentWillUpdate(newProps) {
-    const {
-      gameCompleted,
-      wordsToFind,
-      gameState,
-    } = newProps;
+    const { gameCompleted, wordsToFind, gameState } = newProps;
 
     if (wordsToFind === 0) {
-
       setTimeout(() => {
         gameCompleted(calculatePoints(gameState));
       }, 500);
@@ -211,21 +180,13 @@ class Puzzle extends Component {
   }
 
   render() {
-    const {
-      gameStatus,
-      puzzle,
-      discoveredSoFar
-    } = this.props;
+    const { gameStatus, puzzle, discoveredSoFar } = this.props;
 
-    const {
-      pressedCells
-    } = this.state;
+    const { pressedCells } = this.state;
 
-    const {
-      cells
-    } = discoveredSoFar;
+    const { cells } = discoveredSoFar;
 
-    const rows = puzzle.map((row,idx) => {
+    const rows = puzzle.map((row, idx) => {
       return (
         <Row
           key={idx}
@@ -235,7 +196,7 @@ class Puzzle extends Component {
           discoveredCells={cells}
           cellY={idx}
           row={row}
-          />
+        />
       );
     });
 
@@ -264,8 +225,8 @@ const styles = StyleSheet.create({
     width: puzzleWidth,
     marginTop: 30,
     marginBottom: 20,
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default Puzzle;

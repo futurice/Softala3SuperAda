@@ -1,14 +1,9 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import TabBarButton from '../components/TabBarButton';
 
-import {
-  NavigationExperimental,
-  StyleSheet,
-  View,
-  Image
-} from 'react-native';
+import { NavigationExperimental, StyleSheet, View, Image } from 'react-native';
 
-const {PropTypes: NavigationPropTypes} = NavigationExperimental;
+const { PropTypes: NavigationPropTypes } = NavigationExperimental;
 
 const TabBar = React.createClass({
   displayName: 'TabBar',
@@ -16,7 +11,7 @@ const TabBar = React.createClass({
     tabs: NavigationPropTypes.navigationState.isRequired,
     height: PropTypes.number.isRequired,
     currentTabIndex: PropTypes.number.isRequired,
-    switchTab: PropTypes.func.isRequired
+    switchTab: PropTypes.func.isRequired,
   },
 
   render() {
@@ -24,21 +19,21 @@ const TabBar = React.createClass({
       route.index = index;
     });
 
-    const tabRoutes = this.props.tabs.routes.filter(route => (!!route.title));
+    const tabRoutes = this.props.tabs.routes.filter(route => !!route.title);
 
     return (
-      <View style={[styles.navigationBar, {height: this.props.height}]}>
-        {tabRoutes.map(route => (
+      <View style={[styles.navigationBar, { height: this.props.height }]}>
+        {tabRoutes.map(route =>
           <TabBarButton
             key={'tab-bar-button-' + route.key}
-            text={route.title}            
+            text={route.title}
             action={() => this.props.switchTab(route.key)}
             isSelected={route.index === this.props.currentTabIndex}
-          />
-        ))}
+          />,
+        )}
       </View>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -49,12 +44,12 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   buttonWrapper: {
     flex: 1,
-    position: 'relative'
-  }
+    position: 'relative',
+  },
 });
 
 export default TabBar;

@@ -1,71 +1,44 @@
-import React, {PropTypes} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import NavigationViewContainer from './navigation/NavigationViewContainer';
-import LoginViewContainer from './login/LoginViewContainer';
-import * as snapshotUtil from '../utils/snapshot';
-import * as SessionStateActions from '../modules/session/SessionState';
-import store from '../redux/store';
-import DeveloperMenu from '../components/DeveloperMenu';
-import {setConfiguration} from '../utils/configuration';
+import React, { PropTypes, Component } from 'react';
+import { View, StatusBar, ActivityIndicator } from 'react-native';
+import { connect } from 'react-redux';
 
-const apiRoot = __DEV__ ? 'http://localhost:3000' : 'https://superada.herokuapp.com';
+import NavigatorView from './navigator/NavigatorView';
 
-const AppView = React.createClass({
-  componentDidMount() {
-    setConfiguration('API_ROOT', apiRoot);
-    snapshotUtil.resetSnapshot()
-      .then(snapshot => {
-        const {dispatch} = this.props;
-
-        if (snapshot) {
-          // Make sure our API call in progress vars are false
-          snapshot.auth && (snapshot.auth.loading = false);
-          snapshot.teamDetails && (snapshot.teamDetails.loading = false);
-          snapshot.companyPoints && (snapshot.companyPoints.loading = false);
-          snapshot.feedback && (snapshot.feedback.loading = false);
-          snapshot.companies && (snapshot.companies.loading = false);
-          snapshot.quiz && (snapshot.quiz.loading = false);
-
-          dispatch(SessionStateActions.resetSessionStateFromSnapshot(snapshot));
-        } else {
-          dispatch(SessionStateActions.initializeSessionState());
-        }
-
-        store.subscribe(() => {
-          snapshotUtil.saveSnapshot(store.getState());
-        });
-      });
+const styles = {
+  centered: {
+    flex: 1,
+    alignSelf: 'center',
   },
+};
+
+const mapStateToProps = state => ({
+  isReady: state.session.isReady,
+});
+
+export class AppView extends Component {
+  static displayName = 'AppView';
+
+  static propTypes = {
+    isReady: PropTypes.bool.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  };
 
   render() {
-    if (!this.props.isReady) {
+    if (false && !this.props.isReady) {
       return (
-        <View style={{flex: 1, backgroundColor:'#ed3a4b'}}>
-          <ActivityIndicator color={"#FFF"} size={'large'} style={styles.centered}/>
+        <View style={{ flex: 1 }}>
+          <ActivityIndicator style={styles.centered} />
         </View>
       );
-    } else if (!this.props.isLoggedIn) {
-      return (
-        <View style={{flex: 1}}>
-          <LoginViewContainer/>
-        </View>
-      )
     }
 
     return (
-      <View style={{flex: 1}}>
-        <NavigationViewContainer />
-        {__DEV__ && <DeveloperMenu />}
+      <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor="#455a64" barStyle="light-content" />
+        <NavigatorView />
       </View>
     );
   }
-});
+}
 
-const styles = StyleSheet.create({
-  centered: {
-    flex: 1,
-    alignSelf: 'center'
-  }
-});
-
-export default AppView;
+export default connect(mapStateToProps)(AppView);

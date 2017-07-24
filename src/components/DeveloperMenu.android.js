@@ -1,12 +1,7 @@
 import React from 'react';
 import * as snapshot from '../utils/snapshot';
 
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 /**
  * Simple developer menu, which allows e.g. to clear the app state.
@@ -17,30 +12,30 @@ const DeveloperMenu = React.createClass({
   displayName: 'DeveloperMenu',
 
   getInitialState() {
-    return {visible: false};
+    return { visible: false };
   },
   showDeveloperMenu() {
-    this.setState({isVisible: true});
+    this.setState({ isVisible: true });
   },
 
   async clearState() {
     await snapshot.clearSnapshot();
-    console.warn('(╯°□°）╯︵ ┻━┻ \nState cleared, Cmd+R to reload the application now');
+    console.warn(
+      '(╯°□°）╯︵ ┻━┻ \nState cleared, Cmd+R to reload the application now',
+    );
     this.closeMenu();
   },
 
   closeMenu() {
-    this.setState({isVisible: false});
+    this.setState({ isVisible: false });
   },
 
   renderMenuItem(text, onPress) {
     return (
-      <TouchableOpacity
-        key={text}
-        onPress={onPress}
-        style={styles.menuItem}
-        >
-        <Text style={styles.menuItemText}>{text}</Text>
+      <TouchableOpacity key={text} onPress={onPress} style={styles.menuItem}>
+        <Text style={styles.menuItemText}>
+          {text}
+        </Text>
       </TouchableOpacity>
     );
   },
@@ -53,15 +48,15 @@ const DeveloperMenu = React.createClass({
     if (!this.state.isVisible) {
       return (
         <TouchableOpacity
-        style={styles.circle}
-        onPress={this.showDeveloperMenu}
+          style={styles.circle}
+          onPress={this.showDeveloperMenu}
         />
       );
     }
 
     const buttons = [
       this.renderMenuItem('Clear state', this.clearState),
-      this.renderMenuItem('Cancel', this.closeMenu)
+      this.renderMenuItem('Cancel', this.closeMenu),
     ];
 
     return (
@@ -69,7 +64,7 @@ const DeveloperMenu = React.createClass({
         {buttons}
       </View>
     );
-  }
+  },
 });
 
 const styles = StyleSheet.create({
@@ -80,14 +75,14 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   menu: {
     backgroundColor: 'white',
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
   menuItem: {
     flex: 1,
@@ -96,11 +91,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#eee',
     padding: 10,
-    height: 60
+    height: 60,
   },
   menuItemText: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 export default DeveloperMenu;

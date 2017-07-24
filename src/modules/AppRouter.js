@@ -26,11 +26,7 @@ export default function AppRouter(props) {
 
   if (key.indexOf('Color') === 0) {
     const index = props.scenes.indexOf(props.scene);
-    return (
-      <ColorViewContainer
-        index={index}
-      />
-    );
+    return <ColorViewContainer index={index} />;
   }
 
   if (key === 'ExampleView') {

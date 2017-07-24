@@ -15,51 +15,51 @@ export const PRESSED_CELL = 'Puzzle/PRESSED_CELL';
 
 export function initGame() {
   return {
-    type: GAME_INIT
+    type: GAME_INIT,
   };
 }
 
 export function gameStarted(time) {
   return {
     type: GAME_STARTED,
-    payload: time
+    payload: time,
   };
 }
 
 export function gamePause() {
   return {
-    type: GAME_PAUSE
+    type: GAME_PAUSE,
   };
 }
 
 export function gameResume() {
   return {
-    type: GAME_RESUME
+    type: GAME_RESUME,
   };
 }
 
 export function gameCompleted(time) {
   return {
     type: GAME_COMPLETED,
-    payload: time
+    payload: time,
   };
 }
 
 export function wordFound(word) {
   return {
     type: WORD_FOUND,
-    payload: word
+    payload: word,
   };
 }
 
 export function tickTimer() {
   return {
-    type: TIMER
+    type: TIMER,
   };
 }
 
 const randomWords = (words, quantity = __DEV__ ? 2 : 21) => {
-  let hit = { };
+  let hit = {};
   let i = quantity;
   const rands = quantity;
 
@@ -67,7 +67,7 @@ const randomWords = (words, quantity = __DEV__ ? 2 : 21) => {
     hit[Math.ceil(Math.random() * words.length)] = i--;
   }
 
-  return Object.keys(hit).map((key) => words[key - 1]);
+  return Object.keys(hit).map(key => words[key - 1]);
 };
 
 const initialState = {
@@ -78,15 +78,15 @@ const initialState = {
   timer: 0,
   discoveredSoFar: {
     cells: [],
-    words: []
-  }
+    words: [],
+  },
 };
 
-const getCellsFromWord = ({x, y, orientation, word}) => {
+const getCellsFromWord = ({ x, y, orientation, word }) => {
   const next = Wordfind.orientations[orientation];
 
   const cells = word.split('').map((_, idx) => {
-    return next(x,y,idx);
+    return next(x, y, idx);
   });
 
   return cells;
@@ -95,18 +95,46 @@ const getCellsFromWord = ({x, y, orientation, word}) => {
 export default function GameStateReducer(state = initialState, action) {
   switch (action.type) {
     case GAME_INIT: {
-      const words = ['ada', 'lovelace', 'mobile', 'data', 'robot', 'infrastructure', 'testing', 'teamwork',
-        'code', 'binary', 'api', 'agile', 'software', 'project', 'design', 'creativity', 'opensource',
-        'motherboard', 'bug', 'feature', 'internet', 'online', 'interface', 'hypertext',
-        'javascript', 'automation', 'programming', 'computer',
-        'gaming', 'platform', 'meetings'];
+      const words = [
+        'ada',
+        'lovelace',
+        'mobile',
+        'data',
+        'robot',
+        'infrastructure',
+        'testing',
+        'teamwork',
+        'code',
+        'binary',
+        'api',
+        'agile',
+        'software',
+        'project',
+        'design',
+        'creativity',
+        'opensource',
+        'motherboard',
+        'bug',
+        'feature',
+        'internet',
+        'online',
+        'interface',
+        'hypertext',
+        'javascript',
+        'automation',
+        'programming',
+        'computer',
+        'gaming',
+        'platform',
+        'meetings',
+      ];
       const puzzleWords = randomWords(words);
       const puzzle = Wordfind.newPuzzle(puzzleWords, {
         height: 14,
         width: 14,
         preferOverlap: true,
         maxAttempts: 5,
-        fillBlanks: !__DEV__
+        fillBlanks: !__DEV__,
       });
 
       const solution = Wordfind.solve(puzzle, words);
@@ -115,46 +143,43 @@ export default function GameStateReducer(state = initialState, action) {
         gameStatus: GAME_CREATED,
         wordsToFind: puzzleWords.length,
         puzzle,
-        solution
+        solution,
       };
     }
     case GAME_CREATED: {
       return {
         ...state,
-        gameStatus: GAME_CREATED
+        gameStatus: GAME_CREATED,
       };
     }
     case GAME_STARTED: {
       return {
         ...state,
-        gameStatus: GAME_RUNNING
+        gameStatus: GAME_RUNNING,
       };
     }
     case GAME_PAUSE: {
       return {
         ...state,
-        gameStatus: GAME_PAUSE
+        gameStatus: GAME_PAUSE,
       };
     }
     case GAME_RESUME: {
       return {
         ...state,
-        gameStatus: GAME_RUNNING
+        gameStatus: GAME_RUNNING,
       };
     }
     case GAME_COMPLETED: {
       return {
         ...state,
-        gameStatus: GAME_COMPLETED
+        gameStatus: GAME_COMPLETED,
       };
     }
     case TIMER: {
-      const {
-        timer,
-        gameStatus
-      } = state;
+      const { timer, gameStatus } = state;
 
-      const timeLimit = __DEV__ ? 10 : 10 * 60
+      const timeLimit = __DEV__ ? 10 : 10 * 60;
 
       return {
         ...state,
@@ -162,10 +187,7 @@ export default function GameStateReducer(state = initialState, action) {
       };
     }
     case WORD_FOUND: {
-      const {
-        discoveredSoFar,
-        solution
-      } = state;
+      const { discoveredSoFar, solution } = state;
 
       const wordHit = action.payload;
       const cells = discoveredSoFar.cells.concat(getCellsFromWord(wordHit));
@@ -178,9 +200,9 @@ export default function GameStateReducer(state = initialState, action) {
         ...state,
         discoveredSoFar: {
           cells,
-          words
+          words,
         },
-        wordsToFind
+        wordsToFind,
       };
     }
     default:

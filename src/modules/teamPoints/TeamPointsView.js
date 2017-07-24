@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import {
   Text,
   View,
@@ -15,7 +15,7 @@ const TeamPointsView = React.createClass({
     let sum = 0;
     let maxPoints = 0;
 
-    this.props.companies.data.forEach((company) => {
+    this.props.companies.data.forEach(company => {
       if (company.points) {
         sum += company.points;
       }
@@ -32,17 +32,25 @@ const TeamPointsView = React.createClass({
         />
         <ScrollView
           automaticallyAdjustContentInsets={false}
-          style={styles.scrollView}>
+          style={styles.scrollView}
+        >
           <Text style={styles.headerText}>Tiimisi pisteet!</Text>
           <View style={styles.header}>
-            <Image style={styles.mark} source={require('../../../images/pisteet.png')}/>
+            <Image
+              style={styles.mark}
+              source={require('../../../images/pisteet.png')}
+            />
           </View>
           <View style={styles.pointBox}>
-            <Text style={styles.points}>{sum}/{maxPoints}</Text>
+            <Text style={styles.points}>
+              {sum}/{maxPoints}
+            </Text>
           </View>
           <Text style={styles.baseText}>Kaikki rastit suoritettu!</Text>
-          <Text style={styles.baseText}>Haluatko antaa järjestäjille palautetta?</Text>
-          <View style ={styles.buttons}>
+          <Text style={styles.baseText}>
+            Haluatko antaa järjestäjille palautetta?
+          </Text>
+          <View style={styles.buttons}>
             <TouchableOpacity onPress={this.props.feedback}>
               <View style={styles.button}>
                 <Text style={styles.whiteFont}>KYLLÄ</Text>
@@ -57,16 +65,14 @@ const TeamPointsView = React.createClass({
         </ScrollView>
       </View>
     );
-  }
+  },
 });
-
-
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: AppStyles.darkRed,
     flexDirection: 'column',
-    flex: 1
+    flex: 1,
   },
   scrollView: {
     flex: 1,
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
   mark: {
     alignItems: 'center',
     height: 200,
-    width: 150
+    width: 150,
   },
   headerText: {
     marginLeft: 10,
@@ -84,24 +90,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: AppStyles.white,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   pointBox: {
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 30
+    margin: 30,
   },
   points: {
     color: AppStyles.white,
     fontSize: AppStyles.headerFontSize,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   baseText: {
     marginTop: 10,
     fontSize: AppStyles.fontSize,
     color: AppStyles.white,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   button: {
     backgroundColor: AppStyles.lightRed,
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
   whiteFont: {
     color: AppStyles.white,
     fontSize: AppStyles.fontSize,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   header: {
     justifyContent: 'flex-start',
@@ -127,7 +133,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 export default TeamPointsView;

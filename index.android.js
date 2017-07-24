@@ -1,63 +1,38 @@
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+import React, { Component } from 'react';
+import { AppRegistry, BackHandler } from 'react-native';
+
 import store from './src/redux/store';
-import AppViewContainer from './src/modules/AppViewContainer';
-import React from 'react';
-import {
-  AppRegistry,
-  BackAndroid,
-  StatusBar,
-  View
-} from 'react-native';
-import * as NavigationStateActions from './src/modules/navigation/NavigationState';
-import SplashScreen from 'react-native-smart-splash-screen';
+import AppView from './src/modules/AppView';
 
-const SuperAda = React.createClass({
-
+export default class SuperAda extends Component {
   componentWillMount() {
-    BackAndroid.addEventListener('hardwareBackPress', this.navigateBack);
-  },
+    BackHandler.addEventListener('hardwareBackPress', this.navigateBack);
+  }
 
   navigateBack() {
-    const navigationState = store.getState().navigationState;
-    const tabs = navigationState.tabs;
-    const tabKey = tabs.routes[tabs.index].key;
-    const currentTab = navigationState[tabKey];
+    const navigatorState = store.getState().navigatorState;
 
-    // If we are in the beginning of our tab stack :3
-    if (currentTab.index === 0) {
+    const currentStackScreen = navigatorState.index;
+    const currentTab = navigatorState.routes[0].index;
 
-      // if we are not in the first tab, switch tab to the leftmost one
-      if (tabs.index !== 0) {
-        store.dispatch(NavigationStateActions.switchTab('HomeTab'));
-        return true;
-      }
-
-      // otherwise let OS handle the back button action
-      return false;
+    if (currentTab !== 0 || currentStackScreen !== 0) {
+      store.dispatch(NavigationActions.back());
+      return true;
     }
 
-    store.dispatch(NavigationStateActions.popRoute());
-    return true;
-  },
-
-  componentDidMount () {
-    SplashScreen.close(SplashScreen.animationType.scale, 850, 500);
-  },
+    // otherwise let OS handle the back button action
+    return false;
+  }
 
   render() {
     return (
       <Provider store={store}>
-        <View style={{flex: 1}}>
-          <StatusBar
-            animated={false}
-            backgroundColor="#fe9593"
-            barStyle="light-content"
-          />
-          <AppViewContainer />
-        </View>
+        <AppView />
       </Provider>
     );
   }
-});
+}
 
 AppRegistry.registerComponent('SuperAda', () => SuperAda);
