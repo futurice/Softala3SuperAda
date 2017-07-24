@@ -33,6 +33,68 @@ export class LoginView extends React.Component {
     return String(err);
   }
 
+  renderDevLoginButton() {
+    return (
+      <View style={styles.loginButtonContainer}>
+        <TouchableOpacity
+          disabled={this.props.auth.loading}
+          onPress={() => this.props.login('TeamAwesome')}
+          style={
+            this.props.auth.loading
+            ? styles.loginButtonLoading
+            : styles.loginButton
+          }
+          >
+          <Text style={styles.whiteFont}>DEV LOGIN</Text>
+        </TouchableOpacity>
+        {this.props.auth.loading &&
+          <ActivityIndicator
+            animating={true}
+            color={AppStyles.white}
+            style={{
+              zIndex: 1000,
+              position: 'absolute',
+              height: 70,
+              width: 70,
+            }}
+            size="large"
+          />
+        }
+      </View>
+    );
+  }
+
+  renderLoginButton() {
+    return (
+      <View style={styles.loginButtonContainer}>
+        <TouchableOpacity
+          disabled={this.props.auth.loading}
+          onPress={() => this.props.login(this.state.teamname)}
+          style={
+            this.props.auth.loading
+            ? styles.loginButtonLoading
+            : styles.loginButton
+          }
+          >
+          <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
+        </TouchableOpacity>
+        {this.props.auth.loading &&
+          <ActivityIndicator
+            animating={true}
+            color={AppStyles.white}
+            style={{
+              zIndex: 1000,
+              position: 'absolute',
+              height: 70,
+              width: 70,
+            }}
+            size="large"
+          />
+        }
+      </View>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -69,31 +131,8 @@ export class LoginView extends React.Component {
           </View>
         </ScrollView>
 
-        <View style={styles.loginButtonContainer}>
-          <TouchableOpacity
-            disabled={this.props.auth.loading}
-            onPress={() => this.props.login(this.state.teamname)}
-            style={
-              this.props.auth.loading
-                ? styles.loginButtonLoading
-                : styles.loginButton
-            }
-          >
-            <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
-          </TouchableOpacity>
-          {this.props.auth.loading &&
-            <ActivityIndicator
-              animating={true}
-              color={AppStyles.white}
-              style={{
-                zIndex: 1000,
-                position: 'absolute',
-                height: 70,
-                width: 70,
-              }}
-              size="large"
-            />}
-        </View>
+        { this.renderLoginButton() }
+        { __DEV__ && this.renderDevLoginButton() }
       </View>
     );
   }
