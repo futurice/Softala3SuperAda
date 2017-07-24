@@ -2,45 +2,29 @@ import { Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 import LoginView from '../login/LoginView';
-
-/*
-const headerColor = '#333333';
-const activeColor = '#15a369';
+import WelcomeView from '../welcome/Welcome';
 
 // TabNavigator is nested inside StackNavigator
 export const MainScreenNavigator = TabNavigator({
-  Experts: { screen: ExpertsView },
-  Lectures: { screen: LecturesContainer },
-  Profile: { screen: ProfileContainer },
-}, {
-  tabBarOptions: {
-    ...Platform.select({
-      android: {
-        activeTintColor: activeColor,
-        indicatorStyle: { backgroundColor: activeColor },
-        style: { backgroundColor: headerColor },
-      },
-    }),
-  },
+  Welcome: { screen: WelcomeView },
+  //Lectures: { screen: LecturesContainer },
+  // Profile: { screen: ProfileContainer },
+  //Profile: { screen: ProfileContainer },
 });
 
 MainScreenNavigator.navigationOptions = {
-  title: 'XPRT',
-  header: {
-    titleStyle: { color: '#15a369' },
-    style: {
-      backgroundColor: headerColor,
-      elevation: 0, // disable header elevation when TabNavigator visible
-    },
-  },
+  title: 'SuperAda v2',
 };
-*/
 
 // Root navigator is a StackNavigator
-const AppNavigator = StackNavigator({
-  Login: { screen: LoginView },
-}, {
-  headerMode: 'none',
-});
+const AppNavigator = StackNavigator(
+  {
+    Login: { screen: LoginView },
+    MainScreen: { screen: MainScreenNavigator },
+  },
+  {
+    headerMode: 'none',
+  },
+);
 
 export default AppNavigator;
