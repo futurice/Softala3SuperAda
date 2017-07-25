@@ -12,9 +12,13 @@ import {
 
 import AppStyles from '../AppStyles';
 
-import { getConfiguration } from '../../utils/configuration';
+import { apiRoot } from '../../utils/rest';
 
 export class MapView extends React.Component {
+  static navigationOptions = {
+    title: 'Kartta',
+  };
+
   render() {
     const HTML = `
     <!DOCTYPE html>\n
@@ -39,7 +43,7 @@ export class MapView extends React.Component {
         </style>
       </head>
       <body>
-        <img src="${getConfiguration('API_ROOT')}/public/map.png" />
+        <img src="${apiRoot}/public/map.png" />
       </body>
     </html>
     `;
@@ -47,23 +51,6 @@ export class MapView extends React.Component {
     return (
       <View style={styles.MapContainer}>
         <View style={styles.statusBar} />
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={this.props.back}
-            style={{ zIndex: 1000, top: 0, left: 0, position: 'absolute' }}
-          >
-            <Image
-              style={{
-                resizeMode: 'contain',
-                width: 64,
-                height: 64,
-                zIndex: 1000,
-              }}
-              source={require('../../../images/back_arrow.png')}
-            />
-          </TouchableOpacity>
-          <Text style={styles.headerText}>Kartta</Text>
-        </View>
         <WebView style={styles.MapImage} source={{ html: HTML }} />
       </View>
     );

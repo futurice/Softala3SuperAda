@@ -18,8 +18,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import ImageResizer from 'react-native-image-resizer';
 
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
-import * as NavigationState from '../../modules/navigation/NavigationState';
 import rest from '../../utils/rest';
 
 const mapStateToProps = state => ({
@@ -54,7 +54,7 @@ const mapDispatchToProps = dispatch => ({
         },
         (err, data) => {
           if (!err) {
-            dispatch(NavigationState.switchTab('CheckPointsTab'));
+            dispatch(NavigationActions.navigate({ routeName: 'Checkpoints' }));
           }
         },
       ),
@@ -63,6 +63,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export class TeamView extends React.Component {
+  static navigationOptions = {
+    title: 'Muokkaa tiimiä',
+  };
+
   state = {
     modifiedTeamDescription: null,
     modifiedImage: null,
@@ -140,9 +144,6 @@ export class TeamView extends React.Component {
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
         <View style={styles.statusBar} />
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Muokkaa tiimiä</Text>
-        </View>
         <View
           style={{ flex: 1 }}
           onLayout={e => {

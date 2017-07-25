@@ -3,7 +3,7 @@ import Dimensions from 'Dimensions';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import { StyleSheet, View } from 'react-native';
-import * as GameState from '../game/GameState';
+import * as GameState from '../../state/GameState';
 import Row from './Row';
 
 const screenWidth = Dimensions.get('window').width;

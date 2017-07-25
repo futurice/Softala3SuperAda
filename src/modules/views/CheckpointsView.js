@@ -8,16 +8,16 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import * as NavigationState from '../../modules/navigation/NavigationState';
-import TeamPointsView from '../../modules/teamPoints/TeamPointsViewContainer';
+import { NavigationActions } from 'react-navigation';
+
+import TeamPointsView from './TeamPointsView';
 import AppStyles from '../AppStyles';
-import { getConfiguration } from '../../utils/configuration';
+import { apiRoot } from '../../utils/rest';
 import Dimensions from 'Dimensions';
 
 import { connect } from 'react-redux';
 
 import rest from '../../utils/rest';
-import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const mapStateToProps = state => ({
   companies: state.companies,
@@ -26,14 +26,17 @@ const mapDispatchToProps = dispatch => ({
   refresh: () => dispatch(rest.actions.companies()),
   map: () =>
     dispatch(
-      NavigationState.pushRoute({
-        key: 'MapView',
-        title: 'Kartta',
+      NavigationActions.navigate({
+        routeName: 'Map',
       }),
     ),
 });
 
 export class CheckPointView extends React.Component {
+  static navigationOptions = {
+    title: 'Rastit',
+  };
+
   state = {
     refreshInterval: null,
   };
@@ -54,7 +57,6 @@ export class CheckPointView extends React.Component {
   };
 
   renderCompany = company => {
-    const apiRoot = getConfiguration('API_ROOT');
     const uri = `${apiRoot}/public/company${company.companyId}.png`;
 
     return (
@@ -124,9 +126,6 @@ export class CheckPointView extends React.Component {
       return (
         <View style={styles.container}>
           <View style={styles.statusBar} />
-          <View style={styles.header}>
-            <Text style={styles.headerText}>Rastit</Text>
-          </View>
           <ScrollView style={styles.companyListContainer}>
             <View style={styles.companyList}>
               {this.props.companies.data.map(company =>

@@ -20,6 +20,33 @@ import { connect } from 'react-redux';
 import rest from '../../utils/rest';
 import AppStyles from '../AppStyles';
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+  token: state.auth.data.token,
+});
+
+const mapDispatchToProps = dispatch => ({
+  login: name => {
+    dispatch(
+      rest.actions.auth(
+        {},
+        {
+          body: JSON.stringify({
+            name: name.trim(),
+          }),
+        },
+      ),
+    );
+  },
+  navigateTo: (routeName: string) =>
+    dispatch(
+      NavigationActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName })],
+      }),
+    ),
+});
+
 export class LoginView extends React.Component {
   state = {
     teamname: '',
@@ -101,7 +128,7 @@ export class LoginView extends React.Component {
   // take them back to the login screen
   componentDidUpdate() {
     if (this.props.token) {
-      this.props.navigateTo('MainScreen');
+      this.props.navigateTo('Main');
     }
   }
 
@@ -215,33 +242,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginLeft: 20,
   },
-});
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  token: state.auth.data.token,
-});
-
-const mapDispatchToProps = dispatch => ({
-  login: name => {
-    dispatch(
-      rest.actions.auth(
-        {},
-        {
-          body: JSON.stringify({
-            name: name.trim(),
-          }),
-        },
-      ),
-    );
-  },
-  navigateTo: (routeName: string) =>
-    dispatch(
-      NavigationActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({ routeName })],
-      }),
-    ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

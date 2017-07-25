@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
+
 import AppStyles from '../AppStyles';
 
-import { connect } from 'react-redux';
-import TeamPointsView from './TeamPointsView';
 import rest from '../../utils/rest';
-import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const mapStateToProps = state => ({
   companies: state.companies,

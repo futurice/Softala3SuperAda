@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dimensions from 'Dimensions';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
-import * as GameState from '../game/GameState';
+import * as GameState from '../../state/GameState';
 import { noop } from 'lodash';
 import AppStyles from '../AppStyles';
 

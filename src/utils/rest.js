@@ -1,7 +1,7 @@
 import reduxApi, { transformers } from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 
-const apiRoot = __DEV__
+export const apiRoot = __DEV__
   ? 'http://localhost:3000'
   : 'https://superada.herokuapp.com';
 
@@ -35,7 +35,7 @@ const rest = reduxApi({
   },
 })
   .use('options', (url, params, getState) => {
-    const { auth: { token } } = getState();
+    const { auth: { data: { token } } } = getState();
 
     // Add token to header request
     const headers = {

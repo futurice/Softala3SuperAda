@@ -8,8 +8,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Dimensions from 'Dimensions';
+
+import { connect } from 'react-redux';
+import rest from '../../utils/rest';
+
 import PuzzleContainer from '../puzzle/PuzzleContainer';
-import * as GameState from './GameState';
+import * as GameState from '../../state/GameState';
 import AppStyles from '../AppStyles';
 
 const resetGame = component => event => {
@@ -43,10 +47,6 @@ const togglePause = component => event => {
   }
 };
 
-import { connect } from 'react-redux';
-import rest from '../../utils/rest';
-import * as GameState from './GameState';
-
 const mapStateToProps = state => ({
   gameState: state.gameState,
   quizStatus: state.quiz,
@@ -60,6 +60,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export class GameView extends Component {
+  static navigationOptions = {
+    title: 'Super-Ada Quiz!',
+  };
+
   constructor(props) {
     super(props);
   }

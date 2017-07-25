@@ -6,35 +6,31 @@ import LoginView from '../views/LoginView';
 
 // TabNavigator's four tabs
 import WelcomeView from '../views/WelcomeView';
-//import TeamView from '../team/TeamView';
-//import CheckpointsView from '../checkpoints/CheckPointView';
-//import QuizView from '../quiz/QuizView';
+import TeamView from '../views/TeamView';
+import CheckpointsView from '../views/CheckpointsView';
+import QuizView from '../views/QuizView';
 
 // Subviews
-//import MapView from '../map/MapView';
+import MapView from '../views/MapView';
 
 // TabNavigator is nested inside StackNavigator
-export const MainScreenNavigator = TabNavigator({
-  Welcome: { screen: WelcomeView },
-  //Team: { screen: TeamView },
-  //Checkpoints: { screen: CheckPointView },
-  //Quiz: { screen: QuizView },
-});
-
-MainScreenNavigator.navigationOptions = {
-  title: 'SuperAda v2',
-};
-
-// Root navigator is a StackNavigator
-const AppNavigator = StackNavigator(
+export const MainScreenNavigator = TabNavigator(
   {
-    Login: { screen: LoginView },
-    MainScreen: { screen: MainScreenNavigator },
-    //MapScreen: { screen: MapScreen},
+    Welcome: { screen: WelcomeView },
+    Team: { screen: TeamView },
+    Checkpoints: { screen: CheckpointsView },
+    Quiz: { screen: QuizView },
   },
   {
-    headerMode: 'none',
+    tabBarPosition: 'bottom',
   },
 );
+
+// Root navigator is a StackNavigator
+const AppNavigator = StackNavigator({
+  Login: { screen: LoginView },
+  Main: { screen: MainScreenNavigator },
+  Map: { screen: MapView },
+});
 
 export default AppNavigator;

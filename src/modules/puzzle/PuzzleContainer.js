@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import * as GameState from '../game/GameState';
+import * as GameState from '../../state/GameState';
 import rest from '../../utils/rest';
 import Puzzle from './Puzzle';
 

@@ -16,11 +16,14 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
-  profile: () =>
-    dispatch(NavigationActions.navigate({ routeName: 'ProfileTab' })),
+  editTeam: () => dispatch(NavigationActions.navigate({ routeName: 'Team' })),
 });
 
 export class Welcome extends React.Component {
+  static navigationOptions = {
+    title: 'Tervetuloa!',
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -53,7 +56,7 @@ export class Welcome extends React.Component {
         </ScrollView>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={this.props.profile}>
+          <TouchableOpacity style={styles.button} onPress={this.props.editTeam}>
             <Text style={styles.whiteFont}>MUOKKAA TIIMIÄ</Text>
           </TouchableOpacity>
         </View>
