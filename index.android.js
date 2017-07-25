@@ -3,12 +3,16 @@ import { NavigationActions } from 'react-navigation';
 import React, { Component } from 'react';
 import { AppRegistry, BackHandler } from 'react-native';
 
+import persistStore from './src/utils/persist';
 import store from './src/redux/store';
 import AppView from './src/modules/AppView';
 
 export default class SuperAda extends Component {
+  state = { rehydrated: false };
+
   componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.navigateBack);
+    persistStore(store, () => this.setState({ rehydrated: true }));
   }
 
   navigateBack() {
@@ -27,9 +31,11 @@ export default class SuperAda extends Component {
   }
 
   render() {
+    const { rehydrated } = this.state;
+
     return (
       <Provider store={store}>
-        <AppView />
+        <AppView isReady={rehydrated} />
       </Provider>
     );
   }

@@ -53,3 +53,4 @@ const rest = reduxApi({
   .use('fetch', adapterFetch(fetch));
 
 export default rest;
+export const reducers = rest.reducers;

@@ -11,20 +11,15 @@ const styles = {
   },
 };
 
-const mapStateToProps = state => ({
-  isReady: state.session.isReady,
-});
-
 export class AppView extends Component {
   static displayName = 'AppView';
 
   static propTypes = {
     isReady: PropTypes.bool.isRequired,
-    dispatch: PropTypes.func.isRequired,
   };
 
   render() {
-    if (false && !this.props.isReady) {
+    if (!this.props.isReady) {
       return (
         <View style={{ flex: 1 }}>
           <ActivityIndicator style={styles.centered} />
@@ -41,4 +36,4 @@ export class AppView extends Component {
   }
 }
 
-export default connect(mapStateToProps)(AppView);
+export default AppView;
