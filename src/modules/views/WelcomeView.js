@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  StatusBar,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -33,18 +32,11 @@ export class Welcome extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor={AppStyles.darkRed}
-          animated={false}
-          barStyle="light-content"
-        />
-
         <ScrollView
           contentContainerStyle={{
             alignItems: 'center',
           }}
         >
-          <Text style={styles.titleText}>Tervetuloa!</Text>
           <Image
             style={styles.image}
             source={require('../../../images/tervetuloa.png')}

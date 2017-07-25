@@ -5,6 +5,7 @@ export default {
   darkRed: '#ed3a4b',
   whiteBackground: '#fafafa',
   grey: '#eeeeee',
+  darkGrey: '#bbbbbb',
   white: '#ffffff',
   fontSize: 18,
   titleFontSize: 42,
@@ -17,7 +18,7 @@ export default {
     android: 0,
   }),
   icon: {
-    width: 32,
-    height: 32,
+    width: 48,
+    height: 48,
   },
 };

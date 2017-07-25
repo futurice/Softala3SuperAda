@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { View, StatusBar, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 
+import AppStyles from './AppStyles';
+
 import NavigatorView from './navigator/NavigatorView';
 
 const styles = {
@@ -29,7 +31,10 @@ export class AppView extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar backgroundColor="#455a64" barStyle="light-content" />
+        <StatusBar
+          backgroundColor={AppStyles.lightRed}
+          barStyle="light-content"
+        />
         <NavigatorView />
       </View>
     );

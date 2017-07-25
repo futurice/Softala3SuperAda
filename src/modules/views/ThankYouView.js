@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Text, View, StyleSheet, Image, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 
 import AppStyles from '../AppStyles';
 
@@ -7,11 +7,6 @@ export class ThankYouView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor={AppStyles.darkRed}
-          animated={false}
-          barStyle="light-content"
-        />
         <View style={styles.header}>
           <Text style={styles.titleText}>Kiitos!</Text>
           <Image

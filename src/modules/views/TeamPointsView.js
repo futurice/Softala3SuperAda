@@ -3,7 +3,6 @@ import {
   Text,
   View,
   StyleSheet,
-  StatusBar,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -51,11 +50,6 @@ export class TeamPointsView extends React.Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor={AppStyles.darkRed}
-          animated={false}
-          barStyle="light-content"
-        />
         <ScrollView
           automaticallyAdjustContentInsets={false}
           style={styles.scrollView}

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  StatusBar,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -115,11 +114,6 @@ export class GameView extends Component {
     ) {
       return (
         <View style={styles.gameContainer}>
-          <StatusBar
-            backgroundColor={AppStyles.darkRed}
-            animated={false}
-            barStyle="light-content"
-          />
           <Text style={styles.congratsText}>Onneksi olkoon!</Text>
           <Text style={styles.congratsBodyText}>
             {'Tehtävä ratkottu'}
@@ -147,7 +141,6 @@ export class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.titleText}>Super-Ada quiz!</Text>
               <Text style={styles.welcomeText}>
                 Tervetuloa ratkomaan Super-Ada quiz-tehtävää!
               </Text>
@@ -282,11 +275,6 @@ export class GameView extends Component {
 
     return (
       <View style={styles.gameContainer}>
-        <StatusBar
-          backgroundColor={AppStyles.darkRed}
-          animated={false}
-          barStyle="light-content"
-        />
         {contentView}
       </View>
     );
@@ -315,7 +303,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed,
   },
   welcomeContainer: {
-    marginBottom: 20,
+    marginVertical: 20,
   },
   activityIndicator: {
     ...centered,

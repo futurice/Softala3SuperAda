@@ -8,7 +8,6 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  StatusBar,
   Platform,
   AsyncStorage,
   ActivityIndicator,
@@ -135,11 +134,6 @@ export class LoginView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor={AppStyles.darkRed}
-          animated={false}
-          barStyle="light-content"
-        />
         <ScrollView
           style={{ flex: 1, alignSelf: 'stretch' }}
           contentContainerStyle={{
