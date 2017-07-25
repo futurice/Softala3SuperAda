@@ -8,7 +8,7 @@ import WelcomeView from '../welcome/Welcome';
 export const MainScreenNavigator = TabNavigator({
   Welcome: { screen: WelcomeView },
   //Lectures: { screen: LecturesContainer },
-  // Profile: { screen: ProfileContainer },
+  //Profile: { screen: ProfileContainer },
   //Profile: { screen: ProfileContainer },
 });
 

@@ -13,6 +13,7 @@ import {
   AsyncStorage,
   ActivityIndicator,
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../AppStyles';
 
@@ -41,10 +42,10 @@ export class LoginView extends React.Component {
           onPress={() => this.props.login('TeamAwesome')}
           style={
             this.props.auth.loading
-            ? styles.loginButtonLoading
-            : styles.loginButton
+              ? styles.loginButtonLoading
+              : styles.loginButton
           }
-          >
+        >
           <Text style={styles.whiteFont}>DEV LOGIN</Text>
         </TouchableOpacity>
         {this.props.auth.loading &&
@@ -58,8 +59,7 @@ export class LoginView extends React.Component {
               width: 70,
             }}
             size="large"
-          />
-        }
+          />}
       </View>
     );
   }
@@ -72,10 +72,10 @@ export class LoginView extends React.Component {
           onPress={() => this.props.login(this.state.teamname)}
           style={
             this.props.auth.loading
-            ? styles.loginButtonLoading
-            : styles.loginButton
+              ? styles.loginButtonLoading
+              : styles.loginButton
           }
-          >
+        >
           <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
         </TouchableOpacity>
         {this.props.auth.loading &&
@@ -89,10 +89,17 @@ export class LoginView extends React.Component {
               width: 70,
             }}
             size="large"
-          />
-        }
+          />}
       </View>
     );
+  }
+
+  // When the team has logged in, reset the navigation stack so that "back" does not
+  // take them back to the login screen
+  componentDidUpdate() {
+    if (this.props.token) {
+      this.props.navigateTo('MainScreen');
+    }
   }
 
   render() {
@@ -131,8 +138,8 @@ export class LoginView extends React.Component {
           </View>
         </ScrollView>
 
-        { this.renderLoginButton() }
-        { __DEV__ && this.renderDevLoginButton() }
+        {this.renderLoginButton()}
+        {__DEV__ && this.renderDevLoginButton()}
       </View>
     );
   }
@@ -213,6 +220,7 @@ import rest from '../../utils/rest';
 export default connect(
   state => ({
     auth: state.auth,
+    token: state.auth.data.token,
   }),
   dispatch => ({
     login(name) {
@@ -227,5 +235,12 @@ export default connect(
         ),
       );
     },
+    navigateTo: (routeName: string) =>
+      dispatch(
+        NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName })],
+        }),
+      ),
   }),
 )(LoginView);
