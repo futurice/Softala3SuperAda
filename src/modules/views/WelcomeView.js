@@ -8,10 +8,19 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../AppStyles';
 
-const Welcome = React.createClass({
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispatch => ({
+  profile: () =>
+    dispatch(NavigationActions.navigate({ routeName: 'ProfileTab' })),
+});
+
+export class Welcome extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -50,8 +59,8 @@ const Welcome = React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -103,4 +112,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default Welcome;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

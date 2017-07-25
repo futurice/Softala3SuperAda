@@ -1,4 +1,4 @@
-import Wordfind from '../puzzle/wordfind';
+import Wordfind from '../utils/wordfind';
 
 // Actions
 export const NO_GAME = 'Game/NO_GAME';

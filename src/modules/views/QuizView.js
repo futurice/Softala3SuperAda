@@ -43,7 +43,24 @@ const togglePause = component => event => {
   }
 };
 
-class GameView extends Component {
+import { connect } from 'react-redux';
+import rest from '../../utils/rest';
+import * as GameState from './GameState';
+
+export default connect(
+mapStateToProps = const state => ({
+  gameState: state.gameState,
+  quizStatus: state.quiz,
+});
+mapDispatchToProps = dispatch => ({
+  initialiseGame: () => dispatch(GameState.initGame()),
+  refresh: () => dispatch(rest.actions.quiz.sync()),
+  deleteGame: () => dispatch(rest.actions.quiz.delete()),
+  pauseGame: () => dispatch(GameState.gamePause()),
+  resumeGame: () => dispatch(GameState.gameResume()),
+});
+
+export class GameView extends Component {
   constructor(props) {
     super(props);
   }
@@ -384,4 +401,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GameView;
+export default connect(mapStateToProps, mapDispatchToProps)(GameView);

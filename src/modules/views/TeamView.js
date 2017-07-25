@@ -12,35 +12,85 @@ import {
   Platform,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-import { options } from './image-picker-options';
-import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ImageResizer from 'react-native-image-resizer';
 
-const TeamView = React.createClass({
-  getInitialState() {
-    return {
-      modifiedTeamDescription: null,
-      modifiedImage: null,
-      disableSave: false,
+import { connect } from 'react-redux';
 
-      width: 0,
-      height: 0,
-    };
-  },
+import * as NavigationState from '../../modules/navigation/NavigationState';
+import rest from '../../utils/rest';
 
-  checkpoints() {
-    this.props.dispatch(NavigationState.switchTab('CheckPointsTab'));
+const mapStateToProps = state => ({
+  teamDetails: state.teamDetails,
+  image: state.teamDetails.data.file,
+});
+
+const mapDispatchToProps = dispatch => ({
+  refresh: () => dispatch(rest.actions.teamDetails()),
+  save: (description, imageUri) => {
+    let formdata = new FormData();
+
+    if (imageUri) {
+      formdata.append('image', {
+        uri: imageUri,
+        name: 'image.png',
+        type: 'multipart/form-data',
+      });
+    }
+    if (description) {
+      formdata.append('description', description);
+    }
+
+    dispatch(
+      rest.actions.teamDetails.post(
+        {},
+        {
+          body: formdata,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+        (err, data) => {
+          if (!err) {
+            dispatch(NavigationState.switchTab('CheckPointsTab'));
+          }
+        },
+      ),
+    );
   },
+});
+
+export class TeamView extends React.Component {
+  state = {
+    modifiedTeamDescription: null,
+    modifiedImage: null,
+    disableSave: false,
+
+    width: 0,
+    height: 0,
+  };
 
   componentDidMount() {
     this.props.refresh();
-  },
+  }
 
-  openImageGallery() {
+  checkpoints = () => {
+    this.props.dispatch(NavigationState.switchTab('CheckPointsTab'));
+  };
+
+  openImageGallery = () => {
     this.setState({ disableSave: true });
+
+    const options = {
+      title: 'Select Avatar',
+      mediaType: 'photo',
+      maxWidth: 512,
+      maxHeight: 512,
+      allowsEditing: true,
+    };
+
     ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
@@ -62,7 +112,7 @@ const TeamView = React.createClass({
           });
       }
     });
-  },
+  };
 
   render() {
     const description =
@@ -190,8 +240,8 @@ const TeamView = React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}
 
 const circle = {
   borderWidth: 0,
@@ -311,4 +361,5 @@ const styles = StyleSheet.create({
     fontSize: AppStyles.fontSize,
   },
 });
-export default TeamView;
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamView);

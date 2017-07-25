@@ -16,35 +16,67 @@ import RadioForm, {
   RadioButtonInput,
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
+import isUndefined from 'lodash/isUndefined';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import AppStyles from '../AppStyles';
-import _ from 'lodash';
 
-const FeedbackView = React.createClass({
-  getInitialState() {
-    return {};
+import { connect } from 'react-redux';
+import * as NavigationState from '../../modules/navigation/NavigationState';
+import rest from '../../utils/rest';
+
+const mapStateToProps = state => ({
+  feedback: state.feedback,
+});
+const mapDispatchToProps = dispatch => ({
+  refresh() {
+    dispatch(rest.actions.feedback.get());
   },
+  save(feedback) {
+    dispatch(
+      rest.actions.feedback.post(
+        {},
+        {
+          body: JSON.stringify(feedback),
+        },
+        (err, data) => {
+          if (!err) {
+            console.log('successfully sent feedback');
+            dispatch(
+              NavigationState.pushRoute({
+                key: 'GoodbyeFB',
+                title: 'Kiitos palautteestasi',
+              }),
+            );
+          }
+        },
+      ),
+    );
+  },
+});
+
+export class FeedbackView extends React.Component {
+  state = {};
 
   componentDidMount() {
     this.props.refresh();
-  },
+  }
 
-  saveFeedback() {
+  saveFeedback = () => {
     let answers = [];
     Object.keys(this.props.feedback.data).forEach(i => {
       answers[i] = this.state[i];
 
       // Use old answer if user did not change it
-      if (_.isUndefined(answers[i])) {
+      if (isUndefined(answers[i])) {
         answers[i] =
           this.props.feedback.data[i] && this.props.feedback.data[i].answer;
       }
     });
 
     this.props.save({ answers });
-  },
+  };
 
   render() {
     if (this.props.feedback.loading) {
@@ -78,7 +110,7 @@ const FeedbackView = React.createClass({
                   this.setState({
                     [i]: value,
                   })}
-                value={!_.isUndefined(val) ? val : question.answer}
+                value={!isUndefined(val) ? val : question.answer}
               />
             </View>
           </View>,
@@ -154,8 +186,8 @@ const FeedbackView = React.createClass({
         </KeyboardAwareScrollView>
       </View>
     );
-  },
-});
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -230,4 +262,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeedbackView;
+export default connect(mapStateToProps, mapDispatchToProps)(FeedbackView);

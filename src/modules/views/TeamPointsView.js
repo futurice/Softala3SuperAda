@@ -10,7 +10,29 @@ import {
 } from 'react-native';
 import AppStyles from '../AppStyles';
 
-const TeamPointsView = React.createClass({
+import { connect } from 'react-redux';
+import TeamPointsView from './TeamPointsView';
+import rest from '../../utils/rest';
+import * as NavigationState from '../../modules/navigation/NavigationState';
+
+const mapStateToProps = state => ({
+  companies: state.companies,
+}),
+const mapDispatchToProps = dispatch => ({
+  refresh: () => dispatch(rest.actions.companies()),
+  feedback: () => dispatch(NavigationState.pushRoute({
+    key: 'FeedbackView',
+    title: 'Anna palautetta',
+  })),
+  goodbye: () => dispatch(
+      NavigationState.pushRoute({
+        key: 'Goodbye',
+        title: 'Kiitos osallistumisesta!',
+      }),
+    );
+});
+
+export class TeamPointsView extends React.Component {
   render() {
     let sum = 0;
     let maxPoints = 0;
@@ -65,8 +87,8 @@ const TeamPointsView = React.createClass({
         </ScrollView>
       </View>
     );
-  },
-});
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -136,4 +158,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-export default TeamPointsView;
+export default connect(mapStateToProps, mapDispatchToProps)(TeamPointsView);

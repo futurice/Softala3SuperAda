@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image, StatusBar } from 'react-native';
 
 import AppStyles from '../AppStyles';
 
-const Goodbye = React.createClass({
+export class ThankYouView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -28,8 +28,8 @@ const Goodbye = React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -70,4 +70,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-export default Goodbye;
+
+export default ThankYouView;

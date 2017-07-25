@@ -10,12 +10,11 @@ import {
   WebView,
 } from 'react-native';
 
-import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 
 import { getConfiguration } from '../../utils/configuration';
 
-const MapView = React.createClass({
+export class MapView extends React.Component {
   render() {
     const HTML = `
     <!DOCTYPE html>\n
@@ -68,8 +67,8 @@ const MapView = React.createClass({
         <WebView style={styles.MapImage} source={{ html: HTML }} />
       </View>
     );
-  },
-});
+  }
+}
 
 let styles = StyleSheet.create({
   statusBar: {

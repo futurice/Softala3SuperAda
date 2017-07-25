@@ -1,4 +1,4 @@
-import AppNavigator from './Navigator';
+import AppNavigator from '../modules/navigator/Navigator';
 
 export default (state, action) => {
   const newState = AppNavigator.router.getStateForAction(action, state);

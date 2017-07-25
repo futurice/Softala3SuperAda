@@ -14,29 +14,46 @@ import AppStyles from '../AppStyles';
 import { getConfiguration } from '../../utils/configuration';
 import Dimensions from 'Dimensions';
 
-const CheckPointView = React.createClass({
-  getInitialState() {
-    return {
-      refreshInterval: null,
-    };
-  },
+import { connect } from 'react-redux';
+
+import rest from '../../utils/rest';
+import * as NavigationState from '../../modules/navigation/NavigationState';
+
+const mapStateToProps = state => ({
+  companies: state.companies,
+});
+const mapDispatchToProps = dispatch => ({
+  refresh: () => dispatch(rest.actions.companies()),
+  map: () =>
+    dispatch(
+      NavigationState.pushRoute({
+        key: 'MapView',
+        title: 'Kartta',
+      }),
+    ),
+});
+
+export class CheckPointView extends React.Component {
+  state = {
+    refreshInterval: null,
+  };
 
   componentDidMount() {
     this.fetchData();
     this.setState({
       refreshInterval: setInterval(this.fetchData, 60 * 1000),
     });
-  },
+  }
 
   componentWillUnmount() {
     clearInterval(this.state.refreshInterval);
-  },
+  }
 
-  fetchData() {
+  fetchData = () => {
     this.props.refresh();
-  },
+  };
 
-  renderCompany(company) {
+  renderCompany = company => {
     const apiRoot = getConfiguration('API_ROOT');
     const uri = `${apiRoot}/public/company${company.companyId}.png`;
 
@@ -77,7 +94,7 @@ const CheckPointView = React.createClass({
         </View>
       </View>
     );
-  },
+  };
 
   render() {
     let visitedCompanies = 0;
@@ -131,8 +148,8 @@ const CheckPointView = React.createClass({
         </View>
       );
     }
-  },
-});
+  }
+}
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -238,4 +255,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CheckPointView;
+export default connect(mapStateToProps, mapDispatchToProps)(CheckPointView);

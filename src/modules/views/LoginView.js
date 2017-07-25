@@ -13,8 +13,11 @@ import {
   AsyncStorage,
   ActivityIndicator,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
+import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
+
+import rest from '../../utils/rest';
 import AppStyles from '../AppStyles';
 
 export class LoginView extends React.Component {
@@ -214,33 +217,31 @@ const styles = StyleSheet.create({
   },
 });
 
-import { connect } from 'react-redux';
-import rest from '../../utils/rest';
+const mapStateToProps = state => ({
+  auth: state.auth,
+  token: state.auth.data.token,
+});
 
-export default connect(
-  state => ({
-    auth: state.auth,
-    token: state.auth.data.token,
-  }),
-  dispatch => ({
-    login(name) {
-      dispatch(
-        rest.actions.auth(
-          {},
-          {
-            body: JSON.stringify({
-              name: name.trim(),
-            }),
-          },
-        ),
-      );
-    },
-    navigateTo: (routeName: string) =>
-      dispatch(
-        NavigationActions.reset({
-          index: 0,
-          actions: [NavigationActions.navigate({ routeName })],
-        }),
+const mapDispatchToProps = dispatch => ({
+  login: name => {
+    dispatch(
+      rest.actions.auth(
+        {},
+        {
+          body: JSON.stringify({
+            name: name.trim(),
+          }),
+        },
       ),
-  }),
-)(LoginView);
+    );
+  },
+  navigateTo: (routeName: string) =>
+    dispatch(
+      NavigationActions.reset({
+        index: 0,
+        actions: [NavigationActions.navigate({ routeName })],
+      }),
+    ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

@@ -1,10 +1,8 @@
 //import {combineReducers} from 'redux-loop';
 import { combineReducers } from 'redux';
-import NavigatorStateReducer from '../modules/navigator/NavigatorState';
-import GameStateReducer from '../modules/game/GameState';
-import SessionStateReducer, {
-  RESET_STATE,
-} from '../modules/session/SessionState';
+import NavigatorStateReducer from '../state/NavigatorState';
+import GameStateReducer from '../state/GameState';
+import SessionStateReducer, { RESET_STATE } from '../state/SessionState';
 import rest from '../utils/rest';
 
 const reducers = {

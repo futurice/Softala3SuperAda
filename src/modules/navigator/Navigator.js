@@ -2,10 +2,10 @@ import { Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 
 // StackNavigator's initial view
-import LoginView from '../login/LoginView';
+import LoginView from '../views/LoginView';
 
 // TabNavigator's four tabs
-import WelcomeView from '../welcome/Welcome';
+import WelcomeView from '../views/WelcomeView';
 //import TeamView from '../team/TeamView';
 //import CheckpointsView from '../checkpoints/CheckPointView';
 //import QuizView from '../quiz/QuizView';

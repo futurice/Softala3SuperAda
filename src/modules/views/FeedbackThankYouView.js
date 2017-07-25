@@ -1,14 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Text, View, StyleSheet, Image, StatusBar } from 'react-native';
 
-import * as NavigationState from '../../modules/navigation/NavigationState';
 import AppStyles from '../AppStyles';
 
-const GoodbyeFeedbackView = React.createClass({
-  propTypes: {
-    dispatch: PropTypes.func.isRequired,
-  },
-
+export class FeedbackThankYouView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -35,8 +30,8 @@ const GoodbyeFeedbackView = React.createClass({
         </View>
       </View>
     );
-  },
-});
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -73,4 +68,5 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 });
-export default GoodbyeFeedbackView;
+
+export default FeedbackThankYouView;
