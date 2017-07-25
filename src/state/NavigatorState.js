@@ -3,6 +3,7 @@ import AppNavigator from '../modules/navigator/Navigator';
 export default (state, action) => {
   const newState = AppNavigator.router.getStateForAction(action, state);
 
+  /*
   if (state) {
     const currentRoute = state.routes[state.index];
     const newRoute = newState.routes[newState.index];
@@ -12,6 +13,7 @@ export default (state, action) => {
       return state;
     }
   }
+  */
 
   return newState || state;
 };
