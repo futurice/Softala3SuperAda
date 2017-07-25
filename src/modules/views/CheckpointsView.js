@@ -35,6 +35,12 @@ const mapDispatchToProps = dispatch => ({
 export class CheckPointView extends React.Component {
   static navigationOptions = {
     title: 'Rastit',
+    tabBarLabel: '',
+    tabBarIcon: ({ tintColor }) =>
+      <Image
+        source={require('../../../images/karttaiso_transparent.png')}
+        style={[AppStyles.icon, { tintColor: tintColor }]}
+      />,
   };
 
   state = {

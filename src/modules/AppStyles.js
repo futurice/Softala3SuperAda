@@ -16,4 +16,8 @@ export default {
     ios: 18,
     android: 0,
   }),
+  icon: {
+    width: 32,
+    height: 32,
+  },
 };

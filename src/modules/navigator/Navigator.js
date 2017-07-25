@@ -16,13 +16,30 @@ import MapView from '../views/MapView';
 // TabNavigator is nested inside StackNavigator
 export const MainScreenNavigator = TabNavigator(
   {
-    Welcome: { screen: WelcomeView },
+    Welcome: {
+      screen: WelcomeView,
+      tabBarIcon: ({ tintColor }) =>
+        <image
+          source={require('../../../images/homeiso_transparent.png')}
+          style={[styles.icon, { tintColor: tintColor }]}
+        />,
+    },
     Team: { screen: TeamView },
     Checkpoints: { screen: CheckpointsView },
     Quiz: { screen: QuizView },
   },
   {
     tabBarPosition: 'bottom',
+  },
+  {
+    tabBarOptions: {
+      showIcon: true,
+      showLabel: false,
+      activeTintColor: '#ed3a4b',
+    },
+  },
+  {
+    headerMode: 'screen',
   },
 );
 

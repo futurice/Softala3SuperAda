@@ -6,6 +6,7 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import Dimensions from 'Dimensions';
 
@@ -62,6 +63,12 @@ const mapDispatchToProps = dispatch => ({
 export class GameView extends Component {
   static navigationOptions = {
     title: 'Super-Ada Quiz!',
+    tabBarLabel: '',
+    tabBarIcon: ({ tintColor }) =>
+      <Image
+        source={require('../../../images/muutiso_transparent.png')}
+        style={[AppStyles.icon, { tintColor: tintColor }]}
+      />,
   };
 
   constructor(props) {

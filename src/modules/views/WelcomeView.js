@@ -22,6 +22,12 @@ const mapDispatchToProps = dispatch => ({
 export class Welcome extends React.Component {
   static navigationOptions = {
     title: 'Tervetuloa!',
+    tabBarLabel: '',
+    tabBarIcon: ({ tintColor }) =>
+      <Image
+        source={require('../../../images/homeiso_transparent.png')}
+        style={[AppStyles.icon, { tintColor: tintColor }]}
+      />,
   };
 
   render() {

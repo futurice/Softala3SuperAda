@@ -65,6 +65,12 @@ const mapDispatchToProps = dispatch => ({
 export class TeamView extends React.Component {
   static navigationOptions = {
     title: 'Muokkaa tiimiä',
+    tabBarLabel: '',
+    tabBarIcon: ({ tintColor }) =>
+      <Image
+        source={require('../../../images/ryhmaiso_transparent.png')}
+        style={[AppStyles.icon, { tintColor: tintColor }]}
+      />,
   };
 
   state = {
