@@ -17,19 +17,23 @@ import * as NavigationState from '../../modules/navigation/NavigationState';
 
 const mapStateToProps = state => ({
   companies: state.companies,
-}),
+});
 const mapDispatchToProps = dispatch => ({
   refresh: () => dispatch(rest.actions.companies()),
-  feedback: () => dispatch(NavigationState.pushRoute({
-    key: 'FeedbackView',
-    title: 'Anna palautetta',
-  })),
-  goodbye: () => dispatch(
+  feedback: () =>
+    dispatch(
+      NavigationState.pushRoute({
+        key: 'FeedbackView',
+        title: 'Anna palautetta',
+      }),
+    ),
+  goodbye: () =>
+    dispatch(
       NavigationState.pushRoute({
         key: 'Goodbye',
         title: 'Kiitos osallistumisesta!',
       }),
-    );
+    ),
 });
 
 export class TeamPointsView extends React.Component {

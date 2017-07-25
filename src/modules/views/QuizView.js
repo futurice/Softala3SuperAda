@@ -47,12 +47,11 @@ import { connect } from 'react-redux';
 import rest from '../../utils/rest';
 import * as GameState from './GameState';
 
-export default connect(
-mapStateToProps = const state => ({
+const mapStateToProps = state => ({
   gameState: state.gameState,
   quizStatus: state.quiz,
 });
-mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   initialiseGame: () => dispatch(GameState.initGame()),
   refresh: () => dispatch(rest.actions.quiz.sync()),
   deleteGame: () => dispatch(rest.actions.quiz.delete()),
