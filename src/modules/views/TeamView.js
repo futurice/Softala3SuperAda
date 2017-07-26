@@ -12,15 +12,14 @@ import {
   Platform,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
-import AppStyles from '../AppStyles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 import ImageResizer from 'react-native-image-resizer';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 
+import AppStyles from '../AppStyles';
 import rest from '../../utils/rest';
+import AdaButton from '../../components/Button';
 
 const mapStateToProps = state => ({
   teamDetails: state.teamDetails,

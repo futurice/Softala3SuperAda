@@ -10,7 +10,7 @@ import {
 import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../AppStyles';
-
+import AdaButton from '../../components/Button';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({});
@@ -52,12 +52,11 @@ export class Welcome extends React.Component {
           </Text>
           <Text style={styles.textStyle}>ONNEA MATKAAN!</Text>
         </ScrollView>
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={this.props.editTeam}>
-            <Text style={styles.whiteFont}>MUOKKAA TIIMIÄ</Text>
-          </TouchableOpacity>
-        </View>
+        <AdaButton
+          styles={styles}
+          content={'MUOKKAA TIIMIÄ'}
+          onPress={this.props.editTeam}
+        />
       </View>
     );
   }

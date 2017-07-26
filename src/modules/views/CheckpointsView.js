@@ -9,15 +9,15 @@ import {
   Image,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
 
 import TeamPointsView from './TeamPointsView';
 import AppStyles from '../AppStyles';
-import { apiRoot } from '../../utils/rest';
 import Dimensions from 'Dimensions';
 
-import { connect } from 'react-redux';
-
+import { apiRoot } from '../../utils/rest';
 import rest from '../../utils/rest';
+import AdaButton from '../../components/Button';
 
 const mapStateToProps = state => ({
   companies: state.companies,
@@ -139,17 +139,11 @@ export class CheckPointView extends React.Component {
               )}
             </View>
           </ScrollView>
-
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => this.props.map()}
-            >
-              <Text style={[styles.whiteFont, { fontWeight: 'bold' }]}>
-                {'KARTTA'}
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <AdaButton
+            styles={styles}
+            content={'KARTTA'}
+            onPress={() => this.props.map()}
+          />
         </View>
       );
     }
