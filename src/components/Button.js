@@ -8,7 +8,7 @@ class AdaButton extends Component {
 
   static propTypes = {
     content: React.PropTypes.string.isRequired,
-    // TODO: styles: ...isRequired && onPress: ...isRequired
+    // TODO: styles: foo.isRequired, onPress: bar.isRequired
   };
 
   render = () => {
