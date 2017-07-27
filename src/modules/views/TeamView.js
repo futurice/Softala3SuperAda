@@ -23,6 +23,7 @@ import AdaButton from '../../components/Button';
 
 const mapStateToProps = state => ({
   teamDetails: state.teamDetails,
+  description: state.teamDetails.data.description,
   image: state.teamDetails.data.file,
 });
 
@@ -54,6 +55,9 @@ const mapDispatchToProps = dispatch => ({
         (err, data) => {
           if (!err) {
             dispatch(NavigationActions.navigate({ routeName: 'Checkpoints' }));
+          } else {
+            console.log('Error ', err);
+            console.log('Data: ', data);
           }
         },
       ),
@@ -73,8 +77,8 @@ export class TeamView extends React.Component {
   };
 
   state = {
-    modifiedTeamDescription: null,
-    modifiedImage: null,
+    description: this.props.description,
+    image: this.props.image,
     disableSave: false,
 
     width: 0,
@@ -83,6 +87,15 @@ export class TeamView extends React.Component {
 
   componentDidMount() {
     this.props.refresh();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.description !== this.state.description) {
+      this.setState({ description: nextProps.description });
+    }
+    if (nextProps.image !== this.state.image) {
+      this.setState({ image: nextProps.image });
+    }
   }
 
   checkpoints = () => {
@@ -124,12 +137,6 @@ export class TeamView extends React.Component {
   };
 
   render() {
-    const description =
-      this.state.modifiedTeamDescription !== null
-        ? this.state.modifiedTeamDescription
-        : this.props.teamDetails.data
-          ? this.props.teamDetails.data.description
-          : '';
     const name = this.props.teamDetails.data
       ? this.props.teamDetails.data.teamName
       : '';
@@ -138,13 +145,7 @@ export class TeamView extends React.Component {
         ? { uri: this.state.modifiedImage }
         : { uri: this.props.image };
 
-    const disabled =
-      this.props.teamDetails.loading ||
-      this.state.disableSave ||
-      this.state.modifiedTeamDescription === '' ||
-      (!this.state.modifiedImage && !this.state.modifiedTeamDescription);
-
-    const spinner = this.props.teamDetails.loading;
+    const disabled = this.props.teamDetails.loading || this.state.disableSave;
 
     return (
       <View style={{ flex: 1, backgroundColor: '#fafafa' }}>
@@ -199,15 +200,11 @@ export class TeamView extends React.Component {
               <View style={styles.description}>
                 <TextInput
                   style={styles.teamInput}
-                  onChangeText={modifiedTeamDescription =>
-                    this.setState({ modifiedTeamDescription })}
-                  value={description}
+                  onChangeText={description => this.setState({ description })}
+                  value={this.state.description}
                   onSubmitEditing={() => {
                     !disabled &&
-                      this.props.save(
-                        this.state.modifiedTeamDescription,
-                        this.state.modifiedImage,
-                      );
+                      this.props.save(this.state.description, this.state.image);
                   }}
                 />
               </View>
@@ -218,10 +215,7 @@ export class TeamView extends React.Component {
           styles={styles}
           content={'TALLENNA'}
           onPress={() => {
-            this.props.save(
-              this.state.modifiedTeamDescription,
-              this.state.modifiedImage,
-            );
+            this.props.save(this.state.description, this.state.image);
           }}
           disabled={disabled}
           accessible={true}
