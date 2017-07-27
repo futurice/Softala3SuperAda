@@ -214,36 +214,18 @@ export class TeamView extends React.Component {
             </View>
           </KeyboardAwareScrollView>
         </View>
-        <View style={styles.saveButtonContainer}>
-          <TouchableOpacity
-            disabled={disabled}
-            onPress={() => {
-              this.props.save(
-                this.state.modifiedTeamDescription,
-                this.state.modifiedImage,
-              );
-            }}
-            accessible={true}
-            style={disabled ? styles.saveButtonLoading : styles.saveButton}
-          >
-            <Text style={[styles.whiteFont, { fontWeight: 'bold' }]}>
-              {'TALLENNA'}
-            </Text>
-          </TouchableOpacity>
-          {spinner
-            ? <ActivityIndicator
-                animating={true}
-                color={AppStyles.white}
-                style={{
-                  position: 'absolute',
-                  height: 70,
-                  width: 70,
-                  zIndex: 1000,
-                }}
-                size="large"
-              />
-            : null}
-        </View>
+        <AdaButton
+          styles={styles}
+          content={'TALLENNA'}
+          onPress={() => {
+            this.props.save(
+              this.state.modifiedTeamDescription,
+              this.state.modifiedImage,
+            );
+          }}
+          disabled={disabled}
+          accessible={true}
+        />
       </View>
     );
   }
@@ -337,7 +319,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 75,
   },
-  saveButtonContainer: {
+  buttonContainer: {
     backgroundColor: AppStyles.whiteBackground,
     elevation: 5,
     alignSelf: 'stretch',
@@ -346,7 +328,7 @@ const styles = StyleSheet.create({
     height: 70,
     margin: 20,
   },
-  saveButton: {
+  button: {
     backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
@@ -354,7 +336,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 5,
   },
-  saveButtonLoading: {
+  buttonLoading: {
     backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     alignSelf: 'stretch',

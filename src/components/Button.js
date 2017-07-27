@@ -13,10 +13,11 @@ class AdaButton extends Component {
 
   render = () => {
     const { styles, content, onPress, disabled, accessible } = this.props;
+    var buttonStyle = disabled ? styles.buttonLoading : styles.button;
     return (
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={styles.button}
+          style={buttonStyle}
           onPress={onPress}
           disabled={disabled}
         >
