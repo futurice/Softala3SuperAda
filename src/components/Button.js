@@ -11,8 +11,34 @@ class AdaButton extends Component {
     // TODO: styles: foo.isRequired, onPress: bar.isRequired
   };
 
+  //function AddActivityIndicator( loading ) {
+
+  //    return
+  /*
+    <ActivityIndicator
+            animating={true}
+            color={AppStyles.white}
+            style={{
+              zIndex: 1000,
+              position: 'absolute',
+              height: 70,
+              width: 70,
+            }}
+            size="large"
+          />}
+   */
+  // );
+  //}
+
   render = () => {
-    const { styles, content, onPress, disabled, accessible } = this.props;
+    const {
+      styles,
+      content,
+      onPress,
+      disabled,
+      accessible,
+      activityIndicator,
+    } = this.props;
     var buttonStyle = disabled ? styles.buttonLoading : styles.button;
     return (
       <View style={styles.buttonContainer}>

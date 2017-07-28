@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 
 import rest from '../../utils/rest';
 import AppStyles from '../AppStyles';
+import AdaButton from '../../components/Button';
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -65,61 +66,25 @@ export class LoginView extends React.Component {
 
   renderDevLoginButton() {
     return (
-      <View style={styles.loginButtonContainer}>
-        <TouchableOpacity
-          disabled={this.props.auth.loading}
-          onPress={() => this.props.login('TeamAwesome')}
-          style={
-            this.props.auth.loading
-              ? styles.loginButtonLoading
-              : styles.loginButton
-          }
-        >
-          <Text style={styles.whiteFont}>DEV LOGIN</Text>
-        </TouchableOpacity>
-        {this.props.auth.loading &&
-          <ActivityIndicator
-            animating={true}
-            color={AppStyles.white}
-            style={{
-              zIndex: 1000,
-              position: 'absolute',
-              height: 70,
-              width: 70,
-            }}
-            size="large"
-          />}
-      </View>
+      <AdaButton
+        styles={styles}
+        content={'DEV LOGIN'}
+        disabled={this.props.auth.loading}
+        onPress={() => this.props.login('TeamAwesome')}
+        activityIndicator={this.props.auth.loading}
+      />
     );
   }
 
   renderLoginButton() {
     return (
-      <View style={styles.loginButtonContainer}>
-        <TouchableOpacity
-          disabled={this.props.auth.loading}
-          onPress={() => this.props.login(this.state.teamname)}
-          style={
-            this.props.auth.loading
-              ? styles.loginButtonLoading
-              : styles.loginButton
-          }
-        >
-          <Text style={styles.whiteFont}>KIRJAUDU SISÄÄN</Text>
-        </TouchableOpacity>
-        {this.props.auth.loading &&
-          <ActivityIndicator
-            animating={true}
-            color={AppStyles.white}
-            style={{
-              zIndex: 1000,
-              position: 'absolute',
-              height: 70,
-              width: 70,
-            }}
-            size="large"
-          />}
-      </View>
+      <AdaButton
+        styles={styles}
+        content={'KIRJAUDU SISÄÄN'}
+        disabled={this.props.auth.loading}
+        onPress={() => this.props.login(this.state.teamname)}
+        activityIndicator={this.props.auth.loading}
+      />
     );
   }
 
@@ -191,7 +156,7 @@ const styles = StyleSheet.create({
   errContainer: {
     flexGrow: 1,
   },
-  loginButtonContainer: {
+  buttonContainer: {
     backgroundColor: AppStyles.darkRed,
     elevation: 5,
     alignSelf: 'stretch',
@@ -200,14 +165,14 @@ const styles = StyleSheet.create({
     height: 70,
     margin: 20,
   },
-  loginButton: {
+  button: {
     backgroundColor: AppStyles.lightRed,
     alignItems: 'center',
     alignSelf: 'stretch',
     height: 70,
     padding: 20,
   },
-  loginButtonLoading: {
+  buttonLoading: {
     backgroundColor: AppStyles.darkRed,
     alignItems: 'center',
     alignSelf: 'stretch',
