@@ -121,7 +121,6 @@ export class TeamView extends React.Component {
         console.log('ImagePicker Error: ', response.error);
         this.setState({ disableSave: false });
       } else {
-        console.log('Imagepicker.response: ', response);
         ImageResizer.createResizedImage(response.uri, 512, 512, 'PNG', 100)
           .then(resizedImageUri => {
             // resizeImageUri is the URI of the new image that can now be displayed, uploaded...
