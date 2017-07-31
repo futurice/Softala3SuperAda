@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import AppStyles from './AppStyles';
 
 import NavigatorView from './navigator/NavigatorView';
+import ErrorMessageView from './views/ErrorMessageView';
 
 const styles = {
   centered: {
@@ -36,6 +37,7 @@ export class AppView extends Component {
           barStyle="light-content"
         />
         <NavigatorView />
+        <ErrorMessageView />
       </View>
     );
   }

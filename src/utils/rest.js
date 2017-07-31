@@ -1,6 +1,12 @@
 import reduxApi, { transformers } from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 
+export const CLEAR_AUTH_ERROR = 'rest/CLEAR_AUTH_ERROR';
+export const CLEAR_TEAMDETAILS_ERROR = 'rest/CLEAR_TEAMDETAILS_ERROR';
+export const CLEAR_FEEDBACK_ERROR = 'rest/CLEAR_FEEDBACK_ERROR';
+export const CLEAR_COMPANIES_ERROR = 'rest/CLEAR_COMPANIES_ERROR';
+export const CLEAR_QUIZ_ERROR = 'rest/CLEAR_QUIZ_ERROR';
+
 export const apiRoot = __DEV__
   ? 'http://localhost:3000'
   : 'https://superada.herokuapp.com';
@@ -12,6 +18,12 @@ const rest = reduxApi({
     options: {
       method: 'POST',
     },
+    reducer(state, action) {
+      if (action.type === CLEAR_AUTH_ERROR) {
+        return Object.assign({}, state, { error: null });
+      }
+      return state;
+    },
   },
   teamDetails: {
     url: `${apiRoot}/teamdetails`,
@@ -19,19 +31,43 @@ const rest = reduxApi({
       return { ...prevData, ...data };
     },
     crud: true,
+    reducer(state, action) {
+      if (action.type === CLEAR_TEAMDETAILS_ERROR) {
+        return Object.assign({}, state, { error: null });
+      }
+      return state;
+    },
   },
   feedback: {
     url: `${apiRoot}/feedback`,
     transformer: transformers.array,
     crud: true,
+    reducer(state, action) {
+      if (action.type === CLEAR_FEEDBACK_ERROR) {
+        return Object.assign({}, state, { error: null });
+      }
+      return state;
+    },
   },
   companies: {
     url: `${apiRoot}/companies`,
     transformer: transformers.array,
+    reducer(state, action) {
+      if (action.type === CLEAR_COMPANIES_ERROR) {
+        return Object.assign({}, state, { error: null });
+      }
+      return state;
+    },
   },
   quiz: {
     url: `${apiRoot}/quiz`,
     crud: true,
+    reducer(state, action) {
+      if (action.type === CLEAR_QUIZ_ERROR) {
+        return Object.assign({}, state, { error: null });
+      }
+      return state;
+    },
   },
 })
   .use('options', (url, params, getState) => {
