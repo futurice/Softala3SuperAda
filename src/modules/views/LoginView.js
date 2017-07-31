@@ -10,7 +10,6 @@ import {
   Alert,
   Platform,
   AsyncStorage,
-  ActivityIndicator,
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';

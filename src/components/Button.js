@@ -1,5 +1,25 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+
+function AddSpinner(styles, loading) {
+  if (loading) {
+    return (
+      <ActivityIndicator
+        animating={true}
+        color={styles.white}
+        style={{
+          zIndex: 1000,
+          position: 'absolute',
+          height: 70,
+          width: 70,
+        }}
+        size="large"
+      />
+    );
+  } else {
+    return null;
+  }
+}
 
 class AdaButton extends Component {
   constructor(props) {
@@ -10,25 +30,6 @@ class AdaButton extends Component {
     content: React.PropTypes.string.isRequired,
     // TODO: styles: foo.isRequired, onPress: bar.isRequired
   };
-
-  //function AddActivityIndicator( loading ) {
-
-  //    return
-  /*
-    <ActivityIndicator
-            animating={true}
-            color={AppStyles.white}
-            style={{
-              zIndex: 1000,
-              position: 'absolute',
-              height: 70,
-              width: 70,
-            }}
-            size="large"
-          />}
-   */
-  // );
-  //}
 
   render = () => {
     const {

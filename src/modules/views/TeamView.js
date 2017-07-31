@@ -219,6 +219,7 @@ export class TeamView extends React.Component {
           }}
           disabled={disabled}
           accessible={true}
+          activityIndicator={this.state.loading}
         />
       </View>
     );
