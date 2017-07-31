@@ -4,14 +4,14 @@ import { createBlacklistFilter } from 'redux-persist-transform-filter';
 import { reducers as restReducers } from './rest';
 
 /**
- * Don't save or restore 'loading' flag in rest reducers.
+ * Don't save or restore 'loading' and 'error' flag in rest reducers.
  *
  * If the 'loading' flag is set even though there is no request in progress,
  * redux-api will wait forever and never let us issue any further requests
  * to the endpoint
  */
 const apiLoadingFilters = Object.keys(restReducers).map(reducer =>
-  createBlacklistFilter(reducer, ['loading'], ['loading']),
+  createBlacklistFilter(reducer, ['loading', 'error'], ['loading', 'error']),
 );
 
 const persistConfig = {
