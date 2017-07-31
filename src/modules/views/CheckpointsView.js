@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  RefreshControl,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -45,6 +46,7 @@ export class CheckPointView extends React.Component {
 
   state = {
     refreshInterval: null,
+    refreshing: false,
   };
 
   componentDidMount() {
@@ -58,9 +60,20 @@ export class CheckPointView extends React.Component {
     clearInterval(this.state.refreshInterval);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.companies !== this.props.companies) {
+      this.setState({ refreshing: false });
+    }
+  }
+
   fetchData = () => {
     this.props.refresh();
   };
+
+  onPullRefresh() {
+    this.setState({ refreshing: true });
+    this.fetchData();
+  }
 
   renderCompany = company => {
     const uri = `${apiRoot}/public/company${company.companyId}.png`;
@@ -132,7 +145,15 @@ export class CheckPointView extends React.Component {
       return (
         <View style={styles.container}>
           <View style={styles.statusBar} />
-          <ScrollView style={styles.companyListContainer}>
+          <ScrollView
+            style={styles.companyListContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.fetchData.bind(this)}
+              />
+            }
+          >
             <View style={styles.companyList}>
               {this.props.companies.data.map(company =>
                 this.renderCompany(company),
