@@ -1,26 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 
-function AddSpinner(styles, loading) {
-  if (loading) {
-    return (
-      <ActivityIndicator
-        animating={true}
-        color={styles.white}
-        style={{
-          zIndex: 1000,
-          position: 'absolute',
-          height: 70,
-          width: 70,
-        }}
-        size="large"
-      />
-    );
-  } else {
-    return null;
-  }
-}
-
 class AdaButton extends Component {
   constructor(props) {
     super(props);
@@ -32,14 +12,7 @@ class AdaButton extends Component {
   };
 
   render = () => {
-    const {
-      styles,
-      content,
-      onPress,
-      disabled,
-      accessible,
-      activityIndicator,
-    } = this.props;
+    const { styles, content, onPress, disabled } = this.props;
     var buttonStyle = disabled ? styles.buttonLoading : styles.button;
     return (
       <View style={styles.buttonContainer}>
