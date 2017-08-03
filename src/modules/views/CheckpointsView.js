@@ -14,11 +14,10 @@ import { connect } from 'react-redux';
 
 import TeamPointsView from './TeamPointsView';
 import AppStyles from '../AppStyles';
-import Dimensions from 'Dimensions';
 
-import { apiRoot } from '../../utils/rest';
 import rest from '../../utils/rest';
 import AdaButton from '../../components/Button';
+import CompanyView from './CompanyView';
 
 const mapStateToProps = state => ({
   companies: state.companies,
@@ -75,48 +74,6 @@ export class CheckPointView extends React.Component {
     this.fetchData();
   }
 
-  renderCompany = company => {
-    const uri = `${apiRoot}/public/company${company.companyId}.png`;
-
-    return (
-      <View key={company.companyId} style={styles.company}>
-        <Image
-          style={[styles.thumb, company.points ? styles.companyVisited : null]}
-          source={{ uri }}
-        />
-
-        {company.points
-          ? <Image
-              style={styles.checkmark}
-              source={require('../../../images/checkmark.png')}
-            />
-          : null}
-
-        <Text numberOfLines={1} style={styles.companyText}>
-          {company.companyName}
-        </Text>
-        <View style={styles.starsContainer}>
-          {new Array(5)
-            .fill(null)
-            .map(
-              (element, index) =>
-                index < company.points
-                  ? <Image
-                      key={index}
-                      style={styles.star}
-                      source={require('../../../images/star.png')}
-                    />
-                  : <Image
-                      key={index}
-                      style={styles.star}
-                      source={require('../../../images/star_grey.png')}
-                    />,
-            )}
-        </View>
-      </View>
-    );
-  };
-
   render() {
     let visitedCompanies = 0;
     let numCompanies = 0;
@@ -125,7 +82,6 @@ export class CheckPointView extends React.Component {
       if (company.points) {
         visitedCompanies++;
       }
-
       numCompanies++;
     });
 
@@ -156,7 +112,7 @@ export class CheckPointView extends React.Component {
           >
             <View style={styles.companyList}>
               {this.props.companies.data.map(company =>
-                this.renderCompany(company),
+                <CompanyView key={company.companyId} company={company} />,
               )}
             </View>
           </ScrollView>
@@ -170,8 +126,6 @@ export class CheckPointView extends React.Component {
     }
   }
 }
-
-const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -199,14 +153,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
   },
-  company: {
-    alignItems: 'center',
-    padding: 10,
-    width: Math.floor(screenWidth / 3),
-  },
-  companyVisited: {
-    opacity: 0.5,
-  },
   companyListContainer: {
     paddingTop: 10,
     alignSelf: 'stretch',
@@ -216,27 +162,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'space-between',
-  },
-  companyText: {
-    fontSize: Math.floor(screenWidth / 24),
-  },
-  starsContainer: {
-    flexDirection: 'row',
-  },
-  star: {
-    width: Math.floor(screenWidth / 20),
-    height: Math.floor(screenWidth / 20),
-  },
-  checkmark: {
-    width: 32,
-    height: 32,
-    position: 'absolute',
-    right: 20,
-    top: 20,
-  },
-  thumb: {
-    width: Math.floor(screenWidth / 5),
-    height: Math.floor(screenWidth / 5),
   },
   text: {
     fontSize: 24,
