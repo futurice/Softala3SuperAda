@@ -70,7 +70,6 @@ export class LoginView extends React.Component {
         content={'DEV LOGIN'}
         disabled={this.props.auth.loading}
         onPress={() => this.props.login('TeamAwesome')}
-        activityIndicator={this.props.auth.loading}
       />
     );
   }

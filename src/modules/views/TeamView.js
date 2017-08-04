@@ -77,8 +77,8 @@ export class TeamView extends React.Component {
   };
 
   state = {
-    description: this.props.description,
-    image: this.props.image,
+    description: null,
+    image: null,
     disableSave: false,
 
     width: 0,
@@ -90,10 +90,13 @@ export class TeamView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.description !== this.state.description) {
+    if (
+      !this.state.description &&
+      nextProps.description !== this.state.description
+    ) {
       this.setState({ description: nextProps.description });
     }
-    if (nextProps.image !== this.state.image) {
+    if (!this.state.image && nextProps.image !== this.state.image) {
       this.setState({ image: nextProps.image });
     }
   }
@@ -106,10 +109,10 @@ export class TeamView extends React.Component {
     this.setState({ disableSave: true });
 
     const options = {
-      title: 'Select Avatar',
+      title: 'Valitse tiimin kuva',
       mediaType: 'photo',
-      maxWidth: 512,
-      maxHeight: 512,
+      //maxWidth: 512,
+      //maxHeight: 512,
       allowsEditing: true,
     };
 
@@ -126,7 +129,7 @@ export class TeamView extends React.Component {
             // resizeImageUri is the URI of the new image that can now be displayed, uploaded...
             this.setState({
               disableSave: false,
-              modifiedImage: resizedImageUri,
+              image: resizedImageUri,
             });
           })
           .catch(err => {
@@ -140,10 +143,7 @@ export class TeamView extends React.Component {
     const name = this.props.teamDetails.data
       ? this.props.teamDetails.data.teamName
       : '';
-    const image =
-      this.state.modifiedImage !== null
-        ? { uri: this.state.modifiedImage }
-        : { uri: this.props.image };
+    const image = { uri: this.state.image || this.props.image };
 
     const disabled = this.props.teamDetails.loading || this.state.disableSave;
 
@@ -215,11 +215,10 @@ export class TeamView extends React.Component {
           styles={styles}
           content={'TALLENNA'}
           onPress={() => {
+            console.log('Saving ', this.state.image);
             this.props.save(this.state.description, this.state.image);
           }}
           disabled={disabled}
-          accessible={true}
-          activityIndicator={this.state.loading}
         />
       </View>
     );
