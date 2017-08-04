@@ -117,7 +117,7 @@ export class TeamView extends React.Component {
       permissionDenied: {
         title: 'Olet estänyt tämän toiminnon',
         text:
-          'Muokka SuperAdan oikeuksia, jotta voit valita/ottaa tiimillesi kuvan.',
+          'Muokkaa SuperAdan oikeuksia, jotta voit lisätä tiimillesi kuvan.',
         reTryTitle: 'Asetukset',
         okTitle: 'OK',
       },
