@@ -107,15 +107,21 @@ export class TeamView extends React.Component {
 
   openImageGallery = () => {
     this.setState({ disableSave: true });
-
     const options = {
       title: 'Valitse tiimin kuva',
+      takePhotoButtonTitle: 'Ota kuva',
+      chooseFromLibraryButtonTitle: 'Valitse kirjastosta',
+      cancelButtonTitle: 'Peruuta',
       mediaType: 'photo',
-      //maxWidth: 512,
-      //maxHeight: 512,
       allowsEditing: true,
+      permissionDenied: {
+        title: 'Olet estänyt tämän toiminnon',
+        text:
+          'Muokka SuperAdan oikeuksia, jotta voit valita/ottaa tiimillesi kuvan.',
+        reTryTitle: 'Asetukset',
+        okTitle: 'OK',
+      },
     };
-
     ImagePicker.showImagePicker(options, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
