@@ -32,26 +32,20 @@ export class Welcome extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView
-          contentContainerStyle={{
-            alignItems: 'center',
-          }}
-        >
-          <Image
-            style={styles.image}
-            source={require('../../../images/tervetuloa.png')}
-          />
-          <Text style={styles.textStyle}>
-            Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan
-            tehtävä. Rasteja pitävät yritykset ja oppilaitokset kirjaavat
-            rastisuoritukset puolestanne
-          </Text>
-          <Text style={styles.textStyle}>
-            Kannattaa pelata läpi myös Super-Ada Quiz. Tasapistetilanteessa
-            hyvin suoritettu Quiz ratkaisee voiton.
-          </Text>
-          <Text style={styles.textStyle}>ONNEA MATKAAN!</Text>
-        </ScrollView>
+        <Image
+          style={styles.image}
+          source={require('../../../images/tervetuloa.png')}
+        />
+        <Text style={styles.textStyle}>
+          Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan
+          tehtävä. Rasteja pitävät yritykset ja oppilaitokset kirjaavat
+          rastisuoritukset puolestanne
+        </Text>
+        <Text style={styles.textStyle}>
+          Kannattaa pelata läpi myös Super-Ada Quiz. Tasapistetilanteessa hyvin
+          suoritettu Quiz ratkaisee voiton.
+        </Text>
+        <Text style={styles.textStyle}>ONNEA MATKAAN!</Text>
         <AdaButton
           styles={styles}
           content={'MUOKKAA TIIMIÄ'}
