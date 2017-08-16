@@ -21,6 +21,8 @@ import AppStyles from '../AppStyles';
 import rest from '../../utils/rest';
 import AdaButton from '../../components/Button';
 
+import { getTranslated, texts } from '../../utils/translation';
+
 const mapStateToProps = state => ({
   teamDetails: state.teamDetails,
   description: state.teamDetails.data.description,
@@ -67,7 +69,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class TeamView extends React.Component {
   static navigationOptions = {
-    title: 'Muokkaa tiimiä',
+    title: getTranslated(texts.editTeamTitle),
     tabBarLabel: '',
     tabBarIcon: ({ tintColor }) =>
       <Image

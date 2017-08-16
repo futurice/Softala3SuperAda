@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import NavigatorStateReducer from '../state/NavigatorState';
 import GameStateReducer from '../state/GameState';
 import SessionStateReducer, { RESET_STATE } from '../state/SessionState';
+import { LocaleReducer } from '../utils/translation';
 import rest from '../utils/rest';
 
 const reducers = {
@@ -11,6 +12,8 @@ const reducers = {
   session: SessionStateReducer,
 
   gameState: GameStateReducer,
+
+  locale: LocaleReducer,
 
   ...rest.reducers,
 };
@@ -21,6 +24,5 @@ export default function mainReducer(state, action) {
   if (action.type === RESET_STATE) {
     return namespacedReducer(action.payload, action);
   }
-
   return namespacedReducer(state || void 0, action);
 }

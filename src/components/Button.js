@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 
+import { getTranslated, texts } from '../utils/translation';
+
 class AdaButton extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ class AdaButton extends Component {
           disabled={disabled}
         >
           <Text style={styles.whiteFont}>
-            {content}
+            {getTranslated(content)}
           </Text>
         </TouchableOpacity>
       </View>

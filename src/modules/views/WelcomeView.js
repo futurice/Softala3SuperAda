@@ -11,7 +11,9 @@ import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../AppStyles';
 import AdaButton from '../../components/Button';
+import TranslatedText from '../../components/TranslatedText';
 import { connect } from 'react-redux';
+import { getTranslated, texts } from '../../utils/translation';
 
 const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
@@ -20,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class Welcome extends React.Component {
   static navigationOptions = {
-    title: 'Tervetuloa!',
+    title: getTranslated(texts.welcomeTitle),
     tabBarLabel: '',
     tabBarIcon: ({ tintColor }) =>
       <Image
@@ -36,19 +38,12 @@ export class Welcome extends React.Component {
           style={styles.image}
           source={require('../../../images/tervetuloa.png')}
         />
-        <Text style={styles.textStyle}>
-          Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan
-          tehtävä. Rasteja pitävät yritykset ja oppilaitokset kirjaavat
-          rastisuoritukset puolestanne
-        </Text>
-        <Text style={styles.textStyle}>
-          Kannattaa pelata läpi myös Super-Ada Quiz. Tasapistetilanteessa hyvin
-          suoritettu Quiz ratkaisee voiton.
-        </Text>
-        <Text style={styles.textStyle}>ONNEA MATKAAN!</Text>
+        <TranslatedText style={styles.textStyle} text={texts.checkpointIntro} />
+        <TranslatedText style={styles.textStyle} text={texts.quizIntro} />
+        <TranslatedText style={styles.textStyle} text={texts.goodluck} />
         <AdaButton
           styles={styles}
-          content={'MUOKKAA TIIMIÄ'}
+          content={texts.editTeamButton}
           onPress={this.props.editTeam}
         />
       </View>
