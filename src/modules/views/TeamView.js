@@ -110,18 +110,21 @@ export class TeamView extends React.Component {
   openImageGallery = () => {
     this.setState({ disableSave: true });
     const options = {
-      title: 'Valitse tiimin kuva',
-      takePhotoButtonTitle: 'Ota kuva',
-      chooseFromLibraryButtonTitle: 'Valitse kirjastosta',
-      cancelButtonTitle: 'Peruuta',
+      title: getTranslated(texts.imageGalleryOptionsTitle),
+      takePhotoButtonTitle: getTranslated(texts.imageGalleryOptionsTakePhoto),
+      chooseFromLibraryButtonTitle: getTranslated(
+        texts.imageGalleryOptionsLibraryButton,
+      ),
+      cancelButtonTitle: getTranslated(texts.cancelButtonTitle),
       mediaType: 'photo',
       allowsEditing: true,
       permissionDenied: {
-        title: 'Olet estänyt tämän toiminnon',
-        text:
-          'Muokkaa SuperAdan oikeuksia, jotta voit lisätä tiimillesi kuvan.',
-        reTryTitle: 'Asetukset',
-        okTitle: 'OK',
+        title: getTranslated(texts.imageGalleryOptionsPermissionDeniedTitle),
+        text: getTranslated(texts.imageGalleryOptionsPermissionDeniedText),
+        reTryTitle: getTranslated(
+          texts.imageGalleryOptionsPermissionDeniedReTry,
+        ),
+        okTitle: getTranslated(texts.imageGalleryOptionsPermissionDeniedOk),
       },
     };
     ImagePicker.showImagePicker(options, response => {
@@ -221,7 +224,7 @@ export class TeamView extends React.Component {
         </View>
         <AdaButton
           styles={styles}
-          content={'TALLENNA'}
+          content={texts.saveButton}
           onPress={() => {
             console.log('Saving ', this.state.image);
             this.props.save(this.state.description, this.state.image);

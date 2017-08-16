@@ -19,6 +19,8 @@ import rest from '../../utils/rest';
 import AdaButton from '../../components/Button';
 import CompanyView from './CompanyView';
 
+import { getTranslated, texts } from '../../utils/translation';
+
 const mapStateToProps = state => ({
   companies: state.companies,
 });
@@ -34,7 +36,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class CheckPointView extends React.Component {
   static navigationOptions = {
-    title: 'Rastit',
+    title: getTranslated(texts.checkpointsTitle),
     tabBarLabel: '',
     tabBarIcon: ({ tintColor }) =>
       <Image
@@ -118,7 +120,7 @@ export class CheckPointView extends React.Component {
           </ScrollView>
           <AdaButton
             styles={styles}
-            content={'KARTTA'}
+            content={texts.mapButton}
             onPress={() => this.props.map()}
           />
         </View>

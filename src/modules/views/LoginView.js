@@ -19,6 +19,8 @@ import rest from '../../utils/rest';
 import AppStyles from '../AppStyles';
 import AdaButton from '../../components/Button';
 
+import { getTranslated, texts } from '../../utils/translation';
+
 const mapStateToProps = state => ({
   auth: state.auth,
   token: state.auth.data.token,
@@ -78,7 +80,7 @@ export class LoginView extends React.Component {
     return (
       <AdaButton
         styles={styles}
-        content={'KIRJAUDU SISÄÄN'}
+        content={texts.login}
         disabled={this.props.auth.loading}
         onPress={() => this.props.login(this.state.teamname)}
         activityIndicator={this.props.auth.loading}

@@ -1,4 +1,5 @@
 export default {
+  login: 'KIRJAUDU SISÄÄN',
   welcomeTitle: 'Tervetuloa!',
   checkpointIntro:
     'Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan' +
@@ -10,4 +11,16 @@ export default {
   goodluck: 'ONNEA MATKAAN!',
   editTeamButton: 'MUOKKAA TIIMIÄ',
   editTeamTitle: 'Muokkaa tiimiäsi',
+  imageGalleryOptionsTitle: 'Valitse tiimin kuva',
+  imageGalleryOptionsTakePhoto: 'Ota kuva',
+  imageGalleryOptionsLibraryButton: 'Valitse kirjastosta',
+  imageGalleryOptionsCancelButton: 'Peruuta',
+  imageGalleryOptionsPermissionDeniedTitle: 'Olet estänyt tämän toiminnon',
+  imageGalleryOptionsPermissionDeniedText:
+    'Muokkaa SuperAdan oikeuksia, jotta voit lisätä tiimillesi kuvan.',
+  imageGalleryOptionsPermissionDeniedReTryTitle: 'Asetukset',
+  imageGalleryOptionsPermissionDeniedOkTitle: 'OK',
+  saveButton: 'TALLENNA',
+  checkpointsTitle: 'Rastit',
+  mapButton: 'KARTTA',
 };

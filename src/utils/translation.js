@@ -20,12 +20,28 @@ function setLocale(locale) {
 }
 
 var texts = {
+  login: 'login',
   welcomeTitle: 'welcomeTitle',
   checkpointIntro: 'checkpointIntro',
   quizIntro: 'quizIntro',
   goodluck: 'goodluck',
   editTeamButton: 'editTeamButton',
   editTeamTitle: 'editTeamTitle',
+  imageGalleryOptionsTitle: 'imageGalleryOptionsTitle',
+  imageGalleryOptionsTakePhoto: 'imageGalleryOptionsTakePhoto',
+  imageGalleryOptionsLibraryButton: 'imageGalleryOptionsLibraryButton',
+  imageGalleryOptionsCancelButton: 'imageGalleryOptionsCancelButton',
+  imageGalleryOptionsPermissionDeniedTitle:
+    'imageGalleryOptionsPermissionDeniedTitle',
+  imageGalleryOptionsPermissionDeniedText:
+    'imageGalleryOptionsPermissionDeniedText',
+  imageGalleryOptionsPermissionDeniedReTry:
+    'imageGalleryOptionsPermissionDeniedReTry',
+  imageGalleryOptionsPermissionDeniedOk:
+    'imageGalleryOptionsPermissionDeniedOk',
+  saveButton: 'saveButton',
+  checkpointsTitle: 'checkpointsTitle',
+  mapButton: 'mapButton',
 };
 
 function LocaleReducer(state = {}, action) {
