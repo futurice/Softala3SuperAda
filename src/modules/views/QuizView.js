@@ -16,6 +16,9 @@ import PuzzleContainer from '../puzzle/PuzzleContainer';
 import * as GameState from '../../state/GameState';
 import AppStyles from '../AppStyles';
 
+import TranslatedText from '../../components/TranslatedText';
+import { getTranslated, texts } from '../../utils/translation';
+
 const resetGame = component => event => {
   event.preventDefault();
 
@@ -97,13 +100,19 @@ export class GameView extends Component {
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining - minutes * 60;
 
-    let footerText = `Aika: ${minutes}m ${seconds}s ${gameStatus ===
-    GameState.GAME_PAUSE
-      ? '(paused)'
-      : ''}`;
-    if (gameStatus === GameState.GAME_COMPLETED) {
-      footerText = `Game ended in ${timer}s`;
-    }
+    var time = {
+      key: texts.quizTime,
+      minutes: minutes,
+      seconds: seconds,
+    };
+
+    let timerText = getTranslated(time);
+    let pausedText =
+      gameStatus === GameState.GAME_PAUSE
+        ? getTranslated(texts.quizTimerPause)
+        : '';
+
+    timerText += pausedText;
 
     // If server thinks we're done, but redux store state says we're not,
     // show total points from server and offer to restart
@@ -114,23 +123,30 @@ export class GameView extends Component {
     ) {
       return (
         <View style={styles.gameContainer}>
-          <Text style={styles.congratsText}>Onneksi olkoon!</Text>
-          <Text style={styles.congratsBodyText}>
-            {'Tehtävä ratkottu'}
-          </Text>
-          <Text style={styles.congratsBodyText}>
-            {`Pisteitä yhteensä: ${quizStatus.data.points}`}
-          </Text>
-          <Text style={styles.retryText}>
-            {
-              'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'
-            }
-          </Text>
+          <TranslatedText
+            style={styles.congratsText}
+            text={texts.quizEndCongraz}
+          />
+          <TranslatedText
+            style={styles.congratsBodyText}
+            text={texts.quizEndCompleted}
+          />
+          <TranslatedText
+            style={styles.congratsBodyText}
+            text={{
+              key: texts.quizEndTotalScore,
+              points: quizStatus.data.points,
+            }}
+          />
+          <TranslatedText
+            style={styles.retryText}
+            text={texts.quizYouCanTryMultipleTimes}
+          />
           <TouchableOpacity
             style={[{ marginTop: 10 }, styles.button]}
             onPress={resetGame(this)}
           >
-            <Text style={styles.buttonText}>UUSI YRITYS</Text>
+            <TranslatedText style={styles.buttonText} text={texts.quizRetry} />
           </TouchableOpacity>
         </View>
       );
@@ -141,24 +157,28 @@ export class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.welcomeText}>
-                Tervetuloa ratkomaan Super-Ada quiz-tehtävää!
-              </Text>
-              <Text style={styles.welcomeText}>
-                Kerää pisteitä löytämällä mahdollisimman monta IT-alaan
-                liittyvää sanaa. Saat lisäpisteitä löytämällä kaikki sanat
-                nopeasti!
-              </Text>
-              <Text style={styles.welcomeText}>
-                Aikarajoitus: 10 minuuttia.
-              </Text>
-              <Text style={styles.welcomeText}>
-                Voit yrittää ratkoa quiz-tehtävän monta kertaa. Pisteet
-                huomioidaan ainoastaan viimeisestä yrityksestä!
-              </Text>
+              <TranslatedText
+                style={styles.welcomeText}
+                text={texts.quizWelcome}
+              />
+              <TranslatedText
+                style={styles.welcomeText}
+                text={texts.quizExplanation}
+              />
+              <TranslatedText
+                style={styles.welcomeText}
+                text={texts.quizTimelimit}
+              />
+              <TranslatedText
+                style={styles.welcomeText}
+                text={texts.quizYouCanTryMultipleTimes}
+              />
             </View>
             <TouchableOpacity style={styles.button} onPress={startGame(this)}>
-              <Text style={styles.buttonText}>ALOITA</Text>
+              <TranslatedText
+                style={styles.buttonText}
+                text={texts.quizStart}
+              />
             </TouchableOpacity>
           </View>
         );
@@ -170,11 +190,15 @@ export class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <View style={styles.headerContainer}>
-              <Text style={styles.wordsToFind}>
-                Sanaa jäljellä: {wordsToFind || solution.found.length}
-              </Text>
+              <TranslatedText
+                style={styles.wordsToFind}
+                text={{
+                  key: texts.quizWordsLeft,
+                  wordsToFind: wordsToFind || solution.found.length,
+                }}
+              />
               <Text style={styles.timer}>
-                {footerText}
+                {timerText}
               </Text>
             </View>
             <PuzzleContainer
@@ -187,9 +211,14 @@ export class GameView extends Component {
                 style={styles.button}
                 onPress={togglePause(this)}
               >
-                <Text style={styles.buttonText}>
-                  {gameStatus === GameState.GAME_RUNNING ? 'TAUKO' : 'JATKA'}
-                </Text>
+                <TranslatedText
+                  style={styles.buttonText}
+                  text={
+                    gameStatus === GameState.GAME_RUNNING
+                      ? texts.quizPause
+                      : texts.quizContinue
+                  }
+                />
               </TouchableOpacity>
               <TouchableOpacity
                 style={
@@ -200,7 +229,10 @@ export class GameView extends Component {
                 disabled={gameStatus === GameState.GAME_RUNNING}
                 onPress={resetGame(this)}
               >
-                <Text style={styles.buttonText}>UUSI YRITYS</Text>
+                <TranslatedText
+                  style={styles.buttonText}
+                  text={texts.quizRetry}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -227,33 +259,56 @@ export class GameView extends Component {
 
         contentView = (
           <View style={styles.gameContainer}>
-            <Text style={styles.congratsText}>
-              {`${puzzleCompleted ? 'Onneksi olkoon!' : 'Aika loppui!'}`}
-            </Text>
-            <Text style={styles.congratsBodyText}>
-              {`Tehtävä ratkottu ${minutes} minuuttia alle aikarajan: ${minutesPoints} pistettä`}
-            </Text>
-            <Text style={styles.congratsBodyText}>
-              {`${wordsFound} sanaa (${pointsPerWord} pistettä sanaa kohti): ${wordsPoints} pistettä`}
-            </Text>
-            <Text style={styles.congratsBodyText}>
-              {puzzleCompleted
-                ? `Löysitte kaikki sanat: ${pointsCompleted} pistettä`
-                : 'Ette löytäneet kaikkia sanoja: 0 pistettä'}
-            </Text>
-            <Text style={styles.congratsBodyText}>
-              {`Pisteitä yhteensä: ${totalPoints}`}
-            </Text>
-            <Text style={styles.retryText}>
-              {
-                'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!'
+            <TranslatedText
+              style={styles.congratsText}
+              text={`${puzzleCompleted
+                ? texts.quizEndCongraz
+                : texts.quizEndTimeOver}`}
+            />
+            <TranslatedText
+              style={styles.congratsBodyText}
+              text={{
+                key: texts.quizEndMinutesBeforeTimeLimit,
+                minutes: minutes,
+                minutesPoints: minutesPoints,
+              }}
+            />
+            <TranslatedText
+              style={styles.congratsBodyText}
+              text={{
+                key: texts.quizEndWordsFound,
+                wordsFound: wordsFound,
+                pointsPerWord: pointsPerWord,
+                wordsPoints: wordsPoints,
+              }}
+            />
+            <TranslatedText
+              style={styles.congratsBodyText}
+              text={
+                puzzleCompleted
+                  ? {
+                      key: texts.quizEndAllWordsFound,
+                      pointsCompleted: pointsCompleted,
+                    }
+                  : texts.quizEndAllWordsNotFound
               }
-            </Text>
+            />
+            <TranslatedText
+              style={styles.congratsBodyText}
+              text={{ key: texts.quizEndTotalScore, points: totalPoints }}
+            />
+            <TranslatedText
+              style={styles.retryText}
+              text={texts.quizEndYouCanTryAgain}
+            />
             <TouchableOpacity
               style={[{ marginTop: 10 }, styles.button]}
               onPress={resetGame(this)}
             >
-              <Text style={styles.buttonText}>UUSI YRITYS</Text>
+              <TranslatedText
+                style={styles.buttonText}
+                text={texts.quizRetry}
+              />
             </TouchableOpacity>
           </View>
         );

@@ -27,6 +27,33 @@ export default {
   mapButton: 'KARTTA',
   mapTitle: 'Kartta',
 
+  quizWelcome: 'Tervetuloa ratkomaan Super-Ada quiz-tehtävää!',
+  quizExplanation:
+    'Kerää pisteitä löytämällä mahdollisimman monta IT-alaan liittyvää sanaa. Saat lisäpisteitä löytämällä kaikki sanat nopeasti!',
+  quizTimelimit: 'Aikarajoitus: 10 minuuttia.',
+  quizYouCanTryMultipleTimes:
+    'Voit yrittää ratkoa quiz-tehtävän monta kertaa. Pisteet huomioidaan ainoastaan viimeisestä yrityksestä',
+  quizStart: 'ALOITA',
+  quizWordsLeft: 'Sanaa jäljellä: ${wordsToFind}',
+  quizRetry: 'UUSI YRITYS',
+  quizPause: 'TAUKO',
+  quizContinue: 'JATKA',
+  quizTime: 'Aika: ${minutes}m ${seconds}s',
+  quizTimerPause: '(tauolla)',
+
+  quizEndCongraz: 'Onneksi olkoon!',
+  quizEndCompleted: 'Tehtävä ratkottu',
+  quizEndTimeOver: 'Aika loppui!',
+  quizEndMinutesBeforeTimeLimit:
+    'Tehtävä ratkottu ${minutes} minuuttia alle aikarajan: ${minutesPoints} pistettä',
+  quizEndWordsFound:
+    '${wordsFound} sanaa (${pointsPerWord} pistettä sanaa kohti): ${wordsPoints} pistettä',
+  quizEndAllWordsFound: 'Löysitte kaikki sanat: ${pointsCompleted} pistettä',
+  quizEndAllWordsNotFound: 'Ette löytäneet kaikkia sanoja: 0 pistettä',
+  quizEndTotalScore: 'Pisteitä yhteensä: ${points}',
+  quizEndYouCanTryAgain:
+    'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!',
+
   feedbackOrganizersInterested:
     'Super-Adan järjestäjät ovat kiinnostuneita kokemuksistanne' +
     ' tapahtumassa. Vastaamalla autat meitä tekemään tapahtumasta paremman!',

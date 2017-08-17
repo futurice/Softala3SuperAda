@@ -11,8 +11,21 @@ I18n.translations = {
   fi,
 };
 
-function getTranslated(key) {
-  return I18n.t(key, { defaults: [{ message: 'missing translation!' }] });
+function getTranslated(context) {
+  if (context === undefined) {
+    return 'missing translation!';
+  }
+  var str = typeof context === 'string' ? context : context.key;
+  var translated = I18n.t(str, {
+    defaults: [{ message: 'missing translation!' }],
+  });
+  for (var key in context) {
+    if (context.hasOwnProperty(key) || key !== 'key') {
+      var element = context[key];
+      translated = translated.replace('${' + key + '}', element);
+    }
+  }
+  return translated;
 }
 
 function setLocale(locale) {
@@ -44,6 +57,28 @@ var texts = {
   checkpointsTitle: 'checkpointsTitle',
   mapButton: 'mapButton',
   mapTitle: 'mapTitle',
+
+  quizWelcome: 'quizWelcome',
+  quizExplanation: 'quizExplanation',
+  quizTimelimit: 'quizTimelimit',
+  quizYouCanTryMultipleTimes: 'quizYouCanTryMultipleTimes',
+  quizStart: 'quizStart',
+  quizWordsLeft: 'quizWordsLeft',
+  quizRetry: 'quizRetry',
+  quizPause: 'quizPause',
+  quizContinue: 'quizContinue',
+  quizTime: 'quizTime',
+  quizTimerPause: 'quizTimerPause',
+
+  quizEndCongraz: 'quizEndCongraz',
+  quizEndCompleted: 'quizEndCompleted',
+  quizEndTimeOver: 'quizEndTimeOver',
+  quizEndMinutesBeforeTimeLimit: 'quizEndMinutesBeforeTimeLimit',
+  quizEndWordsFound: 'quizEndWordsFound',
+  quizEndAllWordsFound: 'quizEndAllWordsFound',
+  quizEndAllWordsNotFound: 'quizEndAllWordsNotFound',
+  quizEndTotalScore: 'quizEndTotalScore',
+  quizEndYouCanTryAgain: 'quizEndYouCanTryAgain',
 
   feedbackOrganizersInterested: 'feedbackOrganizersInterested',
   feedbackSendButton: 'feedbackSendButton',
