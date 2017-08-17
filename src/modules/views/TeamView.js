@@ -115,7 +115,7 @@ export class TeamView extends React.Component {
       chooseFromLibraryButtonTitle: getTranslated(
         texts.imageGalleryOptionsLibraryButton,
       ),
-      cancelButtonTitle: getTranslated(texts.cancelButtonTitle),
+      cancelButtonTitle: getTranslated(texts.imageGalleryOptionsCancelButton),
       mediaType: 'photo',
       allowsEditing: true,
       permissionDenied: {

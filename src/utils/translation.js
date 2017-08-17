@@ -27,6 +27,7 @@ var texts = {
   goodluck: 'goodluck',
   editTeamButton: 'editTeamButton',
   editTeamTitle: 'editTeamTitle',
+
   imageGalleryOptionsTitle: 'imageGalleryOptionsTitle',
   imageGalleryOptionsTakePhoto: 'imageGalleryOptionsTakePhoto',
   imageGalleryOptionsLibraryButton: 'imageGalleryOptionsLibraryButton',
@@ -42,6 +43,7 @@ var texts = {
   saveButton: 'saveButton',
   checkpointsTitle: 'checkpointsTitle',
   mapButton: 'mapButton',
+  mapTitle: 'mapTitle',
 
   feedbackOrganizersInterested: 'feedbackOrganizersInterested',
   feedbackSendButton: 'feedbackSendButton',

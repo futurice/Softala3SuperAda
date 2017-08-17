@@ -14,9 +14,11 @@ import AppStyles from '../AppStyles';
 
 import { apiRoot } from '../../utils/rest';
 
+import { getTranslated, texts } from '../../utils/translation';
+
 export class MapView extends React.Component {
   static navigationOptions = {
-    title: 'Kartta',
+    title: getTranslated(texts.mapTitle),
   };
 
   render() {
