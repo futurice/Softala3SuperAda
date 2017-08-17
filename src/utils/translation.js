@@ -42,6 +42,16 @@ var texts = {
   saveButton: 'saveButton',
   checkpointsTitle: 'checkpointsTitle',
   mapButton: 'mapButton',
+
+  feedbackOrganizersInterested: 'feedbackOrganizersInterested',
+  feedbackSendButton: 'feedbackSendButton',
+
+  thankYou: 'thankYou',
+  thankYouForParticipation: 'thankYouForParticipation',
+  thankYourForFeedback: 'thankYouForFeedback',
+  thankYouForFeedbackTitle: 'thankYouForFeedbackTitle',
+  thankYouComeAgain: 'thankYouComeAgain',
+  thankYouBestRegards: 'thankYouBestRegards',
 };
 
 function LocaleReducer(state = {}, action) {

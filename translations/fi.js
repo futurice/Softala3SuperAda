@@ -20,7 +20,20 @@ export default {
     'Muokkaa SuperAdan oikeuksia, jotta voit lisätä tiimillesi kuvan.',
   imageGalleryOptionsPermissionDeniedReTryTitle: 'Asetukset',
   imageGalleryOptionsPermissionDeniedOkTitle: 'OK',
+
   saveButton: 'TALLENNA',
   checkpointsTitle: 'Rastit',
   mapButton: 'KARTTA',
+
+  feedbackOrganizersInterested:
+    'Super-Adan järjestäjät ovat kiinnostuneita kokemuksistanne' +
+    ' tapahtumassa. Vastaamalla autat meitä tekemään tapahtumasta paremman!',
+  feedbackSendButton: 'LÄHETÄ',
+
+  thankYou: 'Kiitos!',
+  thankYouForParticipation: 'Kiitos osallistumisestasi!',
+  thankYouForFeedbackTitle: 'Kiitos palautteestasi',
+  thankYouForFeedback: 'Kiitos palautteestasi!',
+  thankYouComeAgain: 'Tervetuloa ensi vuonna uudestaan!',
+  thankYouBestRegards: 't- Super-Ada tiimi',
 };

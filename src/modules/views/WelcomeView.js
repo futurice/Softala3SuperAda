@@ -11,8 +11,9 @@ import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../AppStyles';
 import AdaButton from '../../components/Button';
-import TranslatedText from '../../components/TranslatedText';
 import { connect } from 'react-redux';
+
+import TranslatedText from '../../components/TranslatedText';
 import { getTranslated, texts } from '../../utils/translation';
 
 const mapStateToProps = state => ({});

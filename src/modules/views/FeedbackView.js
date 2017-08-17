@@ -26,6 +26,9 @@ import { connect } from 'react-redux';
 import * as NavigationState from '../../modules/navigation/NavigationState';
 import rest from '../../utils/rest';
 
+import TranslatedText from '../../components/TranslatedText';
+import { getTranslated, texts } from '../../utils/translation';
+
 const mapStateToProps = state => ({
   feedback: state.feedback,
 });
@@ -46,7 +49,7 @@ const mapDispatchToProps = dispatch => ({
             dispatch(
               NavigationState.pushRoute({
                 key: 'GoodbyeFB',
-                title: 'Kiitos palautteestasi',
+                title: getTranslated(texts.thankYouForFeedbackTitle),
               }),
             );
           }
@@ -165,22 +168,20 @@ export class FeedbackView extends React.Component {
           automaticallyAdjustContentInsets={false}
           style={styles.scrollView}
         >
-          <Text style={styles.baseText}>
-            Super-Adan järjestäjät ovat kiinnostuneita kokemuksistanne
-            tapahtumassa. Vastaamalla autat meitä tekemään tapahtumasta
-            paremman!
-          </Text>
-
+          <TranslatedText
+            style={styles.baseText}
+            text={texts.feedbackOrganizersInterested}
+          />
           {feedbackItems}
-
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => this.saveFeedback()}
             >
-              <Text style={[styles.whiteFont, { fontWeight: 'bold' }]}>
-                {'LÄHETÄ'}
-              </Text>
+              <TranslatedText
+                style={[styles.whiteFont, { fontWeight: 'bold' }]}
+                text={texts.feedbackSendButton}
+              />
             </TouchableOpacity>
           </View>
         </KeyboardAwareScrollView>

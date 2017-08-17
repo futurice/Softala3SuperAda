@@ -3,23 +3,35 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 
 import AppStyles from '../AppStyles';
 
+import TranslatedText from '../../components/TranslatedText';
+import { getTranslated, texts } from '../../utils/translation';
+
 export class ThankYouView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.titleText}>Kiitos!</Text>
+          <TranslatedText style={styles.titleText} text={texts.thankYou} />
           <Image
             style={styles.mark}
             source={require('../../../images/kiitos.png')}
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={styles.textBody}>Kiitos osallistumisestasi!</Text>
-          <Text style={styles.textBody}>Tervetuloa ensi vuonna uudestaan!</Text>
+          <TranslatedText
+            style={styles.textBody}
+            text={texts.thankYouForParticipation}
+          />
+          <TranslatedText
+            style={styles.textBody}
+            text={texts.thankYouComeAgain}
+          />
         </View>
         <View style={styles.regardsContainer}>
-          <Text style={styles.bottomText}>t- Super-Ada tiimi</Text>
+          <TranslatedText
+            style={styles.bottomText}
+            text={texts.thankYouBestRegards}
+          />
         </View>
       </View>
     );
