@@ -34,20 +34,29 @@ export class Welcome extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={require('../../../images/tervetuloa.png')}
-        />
-        <TranslatedText style={styles.textStyle} text={texts.checkpointIntro} />
-        <TranslatedText style={styles.textStyle} text={texts.quizIntro} />
-        <TranslatedText style={styles.textStyle} text={texts.goodluck} />
-        <AdaButton
-          styles={styles}
-          content={texts.editTeamButton}
-          onPress={this.props.editTeam}
-        />
-      </View>
+      <ScrollView
+        contentContainerStyle={{
+          alignItems: 'center',
+        }}
+      >
+        <View style={styles.container}>
+          <Image
+            style={styles.image}
+            source={require('../../../images/tervetuloa.png')}
+          />
+          <TranslatedText
+            style={styles.textStyle}
+            text={texts.checkpointIntro}
+          />
+          <TranslatedText style={styles.textStyle} text={texts.quizIntro} />
+          <TranslatedText style={styles.textStyle} text={texts.goodluck} />
+          <AdaButton
+            styles={styles}
+            content={texts.editTeamButton}
+            onPress={this.props.editTeam}
+          />
+        </View>
+      </ScrollView>
     );
   }
 }
