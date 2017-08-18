@@ -34,12 +34,12 @@ export class Welcome extends React.Component {
 
   render() {
     return (
-      <ScrollView
-        contentContainerStyle={{
-          alignItems: 'center',
-        }}
-      >
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <ScrollView
+          contentContainerStyle={{
+            alignItems: 'center',
+          }}
+        >
           <Image
             style={styles.image}
             source={require('../../../images/tervetuloa.png')}
@@ -50,13 +50,13 @@ export class Welcome extends React.Component {
           />
           <TranslatedText style={styles.textStyle} text={texts.quizIntro} />
           <TranslatedText style={styles.textStyle} text={texts.goodluck} />
-          <AdaButton
-            styles={styles}
-            content={texts.editTeamButton}
-            onPress={this.props.editTeam}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+        <AdaButton
+          styles={styles}
+          content={texts.editTeamButton}
+          onPress={this.props.editTeam}
+        />
+      </View>
     );
   }
 }
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
     backgroundColor: AppStyles.darkRed,
   },
   titleText: {
