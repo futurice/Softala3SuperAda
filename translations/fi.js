@@ -27,6 +27,16 @@ export default {
   mapButton: 'KARTTA',
   mapTitle: 'Kartta',
 
+  yes: 'KYLLÄ',
+  no: 'EI',
+
+  teamPointsYourScore: 'Tiimisi pisteet!',
+  teamPointsAllCheckpointsComplete: 'Kaikki rastit suoritettu!',
+  teamPointsGiveFeedback: 'Haluatko antaa järjestäjille palautetta?',
+
+  feedbackTitle: 'Anna palautetta',
+  goodByeTitle: 'Kiitos osallistumisesta!',
+
   quizWelcome: 'Tervetuloa ratkomaan Super-Ada quiz-tehtävää!',
   quizExplanation:
     'Kerää pisteitä löytämällä mahdollisimman monta IT-alaan liittyvää sanaa. Saat lisäpisteitä löytämällä kaikki sanat nopeasti!',

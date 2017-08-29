@@ -28,7 +28,7 @@ class ErrorMessageView extends React.Component {
         alertType: 'error',
         title: 'Error happened',
         message:
-          'Could not fetch team details: ' + nextProps.teamDetailsError.message,
+          'Error with team details: ' + nextProps.teamDetailsError.message,
       });
       this.props.clearTeamDetailsError();
     }

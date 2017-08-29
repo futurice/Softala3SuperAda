@@ -12,6 +12,9 @@ import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../AppStyles';
 
+import TranslatedText from '../../components/TranslatedText';
+import { getTranslated, texts } from '../../utils/translation';
+
 import rest from '../../utils/rest';
 
 const mapStateToProps = state => ({
@@ -23,14 +26,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       NavigationState.pushRoute({
         key: 'FeedbackView',
-        title: 'Anna palautetta',
+        title: getTranslated(texts.feedbackTitle),
       }),
     ),
   goodbye: () =>
     dispatch(
       NavigationState.pushRoute({
         key: 'Goodbye',
-        title: 'Kiitos osallistumisesta!',
+        title: getTranslated(texts.goodByeTitle),
       }),
     ),
 });
@@ -44,7 +47,6 @@ export class TeamPointsView extends React.Component {
       if (company.points) {
         sum += company.points;
       }
-
       maxPoints += 5;
     });
 
@@ -54,7 +56,10 @@ export class TeamPointsView extends React.Component {
           automaticallyAdjustContentInsets={false}
           style={styles.scrollView}
         >
-          <Text style={styles.headerText}>Tiimisi pisteet!</Text>
+          <TranslatedText
+            style={styles.headerText}
+            text={texts.teamPointsYourScore}
+          />
           <View style={styles.header}>
             <Image
               style={styles.mark}
@@ -66,19 +71,23 @@ export class TeamPointsView extends React.Component {
               {sum}/{maxPoints}
             </Text>
           </View>
-          <Text style={styles.baseText}>Kaikki rastit suoritettu!</Text>
-          <Text style={styles.baseText}>
-            Haluatko antaa järjestäjille palautetta?
-          </Text>
+          <TranslatedText
+            style={styles.baseText}
+            text={texts.teamPointsAllCheckpointsComplete}
+          />
+          <TranslatedText
+            style={styles.baseText}
+            text={texts.teamPointsGiveFeedback}
+          />
           <View style={styles.buttons}>
             <TouchableOpacity onPress={this.props.feedback}>
               <View style={styles.button}>
-                <Text style={styles.whiteFont}>KYLLÄ</Text>
+                <TranslatedText style={styles.whiteFont} text={texts.yes} />
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.props.goodbye}>
               <View style={styles.button}>
-                <Text style={styles.whiteFont}>EI</Text>
+                <TranslatedText style={styles.whiteFont} text={texts.no} />
               </View>
             </TouchableOpacity>
           </View>

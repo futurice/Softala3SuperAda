@@ -58,6 +58,16 @@ var texts = {
   mapButton: 'mapButton',
   mapTitle: 'mapTitle',
 
+  yes: 'yes',
+  no: 'no',
+
+  teamPointsYourScore: 'teamPointsYourScore',
+  teamPointsAllCheckpointsComplete: 'teamPointsAllCheckpointsComplete',
+  teamPointsGiveFeedback: 'teamPointsGiveFeedback',
+
+  feedbackTitle: 'feedbackTitle',
+  goodByeTitle: 'goodByeTitle',
+
   quizWelcome: 'quizWelcome',
   quizExplanation: 'quizExplanation',
   quizTimelimit: 'quizTimelimit',

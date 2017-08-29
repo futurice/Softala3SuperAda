@@ -27,6 +27,16 @@ export default {
   mapButton: 'MAP',
   mapTitle: 'Map',
 
+  yes: 'YES',
+  no: 'NO',
+
+  teamPointsYourScore: 'Score of your team!',
+  teamPointsAllCheckpointsComplete: 'You completed all checkpoints!',
+  teamPointsGiveFeedback: 'Do you want to give feedback for the organizers?',
+
+  feedbackTitle: 'Feedback',
+  goodByeTitle: 'Thank you for participating!',
+
   quizWelcome: 'Welcome to solve the Super-Ada quiz!',
   quizExplanation:
     'Collect points by finding words related to information technology. You get extra points by quickly finding all of the words!',
