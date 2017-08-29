@@ -63,6 +63,7 @@ class ErrorMessageView extends React.Component {
       <MessageBar
         ref={alert => {
           MessageBarManager.registerMessageBar(alert);
+          MessageBarManager.hideAlert();
         }}
       />
     );
