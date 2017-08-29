@@ -3,122 +3,32 @@ import Dimensions from 'Dimensions';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import { StyleSheet, View } from 'react-native';
-import * as GameState from '../../state/GameState';
 import Row from './Row';
+
+import { connect } from 'react-redux';
+import * as GameState from '../../state/GameState';
+import rest from '../../utils/rest';
+import Vector2 from '../../utils/vector2';
+
+import { cellSize, cellsNumber } from './CellSize';
+import * as Config from '../Config';
 
 const screenWidth = Dimensions.get('window').width;
 const puzzleWidth = screenWidth - 10;
 
-const onCellPress = component => (cellX, cellY) => event => {
-  event.preventDefault();
-
-  const { puzzle, solution, discoveredSoFar, wordFound } = component.props;
-
-  const { found } = solution;
-
-  const { currentWord } = component.state;
-
-  const wordHit = found.filter(foundWordObj => {
-    return (
-      !discoveredSoFar.words.includes(foundWordObj.word) &&
-      foundWordObj.x === cellX &&
-      foundWordObj.y === cellY
-    );
-  });
-
-  if (wordHit.length > 0 || currentWord.wordHit !== null) {
-    const { pressedCells } = component.state;
-    pressedCells.push({ x: cellX, y: cellY });
-
-    // if we hit the beginning of a new word whilst following
-    // a current one, ignore the new one
-    currentWord.wordHit = currentWord.wordHit || wordHit[0];
-
-    const { currentWordPressed } = currentWord;
-    const { word } = currentWord.wordHit;
-
-    const tmpWord = currentWordPressed.join('') + puzzle[cellY][cellX];
-    if (tmpWord === word) {
-      // Yeah, found a word!
-      wordFound(currentWord.wordHit);
-
-      component.setState({
-        currentWord: {
-          currentWordPressed: [],
-          wordHit: null,
-        },
-        pressedCells: [],
-      });
-
-      return;
-    }
-
-    if (word.search(tmpWord) > -1) {
-      // Got another letter of the word
-      if (tmpWord.length > word.length / 2) {
-        wordFound(currentWord.wordHit);
-
-        component.setState({
-          currentWord: {
-            currentWordPressed: [],
-            wordHit: null,
-          },
-          pressedCells: [],
-        });
-
-        return;
-      }
-
-      currentWordPressed.push(puzzle[cellY][cellX]);
-      component.setState({
-        currentWord: {
-          currentWordPressed,
-          wordHit: currentWord.wordHit,
-        },
-        pressedCells,
-      });
-    } else {
-      // Letter doesn't belong to a word, reset pressedCells and currentWord
-      component.setState({
-        currentWord: {
-          currentWordPressed: [],
-          wordHit: null,
-        },
-        pressedCells: [],
-      });
-
-      return;
-    }
-  } else {
-    // Letter doesn't belong to a word, reset pressedCells and currentWord
-    component.setState({
-      currentWord: {
-        currentWordPressed: [],
-        wordHit: null,
-      },
-      pressedCells: [],
-    });
-  }
-};
-
 const calculatePoints = gameState => {
   const { puzzle, solution, gameStatus, wordsToFind, timer } = gameState;
 
-  const remaining = (__DEV__ ? 10 : 10 * 60) - timer;
+  const remaining = Config.timelimit - timer;
   const minutes = Math.floor(remaining / 60);
 
-  // TODO: move this into a config
-  const pointsPerMinute = 10;
-  const pointsPerWord = 5;
-  const pointsCompleted = 100;
-  const maxMinutes = 10;
   const puzzleCompleted = wordsToFind === 0;
 
   // Points per minutes
-  const minutesPoints = Math.max(minutes * pointsPerMinute, 0);
+  const minutesPoints = Math.max(minutes * Config.pointsPerMinute, 0);
   const wordsFound = solution.found.length - wordsToFind;
-  const wordsPoints = wordsFound * pointsPerWord;
-  const pointsIfCompleted = puzzleCompleted ? pointsCompleted : 0;
+  const wordsPoints = wordsFound * Config.pointsPerWord;
+  const pointsIfCompleted = puzzleCompleted ? Config.pointsCompleted : 0;
 
   return Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
 };
@@ -129,7 +39,7 @@ const tick = component => {
   const { gameStatus, timer } = gameState;
 
   if (gameStatus === GameState.GAME_RUNNING) {
-    const remaining = (__DEV__ ? 10 : 10 * 60) - timer;
+    const remaining = Config.timelimit - timer;
     if (remaining <= 0) {
       gameCompleted(calculatePoints(gameState));
     } else {
@@ -148,7 +58,19 @@ class Puzzle extends Component {
         wordHit: null,
       },
       pressedCells: [],
+      firstPressed: {},
     };
+
+    this.allowedDirections = [
+      new Vector2(1, 0),
+      new Vector2(1, 1),
+      new Vector2(0, 1),
+      new Vector2(-1, 1),
+      new Vector2(-1, 0),
+      new Vector2(-1, -1),
+      new Vector2(0, -1),
+      new Vector2(1, -1),
+    ];
   }
 
   componentDidMount() {
@@ -179,6 +101,188 @@ class Puzzle extends Component {
     }
   }
 
+  onCellPress = cell => {
+    const { pressedCells } = this.state;
+    pressedCells.push(cell);
+    this.setState({
+      pressedCells: pressedCells,
+      firstPressed: cell,
+    });
+  };
+
+  handlePress = e => {
+    const { gameStatus } = this.props;
+    if (gameStatus === GameState.GAME_RUNNING) {
+      var cellPosition = this.solveCellPosition(e);
+      this.onCellPress(cellPosition);
+    }
+  };
+
+  onCellMove = currentCell => {
+    const { pressedCells } = this.state;
+
+    var firstCell = new Vector2(
+      this.state.firstPressed.x,
+      this.state.firstPressed.y,
+    );
+
+    if (currentCell.equals(firstCell)) {
+      return;
+    }
+
+    var lastAdded = pressedCells[pressedCells.length - 1];
+    if (lastAdded !== undefined) {
+      var lastAddedVector = new Vector2(lastAdded.x, lastAdded.y);
+      if (lastAddedVector.equals(currentCell)) {
+        return;
+      }
+    }
+
+    var newPressedCells = [];
+
+    // check the direction between cells
+    var direction = firstCell.getDirection(currentCell);
+    direction = direction.normalize();
+
+    // find closest direction
+    var gridDirection = this.findClosestGridDirection(
+      this.allowedDirections,
+      direction,
+    );
+
+    if (gridDirection !== undefined) {
+      // add pressed cells on the way
+      var lastAdded = firstCell;
+      newPressedCells.push(firstCell);
+      var movedVector = currentCell.subtract(firstCell);
+      var x = Math.abs(movedVector.x);
+      var y = Math.abs(movedVector.y);
+      var i = Math.max(x, y);
+      while (i > 0) {
+        lastAdded = lastAdded.add(gridDirection);
+        newPressedCells.push(lastAdded);
+        i--;
+      }
+      var uniqueCells = this.removeDuplicates(newPressedCells);
+      this.setState({
+        pressedCells: uniqueCells,
+      });
+    } else {
+      this.setState({
+        pressedCells: [],
+      });
+    }
+  };
+
+  findClosestGridDirection = (array, vector2) => {
+    var closestDirection, smallestAngle;
+    for (var i in array) {
+      var normalized = array[i].normalize();
+      var angle = Math.abs(vector2.angle(normalized));
+      if (smallestAngle === undefined || angle < smallestAngle) {
+        closestDirection = array[i];
+        smallestAngle = angle;
+      }
+    }
+    return closestDirection;
+  };
+
+  handleMove = e => {
+    const { gameStatus } = this.props;
+    if (gameStatus === GameState.GAME_RUNNING) {
+      var cellPosition = this.solveCellPosition(e);
+      this.onCellMove(cellPosition);
+    }
+  };
+
+  onCellRelease = currentCell => {
+    const { pressedCells } = this.state;
+    const { puzzle, solution, discoveredSoFar, wordFound } = this.props;
+
+    var word = '';
+    pressedCells.forEach(function(element) {
+      if (
+        puzzle[element.y] !== undefined &&
+        puzzle[element.y][element.x] !== undefined
+      ) {
+        word += puzzle[element.y][element.x];
+      }
+    }, this);
+
+    var wordReversed = word.split('').reverse().join('');
+
+    var found =
+      this.tryFindingWord(this.state.firstPressed, word) ||
+      this.tryFindingWord(currentCell, wordReversed);
+
+    this.setState({
+      pressedCells: [],
+    });
+  };
+
+  tryFindingWord(position, word) {
+    const { solution, discoveredSoFar, wordFound } = this.props;
+    const { found } = solution;
+    const wordHit = found.filter(foundWordObj => {
+      return (
+        !discoveredSoFar.words.includes(foundWordObj.word) &&
+        foundWordObj.x === position.x &&
+        foundWordObj.y === position.y
+      );
+    });
+    if (wordHit.length > 0) {
+      if (wordHit[0].word === word) {
+        // Yeah, found a word!
+        wordFound(wordHit[0]);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  removeDuplicates(originalArray) {
+    var newArray = [];
+    var lookupObject = {};
+    for (var i in originalArray) {
+      var cell = originalArray[i];
+      lookupObject[cell.x + ',' + cell.y] = cell;
+    }
+    for (i in lookupObject) {
+      newArray.push(lookupObject[i]);
+    }
+    return newArray;
+  }
+
+  handleRelease = e => {
+    const { gameStatus } = this.props;
+    if (gameStatus === GameState.GAME_RUNNING) {
+      var cellPosition = this.solveCellPosition(e);
+      this.onCellRelease(cellPosition);
+    }
+  };
+
+  solveCellPosition(e) {
+    var evt = e.nativeEvent;
+    //can not use location from nativeEvent because it doesn't update properly on android
+    var locationX = evt.pageX - this.state.layoutX;
+    var locationY = evt.pageY - this.state.layoutY;
+    var cellX = Math.floor(locationX / cellSize);
+    var cellY = Math.floor(locationY / cellSize);
+    return new Vector2(cellX, cellY);
+  }
+
+  handleOnLayout = evt => {
+    //this is called here becase on android we need onLayout callback to get some values out of measure
+    this.refs.puzzleComponent.measure((fx, fy, width, height, px, py) => {
+      this.setState({
+        layoutX: px,
+        layoutY: py,
+        width: width,
+        height: height,
+      });
+    });
+  };
+
   render() {
     const { gameStatus, puzzle, discoveredSoFar } = this.props;
 
@@ -191,7 +295,6 @@ class Puzzle extends Component {
         <Row
           key={idx}
           gameStatus={gameStatus}
-          onCellPress={onCellPress(this)}
           pressedCells={pressedCells}
           discoveredCells={cells}
           cellY={idx}
@@ -201,8 +304,18 @@ class Puzzle extends Component {
     });
 
     return (
-      <View style={styles.puzzle}>
-        {rows}
+      <View
+        style={styles.puzzle}
+        onStartShouldSetResponder={event => true}
+        onMoveShouldSetResponder={event => true}
+        onResponderTerminationRequest={event => true}
+        onResponderGrant={this.handlePress}
+        onResponderMove={this.handleMove}
+        onResponderRelease={this.handleRelease}
+      >
+        <View ref="puzzleComponent" onLayout={this.handleOnLayout}>
+          {rows}
+        </View>
       </View>
     );
   }
@@ -229,4 +342,39 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Puzzle;
+export default connect(
+  state => ({
+    discoveredSoFar: state.gameState.discoveredSoFar,
+    wordsToFind: state.gameState.wordsToFind,
+    gameState: state.gameState,
+  }),
+  dispatch => ({
+    gameStarted() {
+      dispatch(GameState.gameStarted(Date.now()));
+    },
+    tickTimer() {
+      dispatch(GameState.tickTimer());
+    },
+    gameCompleted(points) {
+      dispatch(
+        rest.actions.quiz.post(
+          {},
+          {
+            body: JSON.stringify({ points: points }),
+          },
+          (err, data) => {
+            if (!err) {
+              console.log('successfully set quiz points: ', points);
+            } else {
+              console.log('Error setting quiz points: ', err, data);
+            }
+          },
+        ),
+      );
+      dispatch(GameState.gameCompleted(Date.now()));
+    },
+    wordFound(word) {
+      dispatch(GameState.wordFound(word));
+    },
+  }),
+)(Puzzle);

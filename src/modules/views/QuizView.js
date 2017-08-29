@@ -12,12 +12,13 @@ import Dimensions from 'Dimensions';
 import { connect } from 'react-redux';
 import rest from '../../utils/rest';
 
-import PuzzleContainer from '../puzzle/PuzzleContainer';
+import Puzzle from '../puzzle/Puzzle';
 import * as GameState from '../../state/GameState';
 import AppStyles from '../AppStyles';
 
 import TranslatedText from '../../components/TranslatedText';
 import { getTranslated, texts } from '../../utils/translation';
+import * as Config from '../Config';
 
 const resetGame = component => event => {
   event.preventDefault();
@@ -63,7 +64,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export class GameView extends Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Super-Ada Quiz!',
     tabBarLabel: '',
     tabBarIcon: ({ tintColor }) =>
@@ -71,7 +72,7 @@ export class GameView extends Component {
         source={require('../../../images/muutiso_transparent.png')}
         style={[AppStyles.icon, { tintColor: tintColor }]}
       />,
-  };
+  });
 
   constructor(props) {
     super(props);
@@ -92,11 +93,10 @@ export class GameView extends Component {
   // TODO: render grew too big
   render() {
     const { gameState, quizStatus } = this.props;
-
     const { puzzle, solution, gameStatus, wordsToFind, timer } = gameState;
 
     let contentView;
-    const remaining = (__DEV__ ? 10 : 10 * 60) - timer;
+    const remaining = Config.timelimit - timer;
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining - minutes * 60;
 
@@ -121,35 +121,7 @@ export class GameView extends Component {
       quizStatus.data.done &&
       gameStatus !== GameState.GAME_COMPLETED
     ) {
-      return (
-        <View style={styles.gameContainer}>
-          <TranslatedText
-            style={styles.congratsText}
-            text={texts.quizEndCongraz}
-          />
-          <TranslatedText
-            style={styles.congratsBodyText}
-            text={texts.quizEndCompleted}
-          />
-          <TranslatedText
-            style={styles.congratsBodyText}
-            text={{
-              key: texts.quizEndTotalScore,
-              points: quizStatus.data.points,
-            }}
-          />
-          <TranslatedText
-            style={styles.retryText}
-            text={texts.quizYouCanTryMultipleTimes}
-          />
-          <TouchableOpacity
-            style={[{ marginTop: 10 }, styles.button]}
-            onPress={resetGame(this)}
-          >
-            <TranslatedText style={styles.buttonText} text={texts.quizRetry} />
-          </TouchableOpacity>
-        </View>
-      );
+      return this.renderQuizEnd();
     }
 
     switch (gameStatus) {
@@ -201,7 +173,7 @@ export class GameView extends Component {
                 {timerText}
               </Text>
             </View>
-            <PuzzleContainer
+            <Puzzle
               puzzle={puzzle}
               solution={solution}
               gameStatus={gameStatus}
@@ -331,6 +303,39 @@ export class GameView extends Component {
     return (
       <View style={styles.gameContainer}>
         {contentView}
+      </View>
+    );
+  }
+
+  renderQuizEnd() {
+    const { quizStatus } = this.props;
+    return (
+      <View style={styles.gameContainer}>
+        <TranslatedText
+          style={styles.congratsText}
+          text={texts.quizEndCongraz}
+        />
+        <TranslatedText
+          style={styles.congratsBodyText}
+          text={texts.quizEndCompleted}
+        />
+        <TranslatedText
+          style={styles.congratsBodyText}
+          text={{
+            key: texts.quizEndTotalScore,
+            points: quizStatus.data.points,
+          }}
+        />
+        <TranslatedText
+          style={styles.retryText}
+          text={texts.quizYouCanTryMultipleTimes}
+        />
+        <TouchableOpacity
+          style={[{ marginTop: 10 }, styles.button]}
+          onPress={resetGame(this)}
+        >
+          <TranslatedText style={styles.buttonText} text={texts.quizRetry} />
+        </TouchableOpacity>
       </View>
     );
   }

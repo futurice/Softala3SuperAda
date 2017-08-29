@@ -42,6 +42,7 @@ export const MainScreenNavigator = TabNavigator(
         height: 48,
       },
     },
+    swipeEnabled: false,
   },
 );
 

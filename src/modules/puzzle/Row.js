@@ -47,7 +47,7 @@ class Row extends Component {
     });
 
     return (
-      <View style={styles.row} key={cellY}>
+      <View style={styles.row} key={cellY} pointerEvents="none">
         {cells}
       </View>
     );
