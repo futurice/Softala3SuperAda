@@ -136,11 +136,11 @@ export class TeamView extends React.Component {
         this.setState({ disableSave: false });
       } else {
         ImageResizer.createResizedImage(response.uri, 512, 512, 'PNG', 100)
-          .then(resizedImageUri => {
+          .then(resizedImage => {
             // resizeImageUri is the URI of the new image that can now be displayed, uploaded...
             this.setState({
               disableSave: false,
-              image: resizedImageUri,
+              image: resizedImage.uri,
             });
           })
           .catch(err => {
@@ -226,7 +226,6 @@ export class TeamView extends React.Component {
           styles={styles}
           content={texts.saveButton}
           onPress={() => {
-            console.log('Saving ', this.state.image);
             this.props.save(this.state.description, this.state.image);
           }}
           disabled={disabled}
