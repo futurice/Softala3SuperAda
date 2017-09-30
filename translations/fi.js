@@ -1,5 +1,6 @@
 export default {
   login: 'KIRJAUDU SISÄÄN',
+  devLogin: 'DEV LOGIN',
   welcomeTitle: 'Tervetuloa!',
   checkpointIntro:
     'Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan' +

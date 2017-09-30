@@ -37,7 +37,7 @@ export class MapView extends React.Component {
     const { layout } = evt.nativeEvent;
     const containerWidth = layout.width;
 
-    Image.getSize(this.state.source, (width, height) => {
+    Image.getSize(this.state.source.uri, (width, height) => {
       this.setState({
         mapImageWidth: containerWidth,
         mapImageHeight: containerWidth * height / width,

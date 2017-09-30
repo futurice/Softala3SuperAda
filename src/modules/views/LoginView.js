@@ -69,7 +69,7 @@ export class LoginView extends React.Component {
     return (
       <AdaButton
         styles={styles}
-        content={'DEV LOGIN'}
+        content={texts.devLogin}
         disabled={this.props.auth.loading}
         onPress={() => this.props.login('TeamAwesome')}
       />

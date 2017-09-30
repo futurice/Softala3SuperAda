@@ -34,6 +34,7 @@ function setLocale(locale) {
 
 var texts = {
   login: 'login',
+  devLogin: 'devLogin',
   welcomeTitle: 'welcomeTitle',
   checkpointIntro: 'checkpointIntro',
   quizIntro: 'quizIntro',

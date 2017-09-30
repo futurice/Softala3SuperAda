@@ -1,5 +1,6 @@
 export default {
   login: 'LOGIN',
+  devLogin: 'DEV LOGIN',
   welcomeTitle: 'Welcome!',
   checkpointIntro:
     'There are eight checkpoints waiting for you! Each checkpoint will give you a task. ' +
