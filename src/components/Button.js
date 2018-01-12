@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 
-import { getTranslated, texts } from '../utils/translation';
+import I18n from 'ex-react-native-i18n'
 
 class AdaButton extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class AdaButton extends Component {
   }
 
   static propTypes = {
-    content: React.PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
     // TODO: styles: foo.isRequired, onPress: bar.isRequired
   };
 
@@ -24,7 +25,7 @@ class AdaButton extends Component {
           disabled={disabled}
         >
           <Text style={styles.whiteFont}>
-            {getTranslated(content)}
+            {I18n.t(content)}
           </Text>
         </TouchableOpacity>
       </View>

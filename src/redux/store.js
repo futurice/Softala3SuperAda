@@ -1,17 +1,18 @@
 import { applyMiddleware, createStore, compose } from 'redux';
-import { autoRehydrate } from 'redux-persist';
-//import * as reduxLoop from 'redux-loop';
-
+import enhancers from './enhancers';
 import middleware from './middleware';
 import reducer from './reducer';
 
-const enhancers = [applyMiddleware(...middleware), autoRehydrate()];
-
+/* Enable redux dev tools only in development.
+ * We suggest using React Native Debugger for debugging:
+ * https://github.com/jhen0409/react-native-debugger
+ */
 const composeEnhancers =
   (__DEV__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-const enhancer = composeEnhancers(...enhancers);
+
+const enhancer = composeEnhancers(...enhancers, applyMiddleware(...middleware));
 
 // create the store
-const store = createStore(reducer, null, enhancer);
+const store = createStore(reducer, enhancer);
 
 export default store;

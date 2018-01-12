@@ -1,6 +1,9 @@
 export default {
   login: 'LOGIN',
   devLogin: 'DEV LOGIN',
+  teamName: 'Team name:',
+  incorrectLogin: 'Team not found, check your team name (case sensitive!)',
+  networkError: 'Error while signing in, check your Internet connection!',
   welcomeTitle: 'Welcome!',
   checkpointIntro:
     'There are eight checkpoints waiting for you! Each checkpoint will give you a task. ' +
@@ -9,12 +12,13 @@ export default {
     'You should also complete the Super-Ada Quiz. If the scores are tied, ' +
     'points from the Quiz will determine the winner.',
   goodluck: 'GOOD LUCK!',
-  editTeamButton: 'EDIT TEAM',
+  editTeamButton: 'CREATE TEAM',
   editTeamTitle: 'Edit your team',
 
   imageGalleryOptionsTitle: 'Choose a team picture',
-  imageGalleryOptionsTakePhoto: 'Take a photo',
-  imageGalleryOptionsLibraryButton: 'Choose from the library',
+  imageGalleryOptionsDescription: 'Choose a picture from the gallery or take a new photo with the camera:',
+  imageGalleryOptionsTakePhoto: 'Camera',
+  imageGalleryOptionsLibraryButton: 'Gallery',
   imageGalleryOptionsCancelButton: 'Cancel',
   imageGalleryOptionsPermissionDeniedTitle:
     'You have not allowed this operation',
@@ -31,8 +35,9 @@ export default {
   yes: 'YES',
   no: 'NO',
 
-  teamPointsYourScore: 'Score of your team!',
-  teamPointsAllCheckpointsComplete: 'You completed all checkpoints!',
+  teamPointsYourScore: 'Well done!',
+  teamPointsAllCheckpointsComplete: 'All checkpoints completed!',
+  teamPointsTotalScore: 'You got {{sum}}/{{maxPoints}} points!',
   teamPointsGiveFeedback: 'Do you want to give feedback for the organizers?',
 
   feedbackTitle: 'Feedback',
@@ -45,33 +50,33 @@ export default {
   quizYouCanTryMultipleTimes:
     'You can try the quiz many times. Only the last try counts.',
   quizStart: 'START',
-  quizWordsLeft: 'Words left: ${wordsToFind}',
+  quizWordsLeft: 'Words left: {{wordsToFind}}',
   quizRetry: 'TRY AGAIN',
   quizPause: 'PAUSE',
   quizContinue: 'CONTINUE',
-  quizTime: 'Time: ${minutes}m ${seconds}s',
+  quizTime: 'Time: {{minutes}}m {{seconds}}s',
   quizTimerPause: '(paused)',
 
   quizEndCongraz: 'Congratulations!',
   quizEndCompleted: 'Quiz completed',
   quizEndTimeOver: 'Time over!',
   quizEndMinutesBeforeTimeLimit:
-    'Quiz was completed ${minutes} minutes below the time limit: ${minutesPoints} points',
+    'Quiz was completed {{minutes}} minutes below the time limit: {{minutesPoints}} points',
   quizEndWordsFound:
-    '${wordsFound} words (${pointsPerWord} points per word): ${wordsPoints} points',
-  quizEndAllWordsFound: 'You found all of the words: ${pointsCompleted} points',
+    '{{wordsFound}} words ({{pointsPerWord}} points per word): {{wordsPoints}} points',
+  quizEndAllWordsFound: 'You found all of the words: {{pointsCompleted}} points',
   quizEndAllWordsNotFound: 'You did not find all of the words: 0 points',
-  quizEndTotalScore: 'Total points: ${points}',
+  quizEndTotalScore: 'Total points: {{points}}',
   quizEndYouCanTryAgain:
     'You can try again but keep in mind that it will immediately reset your points!',
 
   feedbackOrganizersInterested:
-    'The organizers of Super-Ada are intested in your experiences ' +
+    'The organizers of Super-Ada are intested in your experience' +
     ' with the event. By responding you help us in making the event better!',
   feedbackSendButton: 'SEND',
 
   thankYou: 'Thank you!',
-  thankYouForParticipation: 'Thank you for participation!',
+  thankYouForParticipation: 'Thank you for participating!',
   thankYourForFeedback: 'Thank you for the feedback',
   thankYouForFeedbackTitle: 'Thank you for the feedback',
   thankYouComeAgain: 'Welcome back next year!',

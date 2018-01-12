@@ -1,28 +1,20 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { getTranslated, setLocale } from '../utils/translation';
-import { connect } from 'react-redux';
+import { Text, StyleSheet, } from 'react-native';
+import I18n from 'ex-react-native-i18n'
 
-class TranslatedText extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    if (this.props.locale !== nextProps.locale) {
-      setLocale(nextProps.locale);
-    }
+const defaultStyles = StyleSheet.create({
+  text: {
+    fontFamily: 'pt-sans',
   }
+});
 
+export default class TranslatedText extends React.Component {
   render() {
-    const { style, text } = this.props;
+    const { style, text, ...options } = this.props;
     return (
-      <Text style={style}>
-        {getTranslated(text)}
+      <Text style={[defaultStyles.text, style]}>
+        {I18n.t(text, options)}
       </Text>
     );
   }
 }
-
-export default connect(
-  state => ({
-    locale: state.locale.locale,
-  }),
-  dispatch => ({}),
-)(TranslatedText);

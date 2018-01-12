@@ -1,6 +1,9 @@
 export default {
   login: 'KIRJAUDU SISÄÄN',
   devLogin: 'DEV LOGIN',
+  teamName: 'Joukkueen nimi:',
+  incorrectLogin: 'Joukkuetta ei löytynyt, varmista joukkueen nimi (huomioi kirjainkoko!)',
+  networkError: 'Virhe kirjautumisessa, tarkista laitteen Internetyhteys!',
   welcomeTitle: 'Tervetuloa!',
   checkpointIntro:
     'Kahdeksan rastia odottavat sinua! Jokaisella rastilla suoritetaan' +
@@ -10,12 +13,13 @@ export default {
     'Kannattaa pelata läpi myös Super-Ada Quiz. Tasapistetilanteessa hyvin' +
     'suoritettu Quiz ratkaisee voiton.',
   goodluck: 'ONNEA MATKAAN!',
-  editTeamButton: 'MUOKKAA TIIMIÄ',
+  editTeamButton: 'LUO TIIMI',
   editTeamTitle: 'Muokkaa tiimiäsi',
 
   imageGalleryOptionsTitle: 'Valitse tiimin kuva',
-  imageGalleryOptionsTakePhoto: 'Ota kuva',
-  imageGalleryOptionsLibraryButton: 'Valitse kirjastosta',
+  imageGalleryOptionsDescription: 'Valitse kuva galleriasta tai ota uusi kuva kameralla:',
+  imageGalleryOptionsTakePhoto: 'Kamera',
+  imageGalleryOptionsLibraryButton: 'Galleria',
   imageGalleryOptionsCancelButton: 'Peruuta',
   imageGalleryOptionsPermissionDeniedTitle: 'Olet estänyt tämän toiminnon',
   imageGalleryOptionsPermissionDeniedText:
@@ -31,8 +35,9 @@ export default {
   yes: 'KYLLÄ',
   no: 'EI',
 
-  teamPointsYourScore: 'Tiimisi pisteet!',
+  teamPointsYourScore: 'Hyvin tehty!',
   teamPointsAllCheckpointsComplete: 'Kaikki rastit suoritettu!',
+  teamPointsTotalScore: 'Saitte {{sum}}/{{maxPoints}} pistettä!',
   teamPointsGiveFeedback: 'Haluatko antaa järjestäjille palautetta?',
 
   feedbackTitle: 'Anna palautetta',
@@ -45,23 +50,23 @@ export default {
   quizYouCanTryMultipleTimes:
     'Voit yrittää ratkoa quiz-tehtävän monta kertaa. Pisteet huomioidaan ainoastaan viimeisestä yrityksestä',
   quizStart: 'ALOITA',
-  quizWordsLeft: 'Sanaa jäljellä: ${wordsToFind}',
+  quizWordsLeft: 'Sanaa jäljellä: {{wordsToFind}}',
   quizRetry: 'UUSI YRITYS',
   quizPause: 'TAUKO',
   quizContinue: 'JATKA',
-  quizTime: 'Aika: ${minutes}m ${seconds}s',
+  quizTime: 'Aika: {{minutes}}m {{seconds}}s',
   quizTimerPause: '(tauolla)',
 
   quizEndCongraz: 'Onneksi olkoon!',
   quizEndCompleted: 'Tehtävä ratkottu',
   quizEndTimeOver: 'Aika loppui!',
   quizEndMinutesBeforeTimeLimit:
-    'Tehtävä ratkottu ${minutes} minuuttia alle aikarajan: ${minutesPoints} pistettä',
+    'Tehtävä ratkottu {{minutes}} minuuttia alle aikarajan: {{minutesPoints}} pistettä',
   quizEndWordsFound:
-    '${wordsFound} sanaa (${pointsPerWord} pistettä sanaa kohti): ${wordsPoints} pistettä',
-  quizEndAllWordsFound: 'Löysitte kaikki sanat: ${pointsCompleted} pistettä',
+    '{{wordsFound}} sanaa ({{pointsPerWord}} pistettä sanaa kohti): {{wordsPoints}} pistettä',
+  quizEndAllWordsFound: 'Löysitte kaikki sanat: {{pointsCompleted}} pistettä',
   quizEndAllWordsNotFound: 'Ette löytäneet kaikkia sanoja: 0 pistettä',
-  quizEndTotalScore: 'Pisteitä yhteensä: ${points}',
+  quizEndTotalScore: 'Pisteitä yhteensä: {{points}}',
   quizEndYouCanTryAgain:
     'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!',
 
