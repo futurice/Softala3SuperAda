@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  Platform,
   StatusBar,
   RefreshControl,
 } from 'react-native';
@@ -39,6 +40,8 @@ const mapDispatchToProps = dispatch => ({
 
 export class CheckPointView extends React.Component {
   static navigationOptions = {
+    header: null,
+    title: 'Checkpoints',
     tabBarIcon: ({ tintColor }) =>
       <Image
         source={require('../../../assets/karttaiso_transparent.png')}
@@ -148,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleText: {
-    paddingTop: StatusBar.currentHeight + 20,
+    paddingTop: StatusBar.currentHeight + Platform.OS === 'ios' ? 40 : 20,
     fontSize: AppStyles.titleFontSize,
     color: AppStyles.darkRed,
     textAlign: 'center',
@@ -159,7 +162,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
   },
   companyListContainer: {
-    paddingTop: 10,
     alignSelf: 'stretch',
   },
   companyList: {

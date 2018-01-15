@@ -8,6 +8,10 @@ import { texts } from '../../utils/translation';
 import I18n from 'ex-react-native-i18n'
 
 export class ThankYouView extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   render() {
     return (
       <View style={styles.container}>

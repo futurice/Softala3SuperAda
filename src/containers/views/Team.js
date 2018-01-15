@@ -78,6 +78,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class TeamView extends React.Component {
   static navigationOptions = {
+    header: null,
     tabBarIcon: ({ tintColor }) =>
       <Image
         source={require('../../../assets/ryhmaiso_transparent.png')}
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   teamTitle: {
-    paddingTop: StatusBar.currentHeight + 20,
+    paddingTop: StatusBar.currentHeight + Platform.OS === 'ios' ? 40 : 20,
     color: AppStyles.darkRed,
     fontFamily: 'pt-sans',
     fontSize: AppStyles.titleFontSize,

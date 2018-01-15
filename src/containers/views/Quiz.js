@@ -68,6 +68,7 @@ const mapDispatchToProps = dispatch => ({
 export class GameView extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Super-Ada Quiz!',
+    header: null,
     swipeEnabled: false,
     tabBarIcon: ({ tintColor }) =>
       <Image

@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   StatusBar,
+  Platform,
   ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   header: {
-    paddingTop: StatusBar.currentHeight + 20,
+    paddingTop: StatusBar.currentHeight + Platform.OS === 'ios' ? 40 : 20,
     color: AppStyles.white,
     fontFamily: 'pt-sans',
     fontSize: AppStyles.titleFontSize,

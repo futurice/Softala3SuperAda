@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Platform,
   StatusBar,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
@@ -25,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class Welcome extends React.Component {
   static navigationOptions = {
+    header: null,
     tabBarIcon: ({ tintColor }) =>
       <Image
         source={require('../../../assets/homeiso_transparent.png')}
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.darkRed,
   },
   titleText: {
-    paddingTop: StatusBar.currentHeight + 20,
+    paddingTop: StatusBar.currentHeight + Platform.OS === 'ios' ? 40 : 20,
     fontSize: AppStyles.titleFontSize,
     color: AppStyles.white,
     textAlign: 'center',

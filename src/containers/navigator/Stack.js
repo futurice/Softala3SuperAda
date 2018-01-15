@@ -11,7 +11,7 @@ import ThankYouView from '../views/ThankYou';
 import Tabs from './Tabs';
 
 const StackNavigatorConfig = {
-  headerMode: 'none',
+  //headerMode: 'none',
 };
 
 export default StackNavigator(

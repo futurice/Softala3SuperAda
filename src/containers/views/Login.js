@@ -51,6 +51,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export class LoginView extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
     teamname: '',
   };
