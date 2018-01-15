@@ -22,7 +22,11 @@
       ]
     },
     "ios": {
-      "bundleIdentifier": "com.superada"
+      "bundleIdentifier": "com.superada",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to allow event participants to take and upload a profile picture of themselves",
+        "NSPhotoLibraryUsageDescription": "This app uses the photo library to allow event participants to select a profile picture from the photo gallery"
+      }
     }
   }
 }
