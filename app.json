@@ -18,7 +18,7 @@
       "versionCode": 10002,
       "permissions": [
         "CAMERA",
-        "READ_EXTERNAL_STORAGE"
+        "WRITE_EXTERNAL_STORAGE"
       ]
     },
     "ios": {
