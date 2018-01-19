@@ -67,9 +67,11 @@ export class LoginView extends React.Component {
     if (err.status === 401) {
       return 'incorrectLogin';
     }
+    /*
     if (err.message) {
       return err.message;
     }
+    */
 
     return 'networkError';
   }
