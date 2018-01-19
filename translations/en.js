@@ -46,7 +46,7 @@ export default {
   quizWelcome: 'Welcome to solve the Super-Ada quiz!',
   quizExplanation:
     'Collect points by finding words related to information technology. You get extra points by quickly finding all of the words!',
-  quizTimelimit: 'Time limit: 10 minutes.',
+  quizTimelimit: 'Time limit: 5 minutes.',
   quizYouCanTryMultipleTimes:
     'You can try the quiz many times. Only the last try counts.',
   quizStart: 'START',

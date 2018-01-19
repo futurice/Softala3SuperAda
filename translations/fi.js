@@ -46,7 +46,7 @@ export default {
   quizWelcome: 'Tervetuloa ratkomaan Super-Ada quiz-tehtävää!',
   quizExplanation:
     'Kerää pisteitä löytämällä mahdollisimman monta IT-alaan liittyvää sanaa. Saat lisäpisteitä löytämällä kaikki sanat nopeasti!',
-  quizTimelimit: 'Aikarajoitus: 10 minuuttia.',
+  quizTimelimit: 'Aikarajoitus: 5 minuuttia.',
   quizYouCanTryMultipleTimes:
     'Voit yrittää ratkoa quiz-tehtävän monta kertaa. Pisteet huomioidaan ainoastaan viimeisestä yrityksestä',
   quizStart: 'ALOITA',
