@@ -11,6 +11,16 @@ import ThankYouView from '../views/ThankYou';
 import Tabs from './Tabs';
 
 const StackNavigatorConfig = {
+  navigationOptions: {
+    ...Platform.select({
+      android: {
+        headerStyle: {
+          paddingTop: StatusBar.currentHeight,
+          height: StatusBar.currentHeight + 56,
+        }
+      }
+    })
+  }
   //headerMode: 'none',
 };
 
