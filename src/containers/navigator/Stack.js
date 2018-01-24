@@ -11,6 +11,7 @@ import ThankYouView from '../views/ThankYou';
 import Tabs from './Tabs';
 
 const StackNavigatorConfig = {
+  /*
   navigationOptions: {
     ...Platform.select({
       android: {
@@ -21,6 +22,7 @@ const StackNavigatorConfig = {
       }
     })
   }
+  */
   //headerMode: 'none',
 };
 
