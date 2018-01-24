@@ -1,6 +1,6 @@
 import React from 'react';
 import { BackHandler } from 'react-native';
-import { AppLoading, Font } from 'expo';
+import { AppLoading, Font, Util } from 'expo';
 import I18n from 'ex-react-native-i18n';
 
 import { Provider } from 'react-redux';
@@ -17,6 +17,10 @@ export default class App extends React.Component {
   };
 
   startAsync = async () => {
+    // Call Util.reload() which is supposed to download latest app version &
+    // relaunch ONLY when there is a JS bundle update available.
+    Util.reload();
+
     // Perform any initialization tasks here while Expo shows its splash screen.
     await persistStore(store);
 
