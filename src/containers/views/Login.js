@@ -22,6 +22,7 @@ import AdaButton from '../../components/Button';
 import TranslatedText from '../../components/TranslatedText';
 import { texts } from '../../utils/translation';
 import I18n from 'ex-react-native-i18n'
+import SuperAda from '../../../assets/superada.png';
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -118,7 +119,7 @@ export class LoginView extends React.Component {
         >
           <Image
             style={styles.logo}
-            source={require('../../../assets/superada_transparent.png')}
+            source={SuperAda}
           />
           <View style={styles.inputContainer}>
             <TranslatedText
@@ -170,8 +171,9 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginVertical: 40,
-    width: 200,
+    width: '80%',
     height: 200,
+    resizeMode: 'contain',
   },
   errContainer: {
     flexGrow: 1,

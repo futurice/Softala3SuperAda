@@ -224,21 +224,24 @@ class Puzzle extends Component {
   tryFindingWord(position, word) {
     const { solution, discoveredSoFar, wordFound } = this.props;
     const { found } = solution;
-    const wordHit = found.filter(foundWordObj => {
+    const wordHits = found.filter(foundWordObj => {
       return (
         !discoveredSoFar.words.includes(foundWordObj.word) &&
         foundWordObj.x === position.x &&
         foundWordObj.y === position.y
       );
     });
-    if (wordHit.length > 0) {
-      if (wordHit[0].word === word) {
+
+    let didFindWord = false;
+    wordHits.forEach(wordHit => {
+      if (wordHit.word === word) {
         // Yeah, found a word!
-        wordFound(wordHit[0]);
-        return true;
+        wordFound(wordHit);
+        didFindWord = true;
       }
-    }
-    return false;
+    });
+
+    return didFindWord;
   }
 
   removeDuplicates(originalArray) {

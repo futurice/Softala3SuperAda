@@ -1,4 +1,5 @@
 import Wordfind from '../utils/wordfind';
+import { timelimit } from '../Config';
 
 // Actions
 export const NO_GAME = 'Game/NO_GAME';
@@ -58,7 +59,7 @@ export function tickTimer() {
   };
 }
 
-const randomWords = (words, quantity = __DEV__ ? 2 : 21) => {
+const randomWords = (words, quantity = 12 /*__DEV__ ? 2 : 21*/) => {
   let hit = {};
   let i = quantity;
   const rands = quantity;
@@ -101,7 +102,7 @@ export default function GameStateReducer(state = initialState, action) {
         'mobile',
         'data',
         'robot',
-        'infrastructure',
+        //'infrastructure',
         'testing',
         'teamwork',
         'code',
@@ -113,7 +114,7 @@ export default function GameStateReducer(state = initialState, action) {
         'design',
         'creativity',
         'opensource',
-        'motherboard',
+        //'motherboard',
         'bug',
         'feature',
         'internet',
@@ -122,7 +123,8 @@ export default function GameStateReducer(state = initialState, action) {
         'hypertext',
         'javascript',
         'automation',
-        'programming',
+        //'programming',
+        'programmer',
         'computer',
         'gaming',
         'platform',
@@ -130,11 +132,11 @@ export default function GameStateReducer(state = initialState, action) {
       ];
       const puzzleWords = randomWords(words);
       const puzzle = Wordfind.newPuzzle(puzzleWords, {
-        height: 14,
-        width: 14,
+        height: 10,
+        width: 10,
         preferOverlap: true,
         maxAttempts: 5,
-        fillBlanks: !__DEV__,
+        //fillBlanks: !__DEV__,
       });
 
       const solution = Wordfind.solve(puzzle, words);
@@ -179,11 +181,12 @@ export default function GameStateReducer(state = initialState, action) {
     case TIMER: {
       const { timer, gameStatus } = state;
 
-      const timeLimit = __DEV__ ? 10 : 10 * 60;
+      //const timeLimit = __DEV__ ? 5 : 5 * 60;
+      //const timeLimit = 5 * 60;
 
       return {
         ...state,
-        timer: Math.min(timer + 1, timeLimit),
+        timer: Math.min(timer + 1, timelimit),
       };
     }
     case WORD_FOUND: {

@@ -5,7 +5,7 @@ import * as GameState from '../../state/game';
 import AppStyles from '../../AppStyles';
 
 const screenWidth = Dimensions.get('window').width;
-const cellsNumber = 14;
+const cellsNumber = 10;
 const puzzleWidth = screenWidth - 10;
 const cellSize = (puzzleWidth - 28) / cellsNumber;
 
@@ -41,6 +41,7 @@ const columnBase = {
 const styles = StyleSheet.create({
   cellText: {
     color: 'black',
+    fontSize: 20,
   },
   column: {
     ...columnBase,
