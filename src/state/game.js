@@ -102,10 +102,12 @@ export default function GameStateReducer(state = initialState, action) {
         'mobile',
         'data',
         'robot',
+        'scrum',
         //'infrastructure',
         'testing',
-        'teamwork',
+        'team',
         'code',
+        'coding',
         'binary',
         'api',
         'agile',
@@ -120,7 +122,7 @@ export default function GameStateReducer(state = initialState, action) {
         'internet',
         'online',
         'interface',
-        'hypertext',
+        //'hypertext',
         'javascript',
         'automation',
         //'programming',
@@ -128,7 +130,7 @@ export default function GameStateReducer(state = initialState, action) {
         'computer',
         'gaming',
         'platform',
-        'meetings',
+        'meeting',
       ];
       const puzzleWords = randomWords(words);
       const puzzle = Wordfind.newPuzzle(puzzleWords, {
