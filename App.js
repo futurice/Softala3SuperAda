@@ -11,16 +11,20 @@ import Navigator, {
   handleBackButton,
 } from './src/containers/navigator/Navigator';
 
+// JS updates are forced to be done in the background on Android, so we need to
+// listen for version updates and relaunch the app if there is an update available.
+// On iOS, the most recent JS bundle is downloaded when the app initially starts.
+Util.addNewVersionListenerExperimental((manifest) => {
+  console.log('New version of app downloaded, restarting:', manifest);
+  Util.reload();
+});
+
 export default class App extends React.Component {
   state = {
     isReady: false,
   };
 
   startAsync = async () => {
-    // Call Util.reload() which is supposed to download latest app version &
-    // relaunch ONLY when there is a JS bundle update available.
-    Util.reload();
-
     // Perform any initialization tasks here while Expo shows its splash screen.
     await persistStore(store);
 
