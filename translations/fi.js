@@ -69,6 +69,10 @@ export default {
   quizEndTotalScore: 'Pisteitä yhteensä: {{points}}',
   quizEndYouCanTryAgain:
     'Voitte yrittää uudelleen, mutta tämä nollaa pisteenne kunnes ratkotte tehtävän uudelleen!',
+  quizErrorPoints: 'Virhe pisteiden lähetyksessä',
+  quizErrorDescription: 'Tarkista laitteen Internet-yhteys. Haluatko kokeilla pisteiden lähetystä uudelleen? Muussa tapauksessa joudut ratkomaan quiz-tehtävän uudelleen!',
+  quizErrorTryAgain: 'Lähetä uudelleen',
+  quizErrorCancel: 'Peruuta',
 
   feedbackOrganizersInterested:
     'Super-Adan järjestäjät ovat kiinnostuneita kokemuksistanne' +

@@ -69,6 +69,10 @@ export default {
   quizEndTotalScore: 'Total points: {{points}}',
   quizEndYouCanTryAgain:
     'You can try again but keep in mind that it will immediately reset your points!',
+  quizErrorPoints: 'Error while submitting your score',
+  quizErrorDescription: "Check your device's Internet connection. Do you want to try resubmitting the score? Otherwise you will have to complete the quiz again!",
+  quizErrorTryAgain: 'Resubmit',
+  quizErrorCancel: 'Cancel',
 
   feedbackOrganizersInterested:
     'The organizers of Super-Ada are intested in your experience' +

@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import Dimensions from 'Dimensions';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import Row from './Row';
+import I18n from 'ex-react-native-i18n'
+import { texts } from '../../utils/translation';
 
 import { connect } from 'react-redux';
 import * as GameState from '../../state/game';
@@ -34,21 +36,6 @@ const calculatePoints = gameState => {
   return Math.round(pointsIfCompleted + wordsPoints + minutesPoints);
 };
 
-const tick = component => {
-  const { gameState, gameCompleted, tickTimer } = component.props;
-
-  const { gameStatus, timer } = gameState;
-
-  if (gameStatus === GameState.GAME_RUNNING) {
-    const remaining = Config.timelimit - timer;
-    if (remaining <= 0) {
-      gameCompleted(calculatePoints(gameState));
-    } else {
-      tickTimer();
-    }
-  }
-};
-
 class Puzzle extends Component {
   constructor(props) {
     super(props);
@@ -74,13 +61,27 @@ class Puzzle extends Component {
     ];
   }
 
+  tick = () => {
+    const { gameState, gameCompleted, tickTimer } = this.props;
+
+    const { gameStatus, timer } = gameState;
+
+    if (gameStatus === GameState.GAME_RUNNING) {
+      const remaining = Config.timelimit - timer;
+      if (remaining == 0) {
+        clearInterval(this.timer);
+        gameCompleted(calculatePoints(gameState));
+      } else if (remaining > 0) {
+        tickTimer();
+      }
+    }
+  };
+
   componentDidMount() {
     const { gameStarted, gameStatus, gameState } = this.props;
 
     // Start the timer
-    this.setInterval(() => {
-      tick(this);
-    }, 1000);
+    this.timer = setInterval(this.tick, 1000);
 
     if (
       gameStatus === GameState.GAME_RUNNING ||
@@ -92,13 +93,15 @@ class Puzzle extends Component {
     gameStarted();
   }
 
+  componentWillUnmount = () => {
+    clearInterval(this.timer);
+  };
+
   componentWillUpdate(newProps) {
     const { gameCompleted, wordsToFind, gameState } = newProps;
 
     if (wordsToFind === 0) {
-      setTimeout(() => {
-        gameCompleted(calculatePoints(gameState));
-      }, 500);
+      gameCompleted(calculatePoints(gameState));
     }
   }
 
@@ -210,7 +213,10 @@ class Puzzle extends Component {
       }
     }, this);
 
-    var wordReversed = word.split('').reverse().join('');
+    var wordReversed = word
+      .split('')
+      .reverse()
+      .join('');
 
     var found =
       this.tryFindingWord(this.state.firstPressed, word) ||
@@ -360,22 +366,43 @@ export default connect(
       dispatch(GameState.tickTimer());
     },
     gameCompleted(points) {
-      dispatch(
-        rest.actions.quiz.post(
-          {},
-          {
-            body: JSON.stringify({ points: points }),
-          },
-          (err, data) => {
-            if (!err) {
-              console.log('successfully set quiz points: ', points);
-            } else {
-              console.log('Error setting quiz points: ', err, data);
-            }
-          },
-        ),
-      );
-      dispatch(GameState.gameCompleted(Date.now()));
+      const sendPoints = () =>
+        dispatch(
+          rest.actions.quiz.post(
+            {},
+            {
+              body: JSON.stringify({ points: points }),
+            },
+            (err, data) => {
+              if (!err) {
+                // If successful, show the end screen
+                console.log('successfully set quiz points: ', points);
+                dispatch(GameState.gameCompleted(Date.now()));
+              } else {
+                console.log('Error setting quiz points: ', err, data);
+                Alert.alert(
+                  I18n.t(texts.quizErrorPoints),
+                  I18n.t(texts.quizErrorDescription),
+                  [
+                    {
+                      text: I18n.t(texts.quizErrorCancel),
+                      onPress: () =>
+                        dispatch(GameState.gameCompleted(Date.now())),
+                      style: 'cancel',
+                    },
+                    {
+                      text: I18n.t(texts.quizErrorTryAgain),
+                      onPress: sendPoints,
+                    },
+                  ],
+                  { cancelable: false }
+                );
+              }
+            },
+          ),
+        );
+
+      sendPoints();
     },
     wordFound(word) {
       dispatch(GameState.wordFound(word));
