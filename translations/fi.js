@@ -43,6 +43,7 @@ export default {
   feedbackTitle: 'Anna palautetta',
   goodByeTitle: 'Kiitos osallistumisesta!',
 
+  quizTitle: 'Super-Ada Quiz',
   quizWelcome: 'Tervetuloa ratkomaan Super-Ada quiz-tehtävää!',
   quizExplanation:
     'Kerää pisteitä löytämällä mahdollisimman monta IT-alaan liittyvää sanaa. Saat lisäpisteitä löytämällä kaikki sanat nopeasti!',

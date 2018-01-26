@@ -43,6 +43,7 @@ export default {
   feedbackTitle: 'Feedback',
   goodByeTitle: 'Thank you for participating!',
 
+  quizTitle: 'Super-Ada Quiz',
   quizWelcome: 'Welcome to solve the Super-Ada quiz!',
   quizExplanation:
     'Collect points by finding words related to information technology. You get extra points by quickly finding all of the words!',

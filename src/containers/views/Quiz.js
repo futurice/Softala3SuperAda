@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   ActivityIndicator,
+  StatusBar,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -131,6 +133,10 @@ export class GameView extends Component {
         contentView = (
           <View style={styles.gameContainer}>
             <View style={styles.welcomeContainer}>
+              <TranslatedText
+                style={styles.titleText}
+                text={texts.quizTitle}
+              />
               <TranslatedText
                 style={styles.welcomeText}
                 text={texts.quizWelcome}
@@ -348,6 +354,12 @@ const centered = {
 };
 
 const styles = StyleSheet.create({
+  titleText: {
+    paddingTop: StatusBar.currentHeight + Platform.OS === 'ios' ? 20 : 0,
+    fontSize: AppStyles.titleFontSize,
+    color: AppStyles.white,
+    textAlign: 'center',
+  },
   gameContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -401,15 +413,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: 'center',
     fontSize: AppStyles.fontSize,
-  },
-  titleText: {
-    ...centered,
-    color: AppStyles.white,
-    paddingHorizontal: 20,
-    marginTop: 40,
-    marginBottom: 20,
-    textAlign: 'center',
-    fontSize: AppStyles.headerFontSize,
   },
   welcomeText: {
     ...centered,
