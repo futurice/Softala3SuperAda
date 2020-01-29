@@ -1,4 +1,4 @@
-import storage from 'redux-persist/lib/storage';
+import { AsyncStorage } from 'react-native';
 import { persistStore } from 'redux-persist';
 import { createBlacklistFilter } from 'redux-persist-transform-filter';
 import rest from '../utils/rest';
@@ -16,7 +16,7 @@ const apiLoadingFilters = Object.keys(rest.reducers).map(reducer =>
 
 export const persistConfig = {
   key: 'primary',
-  storage,
+  storage: AsyncStorage,
 
   transforms: [...apiLoadingFilters],
 

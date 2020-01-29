@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Dimensions from 'Dimensions';
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, View, Alert, Dimensions } from 'react-native';
 import Row from './Row';
 import I18n from 'ex-react-native-i18n'
 import { texts } from '../../utils/translation';

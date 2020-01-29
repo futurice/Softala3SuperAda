@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Dimensions from 'Dimensions';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
 import * as GameState from '../../state/game';
 import AppStyles from '../../AppStyles';
 

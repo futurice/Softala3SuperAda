@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View, ActivityIndicator, StyleSheet, Image } from 'react-native';
+import { Text, View, ActivityIndicator, StyleSheet, Image, Dimensions } from 'react-native';
 
-import Dimensions from 'Dimensions';
 import { apiRoot } from '../utils/rest';
 
 export default class CompanyView extends React.Component {

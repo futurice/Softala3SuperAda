@@ -9,8 +9,9 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Dimensions
 } from 'react-native';
-import Dimensions from 'Dimensions';
+
 
 import { connect } from 'react-redux';
 import rest from '../../utils/rest';
