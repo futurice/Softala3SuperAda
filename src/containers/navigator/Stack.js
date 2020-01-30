@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StatusBar } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import appConfig from '../../../app.json';
 
 // ## View Imports ##
@@ -26,7 +26,7 @@ const StackNavigatorConfig = {
   //headerMode: 'none',
 };
 
-export default StackNavigator(
+export default createStackNavigator(
   {
     Login: { screen: LoginView },
     Tabs: { screen: Tabs, },

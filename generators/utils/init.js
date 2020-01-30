@@ -6,7 +6,7 @@ module.exports = {
     ...createView('generators/templates/Welcome.js.hbs'),
     ...createView(
       'generators/templates/Settings.js.hbs',
-      'StackNavigator',
+      'createStackNavigator',
       'src/containers/navigator/Stack.js',
     ),
   ],

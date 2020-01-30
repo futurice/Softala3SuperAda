@@ -1,4 +1,5 @@
 import { TabNavigator, TabBarBottom } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import appConfig from '../../../app.json';
 
 // ## View Imports ##
@@ -20,7 +21,7 @@ const TabNavigatorConfig = {
   tabBarPosition: 'bottom',
 };
 
-export default TabNavigator(
+export default createBottomTabNavigator(
   {
     Welcome: { screen: WelcomeView },
     Team: { screen: TeamView },

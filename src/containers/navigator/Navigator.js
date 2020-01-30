@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationActions, addNavigationHelpers } from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import RootNavigator from './Stack';
@@ -40,10 +40,10 @@ const mapStateToProps = ({ navigatorState }) => ({ navigatorState });
 export class NavigatorView extends React.Component {
   render = () =>
     <RootNavigator
-      navigation={addNavigationHelpers({
+      navigation={{
         dispatch: this.props.dispatch,
-        state: this.props.navigatorState,
-      })}
+        state: this.props.navigatorState
+      }}
     />;
 }
 

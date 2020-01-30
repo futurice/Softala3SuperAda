@@ -1,6 +1,6 @@
 import React from 'react';
 import { BackHandler } from 'react-native';
-import { AppLoading, Font, Util } from 'expo';
+import { AppLoading, Font, Updates } from 'expo';
 import I18n from 'ex-react-native-i18n';
 
 import { Provider } from 'react-redux';
@@ -14,10 +14,12 @@ import Navigator, {
 // JS updates are forced to be done in the background on Android, so we need to
 // listen for version updates and relaunch the app if there is an update available.
 // On iOS, the most recent JS bundle is downloaded when the app initially starts.
-Util.addNewVersionListenerExperimental((manifest) => {
-  console.log('New version of app downloaded, restarting:', manifest);
-  Util.reload();
-});
+Updates.checkForUpdateAsync();
+// Util was deprecated in SDK 26
+//Util.addNewVersionListenerExperimental((manifest) => {
+// console.log('New version of app downloaded, restarting:', manifest);
+//  Util.reload();
+//});
 
 export default class App extends React.Component {
   state = {
