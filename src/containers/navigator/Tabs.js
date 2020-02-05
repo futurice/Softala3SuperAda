@@ -20,7 +20,8 @@ const TabNavigatorConfig = {
   tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
   navigationOptions: {
-    animationEnabled: false
+    headerShown: false,
+    animationEnabled: false,
   }
 };
 
