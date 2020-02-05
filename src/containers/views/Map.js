@@ -71,7 +71,10 @@ export class MapView extends React.Component {
           var left = 0,
             top = 0;
 
-          if (positionX > 0.0 || positionY > 0.0) {
+          if ((positionX > 0.0 || positionY > 0.0)
+              && mapImageX !== undefined && mapImageY !== undefined
+              && mapImageWidth !== undefined && mapImageHeight !== undefined
+          ) {
             left = positionX * mapImageWidth + mapImageX;
             top = positionY * mapImageHeight + mapImageY;
           } else {
