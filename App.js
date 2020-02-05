@@ -1,6 +1,7 @@
 import React from 'react';
 import { BackHandler } from 'react-native';
-import { AppLoading, Font, Updates } from 'expo';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import I18n from 'ex-react-native-i18n';
 
 import { Provider } from 'react-redux';
@@ -10,16 +11,6 @@ import persistStore from './src/redux/persist';
 import Navigator, {
   handleBackButton,
 } from './src/containers/navigator/Navigator';
-
-// JS updates are forced to be done in the background on Android, so we need to
-// listen for version updates and relaunch the app if there is an update available.
-// On iOS, the most recent JS bundle is downloaded when the app initially starts.
-Updates.checkForUpdateAsync();
-// Util was deprecated in SDK 26
-//Util.addNewVersionListenerExperimental((manifest) => {
-// console.log('New version of app downloaded, restarting:', manifest);
-//  Util.reload();
-//});
 
 export default class App extends React.Component {
   state = {
@@ -32,7 +23,7 @@ export default class App extends React.Component {
 
     await I18n.initAsync();
 
-    await Font.loadAsync('pt-sans', require('./assets/PT_Sans-Web-Bold.ttf'));
+    await Font.loadAsync({'pt-sans': require('./assets/PT_Sans-Web-Bold.ttf')});
 
     BackHandler.addEventListener('hardwareBackPress', () =>
       handleBackButton(store),

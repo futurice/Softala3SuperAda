@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class Welcome extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
     tabBarIcon: ({ tintColor }) =>
       <Image
         source={require('../../../assets/homeiso_transparent.png')}

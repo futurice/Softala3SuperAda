@@ -78,7 +78,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class TeamView extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
     tabBarIcon: ({ tintColor }) =>
       <Image
         source={require('../../../assets/ryhmaiso_transparent.png')}

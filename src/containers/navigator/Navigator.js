@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationActions } from 'react-navigation';
+import { createAppContainer, NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import RootNavigator from './Stack';
@@ -49,4 +49,8 @@ export class NavigatorView extends React.Component {
 
 export { RootNavigator };
 
-export default connect(mapStateToProps)(NavigatorView);
+// export default connect(mapStateToProps)(createAppContainer(NavigatorView));
+
+// Redux integration not supported in new versions of react-navigation
+// TODO: Need to reimplement navigation to go through react navigation instead of redux state
+export default createAppContainer(RootNavigator);

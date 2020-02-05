@@ -40,7 +40,7 @@ const mapDispatchToProps = dispatch => ({
 
 export class CheckPointView extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
     title: 'Checkpoints',
     tabBarIcon: ({ tintColor }) =>
       <Image

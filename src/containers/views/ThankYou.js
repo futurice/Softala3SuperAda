@@ -9,7 +9,7 @@ import I18n from 'ex-react-native-i18n'
 
 export class ThankYouView extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   render() {
