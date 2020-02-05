@@ -1,8 +1,10 @@
 import React from 'react';
-import { NavigationActions } from 'react-navigation';
+import { BackHandler } from 'react-native';
+//import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import RootNavigator from './Stack';
+//import { createStore, applyMiddleware, combineReducers } from 'redux';
 
 export const handleBackButton = (store) => {
   const { navigatorState } = store.getState();
