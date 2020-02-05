@@ -71,7 +71,7 @@ const mapDispatchToProps = dispatch => ({
 export class GameView extends Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: 'Super-Ada Quiz!',
-    header: null,
+    headerShown: false,
     swipeEnabled: false,
     tabBarIcon: ({ tintColor }) =>
       <Image
@@ -84,7 +84,7 @@ export class GameView extends Component {
     super(props);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { initialiseGame, gameState, refresh } = this.props;
 
     const { gameStatus } = gameState;

@@ -9,7 +9,6 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../../AppStyles';
 import AdaButton from '../../components/Button';
@@ -20,13 +19,13 @@ import { texts } from '../../utils/translation';
 import I18n from 'ex-react-native-i18n'
 
 const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({
-  editTeam: () => dispatch(NavigationActions.navigate({ routeName: 'Team' })),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  editTeam: () => ownProps.navigation.navigate({ routeName: 'Team' }),
 });
 
 export class Welcome extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
     tabBarIcon: ({ tintColor }) =>
       <Image
         source={require('../../../assets/homeiso_transparent.png')}

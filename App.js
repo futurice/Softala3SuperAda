@@ -1,6 +1,7 @@
 import React from 'react';
 import { BackHandler } from 'react-native';
-import { AppLoading, Font, Updates } from 'expo';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
 import I18n from 'ex-react-native-i18n';
 
 import { Provider, connect } from 'react-redux';
@@ -78,45 +79,3 @@ export default class Root extends React.Component {
     );
   }
 }
-
-/*
-export default class App extends React.Component {
-  state = {
-    isReady: false,
-  };
-
-  startAsync = async () => {
-    // Perform any initialization tasks here while Expo shows its splash screen.
-    await persistStore(store);
-
-    await I18n.initAsync();
-
-    await Font.loadAsync('pt-sans', require('./assets/PT_Sans-Web-Bold.ttf'));
-
-    BackHandler.addEventListener('hardwareBackPress', () =>
-      handleBackButton(store),
-    );
-  };
-
-  onFinish = () => this.setState(() => ({ isReady: true }));
-
-  render = () => {
-    if (!this.state.isReady) {
-      return (
-        <AppLoading
-          startAsync={this.startAsync}
-          onFinish={this.onFinish}
-          onError={console.warn}
-        />
-      );
-    }
-
-    // Render the app only after we're done initializing
-    return (
-      <Provider store={store}>
-        <Navigator />
-      </Provider>
-    );
-  };
-}
-*/

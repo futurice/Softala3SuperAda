@@ -96,7 +96,7 @@ class Puzzle extends Component {
     clearInterval(this.timer);
   };
 
-  componentWillUpdate(newProps) {
+  UNSAFE_componentWillUpdate(newProps) {
     const { gameCompleted, wordsToFind, gameState } = newProps;
 
     if (wordsToFind === 0) {

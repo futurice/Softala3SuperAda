@@ -12,7 +12,6 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import rest from '../../utils/rest';
@@ -29,7 +28,7 @@ const mapStateToProps = state => ({
   token: state.auth.data.token,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   login: name => {
     dispatch(
       rest.actions.auth(
@@ -43,17 +42,14 @@ const mapDispatchToProps = dispatch => ({
     );
   },
   navigateTo: (routeName: string) =>
-    dispatch(
-      NavigationActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({ routeName })],
-      }),
-    ),
+    ownProps.navigation.replace({
+      routeName,
+    }),
 });
 
 export class LoginView extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   state = {

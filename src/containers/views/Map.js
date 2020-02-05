@@ -9,7 +9,6 @@ import {
   WebView,
 } from 'react-native';
 
-import { NavigationActions } from 'react-navigation';
 import AppStyles from '../../AppStyles';
 import { apiRoot } from '../../utils/rest';
 import { texts } from '../../utils/translation';
@@ -20,9 +19,9 @@ import rest from '../../utils/rest';
 const mapStateToProps = state => ({
   companies: state.companies.data,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => dispatch(rest.actions.companies()),
-  back: () => dispatch(NavigationActions.back()),
+  back: () => ownProps.navigation.back(),
 });
 
 export class MapView extends React.Component {
@@ -72,7 +71,10 @@ export class MapView extends React.Component {
           var left = 0,
             top = 0;
 
-          if (positionX > 0.0 || positionY > 0.0) {
+          if ((positionX > 0.0 || positionY > 0.0)
+              && mapImageX !== undefined && mapImageY !== undefined
+              && mapImageWidth !== undefined && mapImageHeight !== undefined
+          ) {
             left = positionX * mapImageWidth + mapImageX;
             top = positionY * mapImageHeight + mapImageY;
           } else {

@@ -11,7 +11,6 @@ import {
   StatusBar,
   RefreshControl,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import TranslatedText from '../../components/TranslatedText';
@@ -28,19 +27,17 @@ import I18n from 'ex-react-native-i18n'
 const mapStateToProps = state => ({
   companies: state.companies,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => dispatch(rest.actions.companies()),
   map: () =>
-    dispatch(
-      NavigationActions.navigate({
-        routeName: 'Map',
-      }),
-    ),
+    ownProps.navigation.navigate({
+      routeName: 'Map',
+    }),
 });
 
 export class CheckPointView extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
     title: 'Checkpoints',
     tabBarIcon: ({ tintColor }) =>
       <Image
@@ -65,7 +62,7 @@ export class CheckPointView extends React.Component {
     clearInterval(this.state.refreshInterval);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.companies !== this.props.companies) {
       this.setState({ refreshing: false });
     }
