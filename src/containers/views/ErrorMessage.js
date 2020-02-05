@@ -14,7 +14,7 @@ class ErrorMessageView extends React.Component {
     MessageBarManager.unregisterMessageBar();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.authError) {
       MessageBarManager.showAlert({
         alertType: 'error',

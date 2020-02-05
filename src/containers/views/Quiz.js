@@ -84,7 +84,7 @@ export class GameView extends Component {
     super(props);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { initialiseGame, gameState, refresh } = this.props;
 
     const { gameStatus } = gameState;

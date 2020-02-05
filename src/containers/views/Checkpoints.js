@@ -62,7 +62,7 @@ export class CheckPointView extends React.Component {
     clearInterval(this.state.refreshInterval);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.companies !== this.props.companies) {
       this.setState({ refreshing: false });
     }
