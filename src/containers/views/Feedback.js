@@ -23,7 +23,6 @@ import isUndefined from 'lodash/isUndefined';
 import AppStyles from '../../AppStyles';
 
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
 import rest from '../../utils/rest';
 
 import TranslatedText from '../../components/TranslatedText';
@@ -33,7 +32,7 @@ import I18n from 'ex-react-native-i18n'
 const mapStateToProps = state => ({
   feedback: state.feedback,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh() {
     dispatch(rest.actions.feedback.get());
   },
@@ -48,9 +47,7 @@ const mapDispatchToProps = dispatch => ({
           if (!err) {
             console.log('successfully sent feedback');
             dispatch(
-              NavigationActions.reset({ index: 0, actions: [
-                NavigationActions.navigate({routeName: 'ThankYou' })
-              ]})
+              ownProps.navigation.replace({ routeName: 'ThankYou'})
             );
           }
         },

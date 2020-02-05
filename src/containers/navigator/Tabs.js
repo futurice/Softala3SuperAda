@@ -19,6 +19,9 @@ const TabNavigatorConfig = {
   },
   tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
+  navigationOptions: {
+    animationEnabled: false
+  }
 };
 
 export default createBottomTabNavigator(

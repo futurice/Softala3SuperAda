@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
 
 import { PepperoniLogo, IconButton } from '../../components/Pepperoni';
 import { Title, Description, Bold } from '../../components/Text';
 import { ViewContainer, Centered } from '../../components/Layout';
 
 const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   openSettings: () =>
-    dispatch(NavigationActions.navigate({ routeName: 'Settings' })),
+    ownProps.navigation.navigate({ routeName: 'Settings' }),
 });
 
 export class {{ properCase name }}View extends React.Component {

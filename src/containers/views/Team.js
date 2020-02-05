@@ -20,7 +20,6 @@ import I18n from 'ex-react-native-i18n'
 import { ImagePicker } from 'expo';
 import { ImageManipulator } from 'expo';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../../AppStyles';
 import rest from '../../utils/rest';
@@ -34,11 +33,11 @@ const mapStateToProps = state => ({
   image: state.teamDetails.data.file,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => dispatch(rest.actions.teamDetails()),
   save: (description, imageUri) => {
     if (!description && !imageUri) {
-      return dispatch(NavigationActions.navigate({ routeName: 'Checkpoints' }));
+      return ownProps.navigation.navigate({ routeName: 'Checkpoints' });
     }
 
     let formdata = new FormData();
@@ -65,7 +64,7 @@ const mapDispatchToProps = dispatch => ({
         },
         (err, data) => {
           if (!err) {
-            dispatch(NavigationActions.navigate({ routeName: 'Checkpoints' }));
+            ownProps.navigation.navigate({ routeName: 'Checkpoints' });
           } else {
             console.log('Error ', err);
             console.log('Data: ', data);

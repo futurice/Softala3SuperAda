@@ -9,7 +9,6 @@ import {
   WebView,
 } from 'react-native';
 
-import { NavigationActions } from 'react-navigation';
 import AppStyles from '../../AppStyles';
 import { apiRoot } from '../../utils/rest';
 import { texts } from '../../utils/translation';
@@ -20,9 +19,9 @@ import rest from '../../utils/rest';
 const mapStateToProps = state => ({
   companies: state.companies.data,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => dispatch(rest.actions.companies()),
-  back: () => dispatch(NavigationActions.back()),
+  back: () => ownProps.navigation.back(),
 });
 
 export class MapView extends React.Component {

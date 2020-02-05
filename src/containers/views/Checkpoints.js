@@ -11,7 +11,6 @@ import {
   StatusBar,
   RefreshControl,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import TranslatedText from '../../components/TranslatedText';
@@ -28,14 +27,12 @@ import I18n from 'ex-react-native-i18n'
 const mapStateToProps = state => ({
   companies: state.companies,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => dispatch(rest.actions.companies()),
   map: () =>
-    dispatch(
-      NavigationActions.navigate({
-        routeName: 'Map',
-      }),
-    ),
+    ownProps.navigation.navigate({
+      routeName: 'Map',
+    }),
 });
 
 export class CheckPointView extends React.Component {

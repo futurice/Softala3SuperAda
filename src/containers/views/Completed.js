@@ -10,7 +10,6 @@ import {
   ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { NavigationActions } from 'react-navigation';
 
 import AppStyles from '../../AppStyles';
 
@@ -23,18 +22,12 @@ import rest from '../../utils/rest';
 const mapStateToProps = state => ({
   companies: state.companies,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   refresh: () => dispatch(rest.actions.companies()),
   feedback: () =>
-    dispatch(
-      NavigationActions.navigate({ routeName: 'Feedback' })
-    ),
+    ownProps.navigation.navigate({ routeName: 'Feedback' }),
   goodbye: () =>
-  dispatch(
-    NavigationActions.reset({ index: 0, actions: [
-      NavigationActions.navigate({routeName: 'ThankYou' })
-    ]})
-  )
+    ownProps.navigation.replace({ routeName: 'ThankYou' })
 });
 
 export class TeamPointsView extends React.Component {
